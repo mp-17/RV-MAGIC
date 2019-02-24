@@ -1,18 +1,25 @@
-module ALU #(parameter DATA_WIDTH = 32) (
-    input signed [DATA_WIDTH - 1:0] a, b;
-    input [3:0] ctl;
-    output signed [DATA_WIDTH - 1:0] out;
-    output zero,
-    output ovf
+/*  Parametric ALU with 4 bit control input,
+    zero and overflow outputs */
+
+module alu #(parameter DATA_WIDTH = 32) (
+    input signed [DATA_WIDTH - 1:0] a, b,
+    input [3:0] ctl,
+    output logic signed [DATA_WIDTH - 1:0] out,
+    output logic zero,
+    output logic ovf
 );
 
     assign zero = (out == 0);  // assign zero output to 1 only if out is 0
     
     // overflow logic (check sign of operands and result)
     always_comb begin
-        if (ctl == 3 || ctl == 4) begin
+        if (ctl == 3) begin
             ovf = (a[$left(a)] & b[$left(b)] & ~out[$left(out)]) |
                 (~a[$left(a)] & ~b[$left(b)] & out[$left(out)]);
+        end
+        else if (ctl == 4) begin
+            ovf = (a[$left(a)] & ~b[$left(b)] & ~out[$left(out)]) |
+                (~a[$left(a)] & b[$left(b)] & out[$left(out)]);
         end
         else begin
             ovf = 0;
