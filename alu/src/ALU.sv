@@ -1,10 +1,23 @@
-module ALU #(parameter DATA_WIDTH = 32) (a, b, ctl, out, zero);
+module ALU #(parameter DATA_WIDTH = 32) (
     input signed [DATA_WIDTH - 1:0] a, b;
     input [3:0] ctl;
     output signed [DATA_WIDTH - 1:0] out;
-    output zero;
+    output zero,
+    output ovf
+);
 
     assign zero = (out == 0);  // assign zero output to 1 only if out is 0
+    
+    // overflow logic (check sign of operands and result)
+    always_comb begin
+        if (ctl == 3 || ctl == 4) begin
+            ovf = (a[$left(a)] & b[$left(b)] & ~out[$left(out)]) |
+                (~a[$left(a)] & ~b[$left(b)] & out[$left(out)]);
+        end
+        else begin
+            ovf = 0;
+        end
+    end
 
     // decode ctl input into different operations
     always_comb begin
@@ -18,8 +31,7 @@ module ALU #(parameter DATA_WIDTH = 32) (a, b, ctl, out, zero);
             6: out = a >> b;            // ctl = 4'b0110 -> shift right
             7: out = a >>> b;           // ctl = 4'b0111 -> shift right sign ext
             8: out = a < b ? 1 : 0;     // ctl = 4'b1000 -> set less than
+            default: out = 0;           // default case sets out to zero
         endcase
     end
 endmodule
-
-// TODO: add overflow flag
