@@ -11,7 +11,7 @@ module alu_tb();
     alu dut(
         .a(a),
         .b(b),
-        .aluOp(ctl)
+        .ctl(ctl)
     );
 
     initial begin
