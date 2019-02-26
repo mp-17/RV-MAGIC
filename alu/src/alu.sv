@@ -16,33 +16,34 @@
 */
 
 `include "alu_defs.sv"
+`include "../../common/src/rv32i_defs.sv"
 
 module alu (
-    input [`DATA_WIDTH - 1:0] a, b,
-    input [`ALU_OP_WIDTH - 1:0] aluOp,
-    output logic [`DATA_WIDTH - 1:0] out
+    input [`WORD_WIDTH - 1:0] a, b,
+    input [`ALU_CTL_WIDTH - 1:0] ctl,
+    output logic [`WORD_WIDTH - 1:0] out
 );
 
-    // decode aluOp input into different operations
+    // decode ctl input into different operations
     always_comb begin
-        case (aluOp)
+        case (ctl)
             // arithmetic ops
-            `ALU_OP_ADD:    out = a + b;
-            `ALU_OP_SUB:    out = a - b;
+            `ALU_ADD:    out = a + b;
+            `ALU_SUB:    out = a - b;
             // logic ops
-            `ALU_OP_AND:    out = a & b;
-            `ALU_OP_OR:     out = a | b;
-            `ALU_OP_XOR:    out = a ^ b;
-            `ALU_OP_SLL:    out = a << b[`SHAMT_WIDTH - 1:0];
-            `ALU_OP_SRL:    out = a >> b[`SHAMT_WIDTH - 1:0];
-            `ALU_OP_SRA:    out = $signed(a) >>> b[`SHAMT_WIDTH - 1:0];
+            `ALU_AND:    out = a & b;
+            `ALU_OR:     out = a | b;
+            `ALU_XOR:    out = a ^ b;
+            `ALU_SLL:    out = a << b[`SHAMT_WIDTH - 1:0];
+            `ALU_SRL:    out = a >> b[`SHAMT_WIDTH - 1:0];
+            `ALU_SRA:    out = $signed(a) >>> b[`SHAMT_WIDTH - 1:0];
             // set conditions
-            `ALU_OP_SEQ:    out = a == b ? 1 : 0;
-            `ALU_OP_SNE:    out = a != b ? 1 : 0;
-            `ALU_OP_SLT:    out = $signed(a) < $signed(b) ? 1 : 0;
-            `ALU_OP_SGE:    out = $signed(a) >= $signed(b) ? 1 : 0;
-            `ALU_OP_SLTU:   out = a < b ? 1 : 0;
-            `ALU_OP_SGEU:   out = a >= b ? 1 : 0;
+            `ALU_SEQ:    out = a == b ? 1 : 0;
+            `ALU_SNE:    out = a != b ? 1 : 0;
+            `ALU_SLT:    out = $signed(a) < $signed(b) ? 1 : 0;
+            `ALU_SGE:    out = $signed(a) >= $signed(b) ? 1 : 0;
+            `ALU_SLTU:   out = a < b ? 1 : 0;
+            `ALU_SGEU:   out = a >= b ? 1 : 0;
             // default case sets out to zero (should be unreachable)
             default: out = 0; 
         endcase
