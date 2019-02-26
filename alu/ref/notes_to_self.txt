@@ -1,0 +1,2 @@
+- Analyzed different instructions and required operations
+- For branch instructions, at first I thought of using flags, but it's a pita to implement behaviorally, so just set the result to 1 if the condition is true (just like slt/sltu)
