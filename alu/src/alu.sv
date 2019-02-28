@@ -45,7 +45,7 @@ module alu (
             `ALU_SLTU:   out = a < b ? 1 : 0;
             `ALU_SGEU:   out = a >= b ? 1 : 0;
             // default case sets out to zero (should be unreachable)
-            default: out = 0; 
+            default: $display("ALU error: undefined ctl value."); 
         endcase
     end
 
