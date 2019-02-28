@@ -19,9 +19,9 @@
 `include "../../common/src/rv32i_defs.sv"
 
 module alu (
-    input [`WORD_WIDTH - 1:0] a, b,
-    input [`ALU_CTL_WIDTH - 1:0] ctl,
-    output logic [`WORD_WIDTH - 1:0] out
+    input [`WORD_WIDTH-1:0] a, b,
+    input [`ALU_CTL_WIDTH-1:0] ctl,
+    output logic [`WORD_WIDTH-1:0] out
 );
 
     // decode ctl input into different operations

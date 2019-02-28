@@ -5,7 +5,7 @@ module alu_decoder (
     input [6:0] opcode,
     input [2:0] funct3,
     input [6:0] funct7,
-    output logic [`ALU_CTL_WIDTH - 1:0] ctl
+    output logic [`ALU_CTL_WIDTH-1:0] ctl
 );
 
     always_comb begin
