@@ -1,5 +1,6 @@
 // width-related constants
-`define INST_WIDTH     32
+`define INST_WIDTH      32
+`define ADDR_WIDTH      32
 `define WORD_WIDTH      32
 `define HWORD_WIDTH     16
 `define BYTE_WIDTH      8
