@@ -12,7 +12,7 @@ module fwu (
     input [`RF_ADDR_WIDTH-1:0] idexRs1, idexRs2, exmemRd, memwbRd,
     input exmemRegWrite, memwbRegWrite,
     output logic [1:0] fwdA, fwdB
-)
+);
 
     always_comb begin
         // ALU input A
