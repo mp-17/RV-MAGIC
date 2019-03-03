@@ -3,15 +3,18 @@
     If the same register is present in EX/MEM and MEM/WB stages, the former
     takes precedence.
     The outputs should be connected to the control signals of two muxes
-    choosing the ALU inputs.
+    choosing the ALU inputs and the one choosing the memory input data.
+    Moreover, it forwards store data when it immediately follows a load with 
+    to the same register. 
 */
 
 `include "../../common/src/rv32i_defs.sv"
 
 module fwu (
-    input [`RF_ADDR_WIDTH-1:0] idexRs1, idexRs2, exmemRd, memwbRd,
-    input exmemRegWrite, memwbRegWrite,
-    output logic [1:0] fwdA, fwdB
+    input [`RF_ADDR_WIDTH-1:0] idexRs1, idexRs2, exmemRs2, exmemRd, memwbRd,
+    input exmemRegWrite, exmemMemWrite, memwbRegWrite, memwbMemToReg,
+    output logic [1:0] fwdA, fwdB,
+    output logic fwdWriteData
 );
 
     always_comb begin
@@ -30,5 +33,11 @@ module fwu (
             fwdB = 2'b01; // forward from memory/earlier ALU result
         else
             fwdB = 2'b00; // don't forward
+
+        // Data memory write input
+        if (memwbMemToReg && exmemMemWrite && (memwbRd != 0) && (memwbRd == exmemRs2))
+            fwdWriteData = 1; // forward from previous load result
+        else 
+            fwdWriteData = 0; // don't forward
     end
 endmodule

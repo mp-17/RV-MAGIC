@@ -13,8 +13,8 @@ module memory
 ( // ports
     input clk, memRead, memWrite,
     input [ADDR_WIDTH-1:0] address,
-    input [WORD_WIDTH-1:0] data_in,
-    output logic [WORD_WIDTH-1:0] data_out    
+    input [WORD_WIDTH-1:0] dataIn,
+    output logic [WORD_WIDTH-1:0] dataOut    
 );
 
     // declare memory array
@@ -29,10 +29,10 @@ module memory
     always_ff @ (posedge clk) begin
         assert(~(memRead & memWrite))
             if (memRead) begin
-            data_out <= mem_array[address];
+            dataOut <= mem_array[address];
             end
             else if (memWrite) begin
-                mem_array[address] <= data_in;
+                mem_array[address] <= dataIn;
             end
         else $error("Memory error: memRead and memWrite active at the same time.");
     end

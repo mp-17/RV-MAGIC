@@ -6,21 +6,21 @@ module rf
 ) 
 (
     input clk, regWrite,
-    input [`RF_ADDR_WIDTH-1:0] read_addr0, read_addr1, write_addr,
-    input [`WORD_WIDTH-1:0] data_in,
-    output logic [`WORD_WIDTH-1:0] data_out0, data_out1
+    input [`RF_ADDR_WIDTH-1:0] readAddr0, readAddr1, writeAddr,
+    input [`WORD_WIDTH-1:0] dataIn,
+    output logic [`WORD_WIDTH-1:0] dataOut0, dataOut1
 );
 
     // declare reg file array
     logic [`WORD_WIDTH-1:0] regs [0:REGS-1];
 
     // combinational read
-    assign data_out0 = (read_addr0 != 0) ? regs[read_addr0] : 0;
-    assign data_out1 = (read_addr1 != 0) ? regs[read_addr1] : 0;
+    assign dataOut0 = (readAddr0 != 0) ? regs[readAddr0] : 0;
+    assign dataOut1 = (readAddr1 != 0) ? regs[readAddr1] : 0;
 
     // synchronous write
     always @ (posedge clk) begin
-        if (regWrite && (write_addr != 0)) regs[write_addr] <= data_in;
+        if (regWrite && (writeAddr != 0)) regs[writeAddr] <= dataIn;
     end
 
 endmodule
