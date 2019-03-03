@@ -5,6 +5,7 @@
 `define HWORD_WIDTH     16
 `define BYTE_WIDTH      8
 `define SHAMT_WIDTH     5
+`define RF_ADDR_WIDTH   5
 
 // U-type opcodes
 `define RV32_LUI     7'b0110111
