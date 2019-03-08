@@ -1,0 +1,8 @@
+Altre regole che ho iniziato ad usare per gli schemi (modificabili all'occorrenza):
+- Inkscape
+- Spessore linea default (0.265 mm dovrebbe essere)
+- Freccia più piccola che c'è
+- Carattere nome blocchi = 16
+- Carattere nome segnali = 10
+- Carattere larghezza bus = 8
+- Font: Ubuntu Mono
