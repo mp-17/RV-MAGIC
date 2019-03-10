@@ -45,6 +45,67 @@ The RISC-V register file is composed of 32 registers, each 32-bit wide (for RV32
 
 \subsection{ALU}
 
+\subsection{Branch and Jump management}
+\paragraph{Types of instructions}
+There are two classes of instructions which can lead to a modification of the sequential flow of the program. In the RV32I ISA they are:
+\begin{enumerate}
+	\item Branches
+	\item Jumps
+\end{enumerate} 
+The former is a conditional change of the usual choice of the next address to be put in the PC, whereas the latter is unconditional. The condition, whenever present, is always based on the result of an ALU comparison.
 
+The \textbf{Branch} instruction exists in different flavours, depending upon which comparison has to be performed between the content of two registers. It follows a list of all of them:
+\begin{enumerate}
+	\item BEQ
+	\item BNE
+	\item BLT
+	\item BGE
+	\item BLTU
+	\item BGEU
+\end{enumerate} 
+All these instructions belong to the B type one. They have an immediate field split along the word, which indicates an effective immediate divided by two. Indeed, with a RISC-V standard architecture it is possible to address this way an half of a word at most, but never the single byte.
+The effective immediate is calculated with a bit-reorganization, a sign extension and a left shift of one position, to reach the final 32-bits width.
+The instruction contains also the addresses of two registers, whose content will be compared by the ALU to decide whether to take the branch or not. 
+To distinguish which type of comparison is needed, it is necessary to know the instruction field func3.
+
+The \textbf{Jump} instruction can be of two types, each bringing to a different hardware path for the data:
+\begin{enumerate}
+	\item JAL
+	\item JALR
+\end{enumerate}
+\textbf{JAL} is a J instruction, whereas \textbf{JALR} is an I one. This difference is reflected on the HW implementation: more on this later.
+A jump instruction is unconditional, but still need for an address computation. This operation is different for the two instructions: for JAL it is sufficient to use the branch-addr-computation hardware, whereas JALR requires the non shifted immediate to be added to the content of a register (the next address is not derived by the current one).
+
+\paragraph{Instruction execution}
+Since so far no \textbf{BPU} (\textbf{B}ranch \textbf{P}rediction \textbf{U}nit) is present in the design, a "branch not taken" assumption is always done when the content of the PC is updated and the decoded instruction is a \textbf{BR}anch. The simplest way to manage a branch is to delay the decision until the execution stage, waiting for the ALU to do the comparison. The effective decision is then taken in the MEM stage, not to exacerbate a path which can be critical by itself. 
+Also the calculation of the next address, which involves the immediate and the program counter, is performed in the execution stage.
+A possible improvement could be to anticipate the comparison and the next address calculation in the decoding stage, but to keep the design simple the first solution was chosen.
+This is compliant with the calculation of the address for a \textbf{JAL} execution. It is worth to mention that the absence of a condition to be verified is enaugh to simplify the anticipation of the address calculation and bring it in the decode stage. However this solution would increase the number of resources if the other branch/jump instructions are still executed in an another stage.
+A \textbf{JALR} instruction beheaves in a slightly different way: the address calculation is performed by the ALU, because the immediate is added to the content of a register.
+
+A branch instruction has no side effects once it has been executed. On the contrary, a jump instruction leaves in the pipeline the next instruction address to be saved in a destination register. This is not a issue though, because it is possible to see that even without forwarding units no data hazards could arise. If the pipline was longer, maybe the forwarding unit would be the only thing to have the day saved (the design has it, though).
+
+\paragraph{Effective calculation}
+The address calculation in case of branches/jumps is performed in the execution stage and it depends on the type of instruction:
+\subparagraph{Branch/JAL} It is based on the "current" PC value (current for that precise instruction!). The immediate is sign extended, one position left shifted and added to the PC value (percolated through the pipeline until there) by means of another adder. In the meantime, if the instruction is a JAL, the address of the next instruction goes on through the stages.
+\subparagraph{JALR} It involves a sum between an immediate and the content of a register. The ALU performs this operation without shifting the immediate. When the result has to be used, the LSB is substituted with a zero. Even in this case, the address of the next instruction follows its path towards the write-back stage.
+
+\paragraph{Next address selection CU}
+To control the multiplexers for the next address selection, there's the need for knowing:
+\begin{enumerate}
+	\item Whether the instruction in the MEM stage is a branch or a jump.
+	\item Which is between the two.
+	\item The result of the comparison and which was the comparison itself.
+	\item If the instruction is a JALR.
+\end{enumerate}
+The main CU generates two signals \textbf{branch} and \textbf{jump} which percolate along the pipeline, to allow the "Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result, and the type of comparison is encoded in the func3 field. 
+The main CU has to generate another signal "jalr" to indicate a JALR instruction.
+
+The "jump" control signal is used also in the writeback stage, to select the right input for the register file. If a jump is performed, the data to be written in the destination register is the "next" address wrt the jump instruction. 
+
+In any case, the IMEM pipe register, together with IF/ID, ID/EX and EX/DMEM ones, have to be flushed. This brings to a performance loss of 4 instructions for each taken branch or executed jump.
+
+\paragraph{Next address generation}
+The next address is chosen by means of two multiplexers. The first \textbf{BRJAL\_JALR\_MUX} takes in input the result of the ALU with the LSB masked, and the output of the additional adder of the execution stage. These two input come from the EX/DMEM pipe register. The ouput of \textbf{BRJAL\_JALR\_MUX} is one of the input of the other multiplexer \textbf{NEXT\_PC\_MUX}; the other input is the content of the PC + 4.
 
 \end{document}
