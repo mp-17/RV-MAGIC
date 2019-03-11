@@ -1,16 +1,18 @@
 `timescale 1ns/1ns
+`define ADDR_WIDTH 7
 
 module mem_tb ();
 
     // signal declarations
     logic clk, memRead, memWrite;
-    logic [3:0] address;
+    logic [1:0] addrUnit;
+    logic [`ADDR_WIDTH-1:0] address;
     logic [31:0] data;
 
     // module instantiation
     memory 
     #(
-        .ADDR_WIDTH(4),
+        .ADDR_WIDTH(`ADDR_WIDTH),
         .WORD_WIDTH(32),
         .INIT_FILE("../tb/init_mem.mem")
     )
@@ -18,8 +20,9 @@ module mem_tb ();
         .clk(clk),
         .memRead(memRead),
         .memWrite(memWrite),
+        .addrUnit(addrUnit),
         .address(address),
-        .data_in(data)
+        .dataIn(data)
     );
 
     // clock generator
@@ -30,19 +33,16 @@ module mem_tb ();
     // test signals
     initial begin
         // test read
-        #T memRead = 1; memWrite = 0; address = 'h0;
-        #T memRead = 0; address = 'h1;
-        #T memRead = 1; address = 'hA;
+        #T addrUnit = 'b00; memRead = 1; memWrite = 0; address = 'hA;
+        #T addrUnit = 'b01; memRead = 1; memWrite = 0; address = 'hA;
+        #T addrUnit = 'b10; memRead = 1; memWrite = 0; address = 'hA;
         // test write
-        #T memRead = 0; memWrite = 1; address = 'h3; data = 1;
-        #T memRead = 1; memWrite = 0;
-        // out of range address on read
-        #T address = 'h7F;
-        // out of range address on write
-        #T memRead = 0; memWrite = 1; address = 'h44; data = 0;
-        // read/write confict
-        #T memRead = 1; memWrite = 1; address = 'hF; data = 'hFFFF;
-        #T memWrite = 0;
+        #T addrUnit = 'b00; memRead = 0; memWrite = 1; address = 'h3; data = 'hAABBCCDD;
+        #T addrUnit = 'b10; memRead = 1; memWrite = 0; address = 'h3;
+        #T addrUnit = 'b01; memRead = 0; memWrite = 1; address = 'h3; data = 'hAABBCCDD;
+        #T addrUnit = 'b10; memRead = 1; memWrite = 0; address = 'h3;
+        #T addrUnit = 'b10; memRead = 0; memWrite = 1; address = 'h3; data = 'hAABBCCDD;
+        #T addrUnit = 'b10; memRead = 1; memWrite = 0; address = 'h3;
         // finish simulation
         #T $stop;
     end
