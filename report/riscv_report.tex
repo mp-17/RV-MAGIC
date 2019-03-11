@@ -73,6 +73,15 @@ To better illustrate the behavior of the register file operations, their timing 
 \subsection{ALU}
 
 \subsection{Branch and Jump management}
+A general view of the unit is given in Figure \ref{fig:brJump_man_HW}.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.2]{../br_jmp_management/ref/schematic/branchJump_management_schematic.pdf}
+    \caption{Branch and Jump management HW}
+    \label{fig:brJump_man_HW}
+\end{figure}
+
 \paragraph{Types of instructions}
 There are two classes of instructions which can lead to a modification of the sequential flow of the program. In the RV32I ISA they are:
 \begin{enumerate}
