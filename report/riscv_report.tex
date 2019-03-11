@@ -95,10 +95,10 @@ To control the multiplexers for the next address selection, there's the need for
 \begin{enumerate}
 	\item Whether the instruction in the MEM stage is a branch or a jump.
 	\item Which is between the two.
-	\item The result of the comparison and which was the comparison itself.
+	\item The result of the comparison.
 	\item If the instruction is a JALR.
 \end{enumerate}
-The main CU generates two signals \textbf{branch} and \textbf{jump} which percolate along the pipeline, to allow the "Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result, and the type of comparison is encoded in the func3 field. 
+The main CU generates two signals \textbf{branch} and \textbf{jump} which percolate along the pipeline, to allow the "Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result. 
 The main CU has to generate another signal "jalr" to indicate a JALR instruction.
 
 The "jump" control signal is used also in the writeback stage, to select the right input for the register file. If a jump is performed, the data to be written in the destination register is the "next" address wrt the jump instruction. 
