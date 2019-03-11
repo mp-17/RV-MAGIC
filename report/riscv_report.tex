@@ -19,27 +19,6 @@
 \maketitle
 
 \section{Datapath}
-\subsection{Memory}
-Both instruction and data memory are implemented using a simple behavioral memory model, with both synchronous read and write operations. According to the specifications of the RV32I, instructions are 32-bit long and the biggest addressable unit is also a 32-bit word, so this data with applies in both cases.
-
-Figure \ref{fig:memory} shows the interface of this block, where the \texttt{address} is left parametric, as it can differ between instructions and data memory. Read and write operations are handled by the couple of control signals \texttt{memRead} and \texttt{memWrite}, of which only one should be asserted at each clock cycle to perform the desired action. Both signals active represent an forbidden condition and should be avoided by the whatever is in charge of controlling the memory.
-
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[scale=1]{../memory/ref/schematic/memory.pdf}
-    \caption{Memory}
-    \label{fig:memory}
-\end{figure}
-
-Figure \ref{fig:memory_timing} shows the usual timing diagram of this fully synchronous memory, according to which both reads and writes take place at the next clock cycle after the proper control signals are asserted.
-
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[scale=.8]{../memory/ref/timing/memory_timing.pdf}
-    \caption{Memory timing diagram}
-    \label{fig:memory_timing}
-\end{figure}
-
 \subsection{Register file}
 The RISC-V register file is composed of 32 registers, each 32-bit wide (for RV32I), called \texttt{x0} to \texttt{x31}, where \texttt{x0} is a special register hardwired to the value 0, which can turn useful for some instructions. Figure \ref{fig:rf} shows the top level diagram of the register file structure.
 
@@ -186,5 +165,37 @@ In any case, the IMEM pipe register, together with IF/ID, ID/EX and EX/DMEM ones
 
 \paragraph{Next address generation}
 The next address is chosen by means of two multiplexers. The first \textbf{BRJAL\_JALR\_MUX} takes in input the result of the ALU with the LSB masked, and the output of the additional adder of the execution stage. These two input come from the EX/DMEM pipe register. The ouput of \textbf{BRJAL\_JALR\_MUX} is one of the input of the other multiplexer \textbf{NEXT\_PC\_MUX}; the other input is the content of the PC + 4.
+
+\section{Testbench}
+\subsection{Memory}
+Some kind of memory model is needed in order to perform a full simulation of the processor core. Given that the design of a full fledged memory subsystem is beyond the scope of this experience, we resorted to a simple behavioral model of a synchronous memory.
+
+This model is only intended for simulation purposes and does not map a real memory chip on its own, but emulates the function of a more complex memory controller able to select individual bytes among a 32-bit word both in read and in write operations.
+
+Figure \ref{fig:memory} shows the interface of this block, where the \texttt{address} is left parametric, as it can differ between instructions and data memory. Note that compliant to the RISC-V byte addressing specification, each address represents a single byte, even if the data width is always 32 bits, which is the width of the data bus of the architecture. The data width for load and stores is selected by the \texttt{addrUnit} signal, according to the following encoding:
+\begin{itemize}
+    \item 00: byte
+    \item 01: halfword (16 bits)
+    \item 10: word (32 bits)
+\end{itemize}
+Independently of the data width chosen, the correct output is always provided within a single clock cycle. It this behavior was to be replicated on a real byte-addressed memory chip, it would take (at most) four read operations and a clock four times faster.
+
+Read and write operations are handled by the couple of control signals \texttt{memRead} and \texttt{memWrite}, of which only one should be asserted at each clock cycle to perform the desired action. Both signals active represent an forbidden condition and should be avoided by the whatever is in charge of controlling the memory.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=1]{../memory/ref/schematic/memory.pdf}
+    \caption{Memory}
+    \label{fig:memory}
+\end{figure}
+
+Figure \ref{fig:memory_timing} shows the usual timing diagram of this fully synchronous memory, according to which both reads and writes take place at the next clock cycle after the proper control signals are asserted.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=.8]{../memory/ref/timing/memory_timing.pdf}
+    \caption{Memory timing diagram}
+    \label{fig:memory_timing}
+\end{figure}
 
 \end{document}
