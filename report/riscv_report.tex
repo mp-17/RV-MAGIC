@@ -41,7 +41,34 @@ Figure \ref{fig:memory_timing} shows the usual timing diagram of this fully sync
 \end{figure}
 
 \subsection{Register file}
-The RISC-V register file is composed of 32 registers, each 32-bit wide (for RV32I), called \texttt{x0} to \texttt{x31}.
+The RISC-V register file is composed of 32 registers, each 32-bit wide (for RV32I), called \texttt{x0} to \texttt{x31}, where \texttt{x0} is a special register hardwired to the value 0, which can turn useful for some instructions. Figure \ref{fig:rf} shows the top level diagram of the register file structure.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=1]{../register_file/ref/schematic/register_file.pdf}
+    \caption{Register file}
+    \label{fig:rf}
+\end{figure}
+
+Writes to the register file are, of course, synchronous and happen on the positive edge of the clock. For a correct write operation, the destination register must be selected using the \texttt{writeAddr} port, the input data must be placed on the \texttt{dataIn} port and the signal \texttt{regWrite} must be asserted. Internally, the register file will enable only the selected register using a decoder.
+
+Reads are instead combinational and can occur on two different registers at a time, thanks to two different read ports. To select the correct output value, a 32-to-1 multiplexer is used on each read port. However, in order to avoid data hazards during the write back stage, the register file also implements bypassing of input data directly to the output if the same register is read and written during the same clock cycle. Figure \ref{fig:rf_read} shows this read selection process (no multiplexer is used to select 0 in case the register being read is \texttt{x0} as we can suppose it is hardwired directly at its output).
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics{../register_file/ref/schematic/register_file_deep.pdf}
+    \caption{Read operation in the register file}
+    \label{fig:rf_read}
+\end{figure}
+
+To better illustrate the behavior of the register file operations, their timing diagram is shown in \ref{fig:rf_timing}.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=.8]{../register_file/ref/timing/rf_timing.pdf}
+    \caption{Register file timing}
+    \label{fig:rf_timing}
+\end{figure}
 
 \subsection{ALU}
 
