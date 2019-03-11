@@ -11,8 +11,8 @@
 
 module hdu (
     input [`RF_ADDR_WIDTH-1:0] ifidRs1, ifidRs2, idexRd,
-    input idexMemRead,
-    output stall
+    input idexMemRead, branchOrJump,
+    output stall, flush
 );
 
     always_comb begin
@@ -20,5 +20,7 @@ module hdu (
             stall = 1; // stall pipeline
         else stall = 0;
     end
+
+    assign flush = branchOrJump;
 
 endmodule
