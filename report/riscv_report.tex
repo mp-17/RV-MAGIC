@@ -116,6 +116,15 @@ Another approach would have been to split the control of the ALU into two decodi
 Moreover, only few bits of the input fields are required to make a definite decision on the control output, but in order to keep modularity and continuity in the design, the whole fields are given in the interface of the block.
 
 \subsection{Branch and Jump management}
+A general view of the unit is given in Figure \ref{fig:brJump_man_HW}.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.2]{../br_jmp_management/ref/schematic/branchJump_management_schematic.pdf}
+    \caption{Branch and Jump management HW}
+    \label{fig:brJump_man_HW}
+\end{figure}
+
 \paragraph{Types of instructions}
 There are two classes of instructions which can lead to a modification of the sequential flow of the program. In the RV32I ISA they are:
 \begin{enumerate}
@@ -165,10 +174,10 @@ To control the multiplexers for the next address selection, there's the need for
 \begin{enumerate}
 	\item Whether the instruction in the MEM stage is a branch or a jump.
 	\item Which is between the two.
-	\item The result of the comparison and which was the comparison itself.
+	\item The result of the comparison.
 	\item If the instruction is a JALR.
 \end{enumerate}
-The main CU generates two signals \textbf{branch} and \textbf{jump} which percolate along the pipeline, to allow the "Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result, and the type of comparison is encoded in the func3 field. 
+The main CU generates two signals \textbf{branch} and \textbf{jump} which percolate along the pipeline, to allow the "Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result. 
 The main CU has to generate another signal "jalr" to indicate a JALR instruction.
 
 The "jump" control signal is used also in the writeback stage, to select the right input for the register file. If a jump is performed, the data to be written in the destination register is the "next" address wrt the jump instruction. 
