@@ -167,7 +167,7 @@ In any case, the IMEM pipe register, together with IF/ID, ID/EX and EX/DMEM ones
 The next address is chosen by means of two multiplexers. The first \textbf{BRJAL\_JALR\_MUX} takes in input the result of the ALU with the LSB masked, and the output of the additional adder of the execution stage. These two input come from the EX/DMEM pipe register. The output of \textbf{BRJAL\_JALR\_MUX} is one of the input of the other multiplexer \textbf{NEXT\_PC\_MUX}; the other input is the content of the PC + 4.
 
 \section{Control}
-\subsection{Forwarding unit (FWU)}
+\subsection{Forwarding Unit (FWU)}
 Forwarding allows to avoid stalling the pipeline when a data hazard occurs between two subsequent instructions, if the needed data is already available in a following pipe stage. 
 In this five stage pipeline results are written to the destination register during the write back stage, three clock cycles after the operand read in the decode stage. This means that, if an instruction modifies a certain register, only instructions starting from the third after the original would read the correct new data, or equivalently that up to two bubble should be inserted in case of a data hazard.
 
@@ -192,14 +192,31 @@ Figure \ref{fig:fwu} shows the complete FWU with all inputs on which decisions a
 \begin{figure}[hbtp]
     \centering
     \includegraphics[]{../fwu/ref/schematic/fwu.pdf}
-    \caption{Forwarding unit}
+    \caption{Forwarding Unit}
     \label{fig:fwu}
 \end{figure}
 
-\subsection{Hazard detection unit (HDU)}
+\subsection{Hazard Detection Unit (HDU)}
+When data cannot be forwarded, then the pipeline must be inevitably stalled by preventing the fetch of a new instruction and inserting a bubble. Specifically, this happens when a data hazard occurs between a load (\texttt{memRead} asserted in the decode stage) and another using instruction (unless it is a store, for which forwarding accounts).
+
+Moreover, when a branch is taken or an unconditional jump occurs, a similar action of flushing the entire pipeline to get rid of invalid instructions already in execution must be taken.
+
+Both this occurrences are handled by the Hazard Detection Unit, that according to the aforementioned checks, outputs three signals:
+\begin{itemize}
+    \item \texttt{stall\_n}: active low, is connected to the enable of the Program Counter and the IF/ID pipe register to prevent them from changing in the event of a stall.
+    \item \texttt{flushIdEx}: to drive the multiplexer inserting the NOP in the ID/EX register, that will propagate to the rest of the pipeline, in case of a stall or a jump.
+    \item \texttt{flushIfIdExMem}: to drive the multiplexer inserting the NOP in the IF/ID and EX/MEM registers in case of jump.
+\end{itemize}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[]{../hdu/ref/schematic/hdu.pdf}
+    \caption{Hazard Detection Unit}
+    \label{fig:hdu}
+\end{figure}
 
 
-\subsection{Control unit (CU)}
+\subsection{Control Unit (CU)}
 
 
 \section{Testbench}
