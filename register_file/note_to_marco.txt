@@ -1,0 +1,1 @@
+0) in the fwd unit in the reg file: check for the x0 write to avoid wrong forwarding of data instead of zero
