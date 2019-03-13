@@ -13,7 +13,7 @@
 \sisetup{exponent-product=\cdot}
 
 \title{Integrated System Architecture \\ Lab session 3 report - RISC-V special project}
-\author{Marco Andorno (247222)\\ Michele Caon (253027) \\ Alessio Colucci (xxxxxx) \\ Matteo Perotti (251453) \\ Giuseppe Sarda (255648)}
+\author{Marco Andorno (247222)\\ Michele Caon (253027) \\ Alessio Colucci (251197) \\ Matteo Perotti (251453) \\ Giuseppe Sarda (255648)}
 
 \begin{document}
 \maketitle
@@ -233,7 +233,7 @@ A resume is reported in Table \ref{tab:hdu_output}:
 \paragraph{Inserting a NOP} The NOP instruction is not present in the RISC-V ISA. It is possible to emulate it though, using an \textbf{ADDI x0 x0 0}. This instruction does nothing, because the register x0 is hardwired to reference. The instruction NOP belongs to the set of pseudo-assembly instructions: they are translated in RISC-V language on the fly by the assembler, and they exist for programmers ease only.
 For an effective NOP insertion in the IF/ID stage there's the need for a sequential control of the multiplexer which drive the source of the RF. There is no way of doing it before the pipe register, unless a NOP instruction is already present somewhere in memory.
 
-In figure \ref{fig:hzd_management} a high level DP for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is depicted in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded. 
+In figure \ref{fig:hzd_management} a high level DP for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is depicted in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded. For details about the \textbf{NEXT\_ADDR\_SEL\_CU}, refer to figure \ref{fig:next_addr_sel_cu} and \ref{fig:next_addr_sel_cu_internalLogic}.
 
 \begin{figure}[hbtp]
     \centering
@@ -244,9 +244,23 @@ In figure \ref{fig:hzd_management} a high level DP for hazard management is depi
 
 \begin{figure}[hbtp]
     \centering
-    \includegraphics[scale=1]{../hzd_management/ref/timing/hzd_management_timing.png}
+    \includegraphics[scale=0.8]{../hzd_management/ref/timing/hzd_management_timing.png}
     \caption{Hazard management timing}
     \label{fig:hzd_management_timing}
+\end{figure}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.5]{../next_addr_sel_cu/ref/schematic/next_addr_sel_cu.png}
+    \caption{Next address selection CU, for jumps and branch management}
+    \label{fig:next_addr_sel_cu}
+\end{figure}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.4]{../next_addr_sel_cu/ref/schematic/next_addr_sel_cu_internalLogic.png}
+    \caption{Next address selection CU internal logic}
+    \label{fig:next_addr_sel_cu_internalLogic}
 \end{figure}
 
 \subsection{Control Unit (CU)}
