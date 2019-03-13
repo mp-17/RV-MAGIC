@@ -101,7 +101,9 @@
 
 // bit positions
 `define RV32I_FUNCT7_START 25
-`define RV32I_SHAMT_START 25
+`define RV32I_OPCODE_START 0
+`define RV32I_FUNCT3_START 12
+`define RV32I_SHAMT_START 20
 
 
 // operations
