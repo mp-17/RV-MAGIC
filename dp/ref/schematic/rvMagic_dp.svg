@@ -2879,9 +2879,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="963.4053"
-     inkscape:cy="812.12777"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="521.94828"
+     inkscape:cy="1026.6178"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
@@ -2906,7 +2906,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -4153,7 +4153,7 @@
            height="45"
            x="1280"
            y="303.18896" /></flowRegion><flowPara
-         id="flowPara69239"></flowPara></flowRoot>    <path
+         id="flowPara69239" /></flowRoot>    <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.21500003;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 1328.0374,355.66642 5,-5"
        id="path5429-5-4-9-5-6"
@@ -4527,6 +4527,28 @@
        d="m 1170.1128,18.313601 0,35.675989"
        id="path199520"
        inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="421.23239"
+       y="478.55511"
+       id="text24632-5-3"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan24634-8-6"
+         x="421.23239"
+         y="478.55511">d</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="421.28262"
+       y="490.14612"
+       id="text24632-5-7"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan24634-8-5"
+         x="421.28262"
+         y="490.14612">q</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -8211,6 +8233,18 @@
          x="1116.4056"
          y="22.941441"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';fill:#7f7f7f;fill-opacity:1">ID_EX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="427.99136"
+       y="500.56766"
+       id="text142466-3"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan142468-5"
+         x="427.99136"
+         y="500.56766"
+         style="font-size:7.5px">IfId_FLUSH_FF</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
