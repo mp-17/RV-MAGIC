@@ -446,8 +446,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="556.83055"
-     inkscape:cy="407.07929"
+     inkscape:cx="591.31119"
+     inkscape:cy="504.77419"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -618,13 +618,13 @@
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.36899996;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
     <path
-       style="fill:none;fill-opacity:0.68390802;stroke:#00b6ff;stroke-width:1.36899996;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6463)"
-       d="m 670,542.3622 40,0"
+       style="fill:none;fill-opacity:0.68390802;stroke:#00b6ff;stroke-width:1.32527721;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6463)"
+       d="m 670,542.3622 37.48578,0"
        id="path6455"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;fill-opacity:0.68390802;stroke:#00b6ff;stroke-width:1.36899996;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6751)"
-       d="m 550,562.3622 97.14286,0"
+       d="m 549.24239,562.3622 97.14286,0"
        id="path6623"
        inkscape:connector-curvature="0" />
     <path
@@ -725,7 +725,7 @@
          y="424.53046">flush_IdEX</tspan></text>
     <path
        style="fill:none;fill-opacity:0.68390802;stroke:#00b6ff;stroke-width:1.26152217;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker12399)"
-       d="m 470,562.3622 33.96588,0"
+       d="m 471.07143,562.71934 33.96588,0"
        id="path12391"
        inkscape:connector-curvature="0" />
     <path
@@ -1108,8 +1108,8 @@
          x="929.39337"
          y="729.63373">DMEM</tspan></text>
     <path
-       style="fill:none;fill-opacity:1;stroke:#00b6ff;stroke-width:1.35500002;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker5976)"
-       d="m 750,542.36221 180,0"
+       style="fill:none;fill-opacity:1;stroke:#00b6ff;stroke-width:1.33511031;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker5976)"
+       d="m 751.78571,542.36221 174.75442,0"
        id="path5968"
        inkscape:connector-curvature="0" />
     <path
@@ -1219,5 +1219,77 @@
          id="tspan4499"
          x="618.57141"
          y="591.64789">ExDmem_flush_MUX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="529.54572"
+       y="563.37231"
+       id="text4613"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan4615"
+         x="529.54572"
+         y="563.37231"
+         style="font-size:5px">ctrlOut</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="510.35278"
+       y="563.62616"
+       id="text4617"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan4619"
+         x="510.35278"
+         y="563.62616"
+         style="font-size:5px">ctrlIn</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="732.04572"
+       y="543.5509"
+       id="text4613-3"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan4615-6"
+         x="732.04572"
+         y="543.5509"
+         style="font-size:5px">ctrlOut</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="712.85278"
+       y="543.80475"
+       id="text4617-7"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan4619-5"
+         x="712.85278"
+         y="543.80475"
+         style="font-size:5px">ctrlIn</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="950.9743"
+       y="543.5509"
+       id="text4613-35"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan4615-62"
+         x="950.9743"
+         y="543.5509"
+         style="font-size:5px">ctrlOut</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="931.78137"
+       y="543.80475"
+       id="text4617-9"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan4619-1"
+         x="931.78137"
+         y="543.80475"
+         style="font-size:5px">ctrlIn</tspan></text>
   </g>
 </svg>

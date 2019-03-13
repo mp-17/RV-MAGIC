@@ -233,13 +233,20 @@ A resume is reported in Table \ref{tab:hdu_output}:
 \paragraph{Inserting a NOP} The NOP instruction is not present in the RISC-V ISA. It is possible to emulate it though, using an \textbf{ADDI x0 x0 0}. This instruction does nothing, because the register x0 is hardwired to reference. The instruction NOP belongs to the set of pseudo-assembly instructions: they are translated in RISC-V language on the fly by the assembler, and they exist for programmers ease only.
 For an effective NOP insertion in the IF/ID stage there's the need for a sequential control of the multiplexer which drive the source of the RF. There is no way of doing it before the pipe register, unless a NOP instruction is already present somewhere in memory.
 
-In figure \ref{fig:hzd_management} a high level DP for hazard management is depicted. 
+In figure \ref{fig:hzd_management} a high level DP for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is depicted in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded. 
 
 \begin{figure}[hbtp]
     \centering
     \includegraphics[scale=0.5]{../hzd_management/ref/schematic/hzd_management.pdf}
     \caption{Hazard management HW}
     \label{fig:hzd_management}
+\end{figure}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=1]{../hzd_management/ref/timing/hzd_management_timing.png}
+    \caption{Hazard management timing}
+    \label{fig:hzd_management_timing}
 \end{figure}
 
 \subsection{Control Unit (CU)}

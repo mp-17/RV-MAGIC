@@ -1,0 +1,2973 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with WaveDrom -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svgcontent_0"
+   height="240"
+   viewBox="0 0 580 240"
+   width="580"
+   overflow="hidden"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="hzd_management_timing.svg"
+   inkscape:export-filename="/home/matteo/git/RV-MAGIC/hzd_management/ref/timing/hzd_management_timing.png"
+   inkscape:export-xdpi="301"
+   inkscape:export-ydpi="301">
+  <metadata
+     id="metadata1376">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview1374"
+     showgrid="false"
+     inkscape:zoom="0.8862069"
+     inkscape:cx="176.33187"
+     inkscape:cy="152.55475"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svgcontent_0" />
+  <style
+     type="text/css"
+     id="style3">text{font-size:11pt;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;fill-opacity:1;font-family:Helvetica}.muted{fill:#aaa}.warning{fill:#f6b900}.error{fill:#f60000}.info{fill:#0041c4}.success{fill:#00ab00}.h1{font-size:33pt;font-weight:bold}.h2{font-size:27pt;font-weight:bold}.h3{font-size:20pt;font-weight:bold}.h4{font-size:14pt;font-weight:bold}.h5{font-size:11pt;font-weight:bold}.h6{font-size:8pt;font-weight:bold}.s1{fill:none;stroke:#000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none}.s2{fill:none;stroke:#000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none}.s3{color:#000;fill:none;stroke:#000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1, 3;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate}.s4{color:#000;fill:none;stroke:#000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible}.s5{fill:#fff;stroke:none}.s6{color:#000;fill:#ffffb4;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate}.s7{color:#000;fill:#ffe0b9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate}.s8{color:#000;fill:#b9e0ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate}.s9{fill:#000;fill-opacity:1;stroke:none}.s10{color:#000;fill:#fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate}.s11{fill:#0041c4;fill-opacity:1;stroke:none}.s12{fill:none;stroke:#0041c4;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none}</style>
+  <defs
+     id="defs5">
+    <g
+       id="socket">
+      <rect
+         y="15"
+         x="6"
+         height="20"
+         width="20"
+         id="rect8" />
+    </g>
+    <g
+       id="pclk">
+      <path
+         d="M0,20 0,0 20,0"
+         class="s1"
+         id="path11" />
+    </g>
+    <g
+       id="nclk">
+      <path
+         d="m0,0 0,20 20,0"
+         class="s1"
+         id="path14" />
+    </g>
+    <g
+       id="000">
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path17" />
+    </g>
+    <g
+       id="0m0">
+      <path
+         d="m0,20 3,0 3,-10 3,10 11,0"
+         class="s1"
+         id="path20" />
+    </g>
+    <g
+       id="0m1">
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path23" />
+    </g>
+    <g
+       id="0mx">
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path26" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path28" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path30" />
+      <path
+         d="M20,5 5,20"
+         class="s2"
+         id="path32" />
+      <path
+         d="M20,0 4,16"
+         class="s2"
+         id="path34" />
+      <path
+         d="M15,0 6,9"
+         class="s2"
+         id="path36" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path38" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path40" />
+    </g>
+    <g
+       id="0md">
+      <path
+         d="m8,20 10,0"
+         class="s3"
+         id="path43" />
+      <path
+         d="m0,20 5,0"
+         class="s1"
+         id="path45" />
+    </g>
+    <g
+       id="0mu">
+      <path
+         d="m0,20 3,0 C 7,10 10.107603,0 20,0"
+         class="s1"
+         id="path48" />
+    </g>
+    <g
+       id="0mz">
+      <path
+         d="m0,20 3,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path51" />
+    </g>
+    <g
+       id="111">
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path54" />
+    </g>
+    <g
+       id="1m0">
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path57" />
+    </g>
+    <g
+       id="1m1">
+      <path
+         d="M0,0 3,0 6,10 9,0 20,0"
+         class="s1"
+         id="path60" />
+    </g>
+    <g
+       id="1mx">
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path63" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path65" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path67" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path69" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path71" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path73" />
+      <path
+         d="M15,0 6,9"
+         class="s2"
+         id="path75" />
+      <path
+         d="M10,0 5,5"
+         class="s2"
+         id="path77" />
+      <path
+         d="M3.5,1.5 5,0"
+         class="s2"
+         id="path79" />
+    </g>
+    <g
+       id="1md">
+      <path
+         d="m0,0 3,0 c 4,10 7,20 17,20"
+         class="s1"
+         id="path82" />
+    </g>
+    <g
+       id="1mu">
+      <path
+         d="M0,0 5,0"
+         class="s1"
+         id="path85" />
+      <path
+         d="M8,0 18,0"
+         class="s3"
+         id="path87" />
+    </g>
+    <g
+       id="1mz">
+      <path
+         d="m0,0 3,0 c 7,10 12,10 17,10"
+         class="s1"
+         id="path90" />
+    </g>
+    <g
+       id="xxx">
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path93" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path95" />
+      <path
+         d="M0,5 5,0"
+         class="s2"
+         id="path97" />
+      <path
+         d="M0,10 10,0"
+         class="s2"
+         id="path99" />
+      <path
+         d="M0,15 15,0"
+         class="s2"
+         id="path101" />
+      <path
+         d="M0,20 20,0"
+         class="s2"
+         id="path103" />
+      <path
+         d="M5,20 20,5"
+         class="s2"
+         id="path105" />
+      <path
+         d="M10,20 20,10"
+         class="s2"
+         id="path107" />
+      <path
+         d="m15,20 5,-5"
+         class="s2"
+         id="path109" />
+    </g>
+    <g
+       id="xm0">
+      <path
+         d="M0,0 4,0 9,20"
+         class="s1"
+         id="path112" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path114" />
+      <path
+         d="M0,5 4,1"
+         class="s2"
+         id="path116" />
+      <path
+         d="M0,10 5,5"
+         class="s2"
+         id="path118" />
+      <path
+         d="M0,15 6,9"
+         class="s2"
+         id="path120" />
+      <path
+         d="M0,20 7,13"
+         class="s2"
+         id="path122" />
+      <path
+         d="M5,20 8,17"
+         class="s2"
+         id="path124" />
+    </g>
+    <g
+       id="xm1">
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path127" />
+      <path
+         d="M0,20 4,20 9,0"
+         class="s1"
+         id="path129" />
+      <path
+         d="M0,5 5,0"
+         class="s2"
+         id="path131" />
+      <path
+         d="M0,10 9,1"
+         class="s2"
+         id="path133" />
+      <path
+         d="M0,15 7,8"
+         class="s2"
+         id="path135" />
+      <path
+         d="M0,20 5,15"
+         class="s2"
+         id="path137" />
+    </g>
+    <g
+       id="xmx">
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path140" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path142" />
+      <path
+         d="M0,5 5,0"
+         class="s2"
+         id="path144" />
+      <path
+         d="M0,10 10,0"
+         class="s2"
+         id="path146" />
+      <path
+         d="M0,15 15,0"
+         class="s2"
+         id="path148" />
+      <path
+         d="M0,20 20,0"
+         class="s2"
+         id="path150" />
+      <path
+         d="M5,20 20,5"
+         class="s2"
+         id="path152" />
+      <path
+         d="M10,20 20,10"
+         class="s2"
+         id="path154" />
+      <path
+         d="m15,20 5,-5"
+         class="s2"
+         id="path156" />
+    </g>
+    <g
+       id="xmd">
+      <path
+         d="m0,0 4,0 c 3,10 6,20 16,20"
+         class="s1"
+         id="path159" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path161" />
+      <path
+         d="M0,5 4,1"
+         class="s2"
+         id="path163" />
+      <path
+         d="M0,10 5.5,4.5"
+         class="s2"
+         id="path165" />
+      <path
+         d="M0,15 6.5,8.5"
+         class="s2"
+         id="path167" />
+      <path
+         d="M0,20 8,12"
+         class="s2"
+         id="path169" />
+      <path
+         d="m5,20 5,-5"
+         class="s2"
+         id="path171" />
+      <path
+         d="m10,20 2.5,-2.5"
+         class="s2"
+         id="path173" />
+    </g>
+    <g
+       id="xmu">
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path176" />
+      <path
+         d="m0,20 4,0 C 7,10 10,0 20,0"
+         class="s1"
+         id="path178" />
+      <path
+         d="M0,5 5,0"
+         class="s2"
+         id="path180" />
+      <path
+         d="M0,10 10,0"
+         class="s2"
+         id="path182" />
+      <path
+         d="M0,15 10,5"
+         class="s2"
+         id="path184" />
+      <path
+         d="M0,20 6,14"
+         class="s2"
+         id="path186" />
+    </g>
+    <g
+       id="xmz">
+      <path
+         d="m0,0 4,0 c 6,10 11,10 16,10"
+         class="s1"
+         id="path189" />
+      <path
+         d="m0,20 4,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path191" />
+      <path
+         d="M0,5 4.5,0.5"
+         class="s2"
+         id="path193" />
+      <path
+         d="M0,10 6.5,3.5"
+         class="s2"
+         id="path195" />
+      <path
+         d="M0,15 8.5,6.5"
+         class="s2"
+         id="path197" />
+      <path
+         d="M0,20 11.5,8.5"
+         class="s2"
+         id="path199" />
+    </g>
+    <g
+       id="ddd">
+      <path
+         d="m0,20 20,0"
+         class="s3"
+         id="path202" />
+    </g>
+    <g
+       id="dm0">
+      <path
+         d="m0,20 10,0"
+         class="s3"
+         id="path205" />
+      <path
+         d="m12,20 8,0"
+         class="s1"
+         id="path207" />
+    </g>
+    <g
+       id="dm1">
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path210" />
+    </g>
+    <g
+       id="dmx">
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path213" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path215" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path217" />
+      <path
+         d="M20,5 5,20"
+         class="s2"
+         id="path219" />
+      <path
+         d="M20,0 4,16"
+         class="s2"
+         id="path221" />
+      <path
+         d="M15,0 6,9"
+         class="s2"
+         id="path223" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path225" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path227" />
+    </g>
+    <g
+       id="dmd">
+      <path
+         d="m0,20 20,0"
+         class="s3"
+         id="path230" />
+    </g>
+    <g
+       id="dmu">
+      <path
+         d="m0,20 3,0 C 7,10 10.107603,0 20,0"
+         class="s1"
+         id="path233" />
+    </g>
+    <g
+       id="dmz">
+      <path
+         d="m0,20 3,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path236" />
+    </g>
+    <g
+       id="uuu">
+      <path
+         d="M0,0 20,0"
+         class="s3"
+         id="path239" />
+    </g>
+    <g
+       id="um0">
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path242" />
+    </g>
+    <g
+       id="um1">
+      <path
+         d="M0,0 10,0"
+         class="s3"
+         id="path245" />
+      <path
+         d="m12,0 8,0"
+         class="s1"
+         id="path247" />
+    </g>
+    <g
+       id="umx">
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path250" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path252" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path254" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path256" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path258" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path260" />
+      <path
+         d="M15,0 6,9"
+         class="s2"
+         id="path262" />
+      <path
+         d="M10,0 5,5"
+         class="s2"
+         id="path264" />
+      <path
+         d="M3.5,1.5 5,0"
+         class="s2"
+         id="path266" />
+    </g>
+    <g
+       id="umd">
+      <path
+         d="m0,0 3,0 c 4,10 7,20 17,20"
+         class="s1"
+         id="path269" />
+    </g>
+    <g
+       id="umu">
+      <path
+         d="M0,0 20,0"
+         class="s3"
+         id="path272" />
+    </g>
+    <g
+       id="umz">
+      <path
+         d="m0,0 3,0 c 7,10 12,10 17,10"
+         class="s4"
+         id="path275" />
+    </g>
+    <g
+       id="zzz">
+      <path
+         d="m0,10 20,0"
+         class="s1"
+         id="path278" />
+    </g>
+    <g
+       id="zm0">
+      <path
+         d="m0,10 6,0 3,10 11,0"
+         class="s1"
+         id="path281" />
+    </g>
+    <g
+       id="zm1">
+      <path
+         d="M0,10 6,10 9,0 20,0"
+         class="s1"
+         id="path284" />
+    </g>
+    <g
+       id="zmx">
+      <path
+         d="m6,10 3,10 11,0"
+         class="s1"
+         id="path287" />
+      <path
+         d="M0,10 6,10 9,0 20,0"
+         class="s1"
+         id="path289" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path291" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path293" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path295" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path297" />
+      <path
+         d="M15,0 6.5,8.5"
+         class="s2"
+         id="path299" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path301" />
+    </g>
+    <g
+       id="zmd">
+      <path
+         d="m0,10 7,0 c 3,5 8,10 13,10"
+         class="s1"
+         id="path304" />
+    </g>
+    <g
+       id="zmu">
+      <path
+         d="m0,10 7,0 C 10,5 15,0 20,0"
+         class="s1"
+         id="path307" />
+    </g>
+    <g
+       id="zmz">
+      <path
+         d="m0,10 20,0"
+         class="s1"
+         id="path310" />
+    </g>
+    <g
+       id="gap">
+      <path
+         d="m7,-2 -4,0 c -5,0 -5,24 -10,24 l 4,0 C 2,22 2,-2 7,-2 z"
+         class="s5"
+         id="path313" />
+      <path
+         d="M-7,22 C -2,22 -2,-2 3,-2"
+         class="s1"
+         id="path315" />
+      <path
+         d="M-3,22 C 2,22 2,-2 7,-2"
+         class="s1"
+         id="path317" />
+    </g>
+    <g
+       id="0mv-3">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s6"
+         id="path320" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path322" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path324" />
+    </g>
+    <g
+       id="1mv-3">
+      <path
+         d="M2.875,0 20,0 20,20 9,20 z"
+         class="s6"
+         id="path327" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path329" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path331" />
+    </g>
+    <g
+       id="xmv-3">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s6"
+         id="path334" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path336" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path338" />
+      <path
+         d="M0,5 3.5,1.5"
+         class="s2"
+         id="path340" />
+      <path
+         d="M0,10 4.5,5.5"
+         class="s2"
+         id="path342" />
+      <path
+         d="M0,15 6,9"
+         class="s2"
+         id="path344" />
+      <path
+         d="M0,20 4,16"
+         class="s2"
+         id="path346" />
+    </g>
+    <g
+       id="dmv-3">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s6"
+         id="path349" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path351" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path353" />
+    </g>
+    <g
+       id="umv-3">
+      <path
+         d="M3,0 20,0 20,20 9,20 z"
+         class="s6"
+         id="path356" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path358" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path360" />
+    </g>
+    <g
+       id="zmv-3">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s6"
+         id="path363" />
+      <path
+         d="m6,10 3,10 11,0"
+         class="s1"
+         id="path365" />
+      <path
+         d="M0,10 6,10 9,0 20,0"
+         class="s1"
+         id="path367" />
+    </g>
+    <g
+       id="vvv-3">
+      <path
+         d="M20,20 0,20 0,0 20,0"
+         class="s6"
+         id="path370" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path372" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path374" />
+    </g>
+    <g
+       id="vm0-3">
+      <path
+         d="M0,20 0,0 3,0 9,20"
+         class="s6"
+         id="path377" />
+      <path
+         d="M0,0 3,0 9,20"
+         class="s1"
+         id="path379" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path381" />
+    </g>
+    <g
+       id="vm1-3">
+      <path
+         d="M0,0 0,20 3,20 9,0"
+         class="s6"
+         id="path384" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path386" />
+      <path
+         d="M0,20 3,20 9,0"
+         class="s1"
+         id="path388" />
+    </g>
+    <g
+       id="vmx-3">
+      <path
+         d="M0,0 0,20 3,20 6,10 3,0"
+         class="s6"
+         id="path391" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path393" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path395" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path397" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path399" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path401" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path403" />
+      <path
+         d="M15,0 7,8"
+         class="s2"
+         id="path405" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path407" />
+    </g>
+    <g
+       id="vmd-3">
+      <path
+         d="m0,0 0,20 20,0 C 10,20 7,10 3,0"
+         class="s6"
+         id="path410" />
+      <path
+         d="m0,0 3,0 c 4,10 7,20 17,20"
+         class="s1"
+         id="path412" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path414" />
+    </g>
+    <g
+       id="vmu-3">
+      <path
+         d="m0,0 0,20 3,0 C 7,10 10,0 20,0"
+         class="s6"
+         id="path417" />
+      <path
+         d="m0,20 3,0 C 7,10 10,0 20,0"
+         class="s1"
+         id="path419" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path421" />
+    </g>
+    <g
+       id="vmz-3">
+      <path
+         d="M0,0 3,0 C 10,10 15,10 20,10 15,10 10,10 3,20 L 0,20"
+         class="s6"
+         id="path424" />
+      <path
+         d="m0,0 3,0 c 7,10 12,10 17,10"
+         class="s1"
+         id="path426" />
+      <path
+         d="m0,20 3,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path428" />
+    </g>
+    <g
+       id="vmv-3-3">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s6"
+         id="path431" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s6"
+         id="path433" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path435" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path437" />
+    </g>
+    <g
+       id="vmv-3-4">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s7"
+         id="path440" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s6"
+         id="path442" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path444" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path446" />
+    </g>
+    <g
+       id="vmv-3-5">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s8"
+         id="path449" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s6"
+         id="path451" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path453" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path455" />
+    </g>
+    <g
+       id="vmv-4-3">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s6"
+         id="path458" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s7"
+         id="path460" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path462" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path464" />
+    </g>
+    <g
+       id="vmv-4-4">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s7"
+         id="path467" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s7"
+         id="path469" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path471" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path473" />
+    </g>
+    <g
+       id="vmv-4-5">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s8"
+         id="path476" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s7"
+         id="path478" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path480" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path482" />
+    </g>
+    <g
+       id="vmv-5-3">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s6"
+         id="path485" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s8"
+         id="path487" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path489" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path491" />
+    </g>
+    <g
+       id="vmv-5-4">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s7"
+         id="path494" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s8"
+         id="path496" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path498" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path500" />
+    </g>
+    <g
+       id="vmv-5-5">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s8"
+         id="path503" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s8"
+         id="path505" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path507" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path509" />
+    </g>
+    <g
+       id="0mv-4">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s7"
+         id="path512" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path514" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path516" />
+    </g>
+    <g
+       id="1mv-4">
+      <path
+         d="M2.875,0 20,0 20,20 9,20 z"
+         class="s7"
+         id="path519" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path521" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path523" />
+    </g>
+    <g
+       id="xmv-4">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s7"
+         id="path526" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path528" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path530" />
+      <path
+         d="M0,5 3.5,1.5"
+         class="s2"
+         id="path532" />
+      <path
+         d="M0,10 4.5,5.5"
+         class="s2"
+         id="path534" />
+      <path
+         d="M0,15 6,9"
+         class="s2"
+         id="path536" />
+      <path
+         d="M0,20 4,16"
+         class="s2"
+         id="path538" />
+    </g>
+    <g
+       id="dmv-4">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s7"
+         id="path541" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path543" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path545" />
+    </g>
+    <g
+       id="umv-4">
+      <path
+         d="M3,0 20,0 20,20 9,20 z"
+         class="s7"
+         id="path548" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path550" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path552" />
+    </g>
+    <g
+       id="zmv-4">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s7"
+         id="path555" />
+      <path
+         d="m6,10 3,10 11,0"
+         class="s1"
+         id="path557" />
+      <path
+         d="M0,10 6,10 9,0 20,0"
+         class="s1"
+         id="path559" />
+    </g>
+    <g
+       id="0mv-5">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s8"
+         id="path562" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path564" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path566" />
+    </g>
+    <g
+       id="1mv-5">
+      <path
+         d="M2.875,0 20,0 20,20 9,20 z"
+         class="s8"
+         id="path569" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path571" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path573" />
+    </g>
+    <g
+       id="xmv-5">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s8"
+         id="path576" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path578" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path580" />
+      <path
+         d="M0,5 3.5,1.5"
+         class="s2"
+         id="path582" />
+      <path
+         d="M0,10 4.5,5.5"
+         class="s2"
+         id="path584" />
+      <path
+         d="M0,15 6,9"
+         class="s2"
+         id="path586" />
+      <path
+         d="M0,20 4,16"
+         class="s2"
+         id="path588" />
+    </g>
+    <g
+       id="dmv-5">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s8"
+         id="path591" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path593" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path595" />
+    </g>
+    <g
+       id="umv-5">
+      <path
+         d="M3,0 20,0 20,20 9,20 z"
+         class="s8"
+         id="path598" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path600" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path602" />
+    </g>
+    <g
+       id="zmv-5">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s8"
+         id="path605" />
+      <path
+         d="m6,10 3,10 11,0"
+         class="s1"
+         id="path607" />
+      <path
+         d="M0,10 6,10 9,0 20,0"
+         class="s1"
+         id="path609" />
+    </g>
+    <g
+       id="vvv-4">
+      <path
+         d="M20,20 0,20 0,0 20,0"
+         class="s7"
+         id="path612" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path614" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path616" />
+    </g>
+    <g
+       id="vm0-4">
+      <path
+         d="M0,20 0,0 3,0 9,20"
+         class="s7"
+         id="path619" />
+      <path
+         d="M0,0 3,0 9,20"
+         class="s1"
+         id="path621" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path623" />
+    </g>
+    <g
+       id="vm1-4">
+      <path
+         d="M0,0 0,20 3,20 9,0"
+         class="s7"
+         id="path626" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path628" />
+      <path
+         d="M0,20 3,20 9,0"
+         class="s1"
+         id="path630" />
+    </g>
+    <g
+       id="vmx-4">
+      <path
+         d="M0,0 0,20 3,20 6,10 3,0"
+         class="s7"
+         id="path633" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path635" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path637" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path639" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path641" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path643" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path645" />
+      <path
+         d="M15,0 7,8"
+         class="s2"
+         id="path647" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path649" />
+    </g>
+    <g
+       id="vmd-4">
+      <path
+         d="m0,0 0,20 20,0 C 10,20 7,10 3,0"
+         class="s7"
+         id="path652" />
+      <path
+         d="m0,0 3,0 c 4,10 7,20 17,20"
+         class="s1"
+         id="path654" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path656" />
+    </g>
+    <g
+       id="vmu-4">
+      <path
+         d="m0,0 0,20 3,0 C 7,10 10,0 20,0"
+         class="s7"
+         id="path659" />
+      <path
+         d="m0,20 3,0 C 7,10 10,0 20,0"
+         class="s1"
+         id="path661" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path663" />
+    </g>
+    <g
+       id="vmz-4">
+      <path
+         d="M0,0 3,0 C 10,10 15,10 20,10 15,10 10,10 3,20 L 0,20"
+         class="s7"
+         id="path666" />
+      <path
+         d="m0,0 3,0 c 7,10 12,10 17,10"
+         class="s1"
+         id="path668" />
+      <path
+         d="m0,20 3,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path670" />
+    </g>
+    <g
+       id="vvv-5">
+      <path
+         d="M20,20 0,20 0,0 20,0"
+         class="s8"
+         id="path673" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path675" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path677" />
+    </g>
+    <g
+       id="vm0-5">
+      <path
+         d="M0,20 0,0 3,0 9,20"
+         class="s8"
+         id="path680" />
+      <path
+         d="M0,0 3,0 9,20"
+         class="s1"
+         id="path682" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path684" />
+    </g>
+    <g
+       id="vm1-5">
+      <path
+         d="M0,0 0,20 3,20 9,0"
+         class="s8"
+         id="path687" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path689" />
+      <path
+         d="M0,20 3,20 9,0"
+         class="s1"
+         id="path691" />
+    </g>
+    <g
+       id="vmx-5">
+      <path
+         d="M0,0 0,20 3,20 6,10 3,0"
+         class="s8"
+         id="path694" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path696" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path698" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path700" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path702" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path704" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path706" />
+      <path
+         d="M15,0 7,8"
+         class="s2"
+         id="path708" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path710" />
+    </g>
+    <g
+       id="vmd-5">
+      <path
+         d="m0,0 0,20 20,0 C 10,20 7,10 3,0"
+         class="s8"
+         id="path713" />
+      <path
+         d="m0,0 3,0 c 4,10 7,20 17,20"
+         class="s1"
+         id="path715" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path717" />
+    </g>
+    <g
+       id="vmu-5">
+      <path
+         d="m0,0 0,20 3,0 C 7,10 10,0 20,0"
+         class="s8"
+         id="path720" />
+      <path
+         d="m0,20 3,0 C 7,10 10,0 20,0"
+         class="s1"
+         id="path722" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path724" />
+    </g>
+    <g
+       id="vmz-5">
+      <path
+         d="M0,0 3,0 C 10,10 15,10 20,10 15,10 10,10 3,20 L 0,20"
+         class="s8"
+         id="path727" />
+      <path
+         d="m0,0 3,0 c 7,10 12,10 17,10"
+         class="s1"
+         id="path729" />
+      <path
+         d="m0,20 3,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path731" />
+    </g>
+    <g
+       id="Pclk">
+      <path
+         d="M-3,12 0,3 3,12 C 1,11 -1,11 -3,12 z"
+         class="s9"
+         id="path734" />
+      <path
+         d="M0,20 0,0 20,0"
+         class="s1"
+         id="path736" />
+    </g>
+    <g
+       id="Nclk">
+      <path
+         d="M-3,8 0,17 3,8 C 1,9 -1,9 -3,8 z"
+         class="s9"
+         id="path739" />
+      <path
+         d="m0,0 0,20 20,0"
+         class="s1"
+         id="path741" />
+    </g>
+    <g
+       id="vvv-2">
+      <path
+         d="M20,20 0,20 0,0 20,0"
+         class="s10"
+         id="path744" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path746" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path748" />
+    </g>
+    <g
+       id="vm0-2">
+      <path
+         d="M0,20 0,0 3,0 9,20"
+         class="s10"
+         id="path751" />
+      <path
+         d="M0,0 3,0 9,20"
+         class="s1"
+         id="path753" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path755" />
+    </g>
+    <g
+       id="vm1-2">
+      <path
+         d="M0,0 0,20 3,20 9,0"
+         class="s10"
+         id="path758" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path760" />
+      <path
+         d="M0,20 3,20 9,0"
+         class="s1"
+         id="path762" />
+    </g>
+    <g
+       id="vmx-2">
+      <path
+         d="M0,0 0,20 3,20 6,10 3,0"
+         class="s10"
+         id="path765" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path767" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path769" />
+      <path
+         d="m20,15 -5,5"
+         class="s2"
+         id="path771" />
+      <path
+         d="M20,10 10,20"
+         class="s2"
+         id="path773" />
+      <path
+         d="M20,5 8,17"
+         class="s2"
+         id="path775" />
+      <path
+         d="M20,0 7,13"
+         class="s2"
+         id="path777" />
+      <path
+         d="M15,0 7,8"
+         class="s2"
+         id="path779" />
+      <path
+         d="M10,0 9,1"
+         class="s2"
+         id="path781" />
+    </g>
+    <g
+       id="vmd-2">
+      <path
+         d="m0,0 0,20 20,0 C 10,20 7,10 3,0"
+         class="s10"
+         id="path784" />
+      <path
+         d="m0,0 3,0 c 4,10 7,20 17,20"
+         class="s1"
+         id="path786" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path788" />
+    </g>
+    <g
+       id="vmu-2">
+      <path
+         d="m0,0 0,20 3,0 C 7,10 10,0 20,0"
+         class="s10"
+         id="path791" />
+      <path
+         d="m0,20 3,0 C 7,10 10,0 20,0"
+         class="s1"
+         id="path793" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path795" />
+    </g>
+    <g
+       id="vmz-2">
+      <path
+         d="M0,0 3,0 C 10,10 15,10 20,10 15,10 10,10 3,20 L 0,20"
+         class="s10"
+         id="path798" />
+      <path
+         d="m0,0 3,0 c 7,10 12,10 17,10"
+         class="s1"
+         id="path800" />
+      <path
+         d="m0,20 3,0 C 10,10 15,10 20,10"
+         class="s1"
+         id="path802" />
+    </g>
+    <g
+       id="0mv-2">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s10"
+         id="path805" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path807" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path809" />
+    </g>
+    <g
+       id="1mv-2">
+      <path
+         d="M2.875,0 20,0 20,20 9,20 z"
+         class="s10"
+         id="path812" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path814" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path816" />
+    </g>
+    <g
+       id="xmv-2">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s10"
+         id="path819" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path821" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path823" />
+      <path
+         d="M0,5 3.5,1.5"
+         class="s2"
+         id="path825" />
+      <path
+         d="M0,10 4.5,5.5"
+         class="s2"
+         id="path827" />
+      <path
+         d="M0,15 6,9"
+         class="s2"
+         id="path829" />
+      <path
+         d="M0,20 4,16"
+         class="s2"
+         id="path831" />
+    </g>
+    <g
+       id="dmv-2">
+      <path
+         d="M9,0 20,0 20,20 3,20 z"
+         class="s10"
+         id="path834" />
+      <path
+         d="M3,20 9,0 20,0"
+         class="s1"
+         id="path836" />
+      <path
+         d="m0,20 20,0"
+         class="s1"
+         id="path838" />
+    </g>
+    <g
+       id="umv-2">
+      <path
+         d="M3,0 20,0 20,20 9,20 z"
+         class="s10"
+         id="path841" />
+      <path
+         d="m3,0 6,20 11,0"
+         class="s1"
+         id="path843" />
+      <path
+         d="M0,0 20,0"
+         class="s1"
+         id="path845" />
+    </g>
+    <g
+       id="zmv-2">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s10"
+         id="path848" />
+      <path
+         d="m6,10 3,10 11,0"
+         class="s1"
+         id="path850" />
+      <path
+         d="M0,10 6,10 9,0 20,0"
+         class="s1"
+         id="path852" />
+    </g>
+    <g
+       id="vmv-3-2">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s10"
+         id="path855" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s6"
+         id="path857" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path859" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path861" />
+    </g>
+    <g
+       id="vmv-4-2">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s10"
+         id="path864" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s7"
+         id="path866" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path868" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path870" />
+    </g>
+    <g
+       id="vmv-5-2">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s10"
+         id="path873" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s8"
+         id="path875" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path877" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path879" />
+    </g>
+    <g
+       id="vmv-2-3">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s6"
+         id="path882" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s10"
+         id="path884" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path886" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path888" />
+    </g>
+    <g
+       id="vmv-2-4">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s7"
+         id="path891" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s10"
+         id="path893" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path895" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path897" />
+    </g>
+    <g
+       id="vmv-2-5">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s8"
+         id="path900" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s10"
+         id="path902" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path904" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path906" />
+    </g>
+    <g
+       id="vmv-2-2">
+      <path
+         d="M9,0 20,0 20,20 9,20 6,10 z"
+         class="s10"
+         id="path909" />
+      <path
+         d="M3,0 0,0 0,20 3,20 6,10 z"
+         class="s10"
+         id="path911" />
+      <path
+         d="m0,0 3,0 6,20 11,0"
+         class="s1"
+         id="path913" />
+      <path
+         d="M0,20 3,20 9,0 20,0"
+         class="s1"
+         id="path915" />
+    </g>
+    <g
+       id="arrow0">
+      <path
+         d="m-12,-3 9,3 -9,3 c 1,-2 1,-4 0,-6 z"
+         class="s11"
+         id="path918" />
+      <path
+         d="M0,0 -15,0"
+         class="s12"
+         id="path920" />
+    </g>
+    <marker
+       id="arrowhead"
+       markerHeight="7"
+       markerWidth="10"
+       markerUnits="strokeWidth"
+       viewBox="0 -4 11 8"
+       refX="15"
+       refY="0"
+       orient="auto"
+       style="fill: rgb(0, 65, 196);">
+      <path
+         d="M0 -4 11 0 0 4z"
+         id="path923" />
+    </marker>
+    <marker
+       id="arrowtail"
+       markerHeight="7"
+       markerWidth="10"
+       markerUnits="strokeWidth"
+       viewBox="-11 -4 11 8"
+       refX="-15"
+       refY="0"
+       orient="auto"
+       style="fill: rgb(0, 65, 196);">
+      <path
+         d="M0 -4 -11 0 0 4z"
+         id="path926" />
+    </marker>
+  </defs>
+  <g
+     id="waves_0">
+    <g
+       id="lanes_0"
+       transform="translate(160.5, 0.5)">
+      <g
+         id="gmarks_0">
+        <path
+           id="gmark_0_0"
+           d="m 0,0 0,240"
+           style="stroke: rgb(136, 136, 136); stroke-width: 0.5; stroke-dasharray: 1, 3;" />
+        <path
+           id="gmark_1_0"
+           d="m 80,0 0,240"
+           style="stroke: rgb(136, 136, 136); stroke-width: 0.5; stroke-dasharray: 1, 3;" />
+        <path
+           id="gmark_2_0"
+           d="m 160,0 0,240"
+           style="stroke: rgb(136, 136, 136); stroke-width: 0.5; stroke-dasharray: 1, 3;" />
+        <path
+           id="gmark_3_0"
+           d="m 240,0 0,240"
+           style="stroke: rgb(136, 136, 136); stroke-width: 0.5; stroke-dasharray: 1, 3;" />
+        <path
+           id="gmark_4_0"
+           d="m 320,0 0,240"
+           style="stroke: rgb(136, 136, 136); stroke-width: 0.5; stroke-dasharray: 1, 3;" />
+        <path
+           id="gmark_5_0"
+           d="m 400,0 0,240"
+           style="stroke: rgb(136, 136, 136); stroke-width: 0.5; stroke-dasharray: 1, 3;" />
+      </g>
+      <g
+         id="wavelane_0_0"
+         transform="translate(0,5)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text938"><tspan
+             id="tspan940">clk</tspan></text>
+        <g
+           id="wavelane_draw_0_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#pclk"
+             transform="translate(0)"
+             id="use943" />
+          <use
+             xlink:href="#111"
+             transform="translate(20)"
+             id="use945" />
+          <use
+             xlink:href="#nclk"
+             transform="translate(40)"
+             id="use947" />
+          <use
+             xlink:href="#000"
+             transform="translate(60)"
+             id="use949" />
+          <use
+             xlink:href="#pclk"
+             transform="translate(80)"
+             id="use951" />
+          <use
+             xlink:href="#111"
+             transform="translate(100)"
+             id="use953" />
+          <use
+             xlink:href="#nclk"
+             transform="translate(120)"
+             id="use955" />
+          <use
+             xlink:href="#000"
+             transform="translate(140)"
+             id="use957" />
+          <use
+             xlink:href="#pclk"
+             transform="translate(160)"
+             id="use959" />
+          <use
+             xlink:href="#111"
+             transform="translate(180)"
+             id="use961" />
+          <use
+             xlink:href="#nclk"
+             transform="translate(200)"
+             id="use963" />
+          <use
+             xlink:href="#000"
+             transform="translate(220)"
+             id="use965" />
+          <use
+             xlink:href="#pclk"
+             transform="translate(240)"
+             id="use967" />
+          <use
+             xlink:href="#111"
+             transform="translate(260)"
+             id="use969" />
+          <use
+             xlink:href="#nclk"
+             transform="translate(280)"
+             id="use971" />
+          <use
+             xlink:href="#000"
+             transform="translate(300)"
+             id="use973" />
+          <use
+             xlink:href="#pclk"
+             transform="translate(320)"
+             id="use975" />
+          <use
+             xlink:href="#111"
+             transform="translate(340)"
+             id="use977" />
+          <use
+             xlink:href="#nclk"
+             transform="translate(360)"
+             id="use979" />
+          <use
+             xlink:href="#000"
+             transform="translate(380)"
+             id="use981" />
+        </g>
+      </g>
+      <g
+         id="wavelane_1_0"
+         transform="translate(0,35)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text984"><tspan
+             id="tspan986">Hazard detection</tspan></text>
+        <g
+           id="wavelane_draw_1_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(0)"
+             id="use989" />
+          <use
+             xlink:href="#vmv-2-3"
+             transform="translate(20)"
+             id="use991" />
+          <use
+             xlink:href="#vvv-3"
+             transform="translate(40)"
+             id="use993" />
+          <use
+             xlink:href="#vvv-3"
+             transform="translate(60)"
+             id="use995" />
+          <use
+             xlink:href="#vmv-3-2"
+             transform="translate(80)"
+             id="use997" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(100)"
+             id="use999" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(120)"
+             id="use1001" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(140)"
+             id="use1003" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(160)"
+             id="use1005" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(180)"
+             id="use1007" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(200)"
+             id="use1009" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(220)"
+             id="use1011" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(240)"
+             id="use1013" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(260)"
+             id="use1015" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(280)"
+             id="use1017" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(300)"
+             id="use1019" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(320)"
+             id="use1021" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(340)"
+             id="use1023" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(360)"
+             id="use1025" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(380)"
+             id="use1027" />
+          <text
+             x="6"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1029"><tspan
+               id="tspan1031" /></text>
+          <text
+             x="56"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1033"><tspan
+               id="tspan1035">Ctrl hzd</tspan></text>
+        </g>
+      </g>
+      <g
+         id="wavelane_2_0"
+         transform="translate(0,65)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text1038"><tspan
+             id="tspan1040">flush_IdEx</tspan></text>
+        <g
+           id="wavelane_draw_2_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#000"
+             transform="translate(0)"
+             id="use1043" />
+          <use
+             xlink:href="#000"
+             transform="translate(20)"
+             id="use1045" />
+          <use
+             xlink:href="#0m1"
+             transform="translate(40)"
+             id="use1047" />
+          <use
+             xlink:href="#111"
+             transform="translate(60)"
+             id="use1049" />
+          <use
+             xlink:href="#1m0"
+             transform="translate(80)"
+             id="use1051" />
+          <use
+             xlink:href="#000"
+             transform="translate(100)"
+             id="use1053" />
+          <use
+             xlink:href="#000"
+             transform="translate(120)"
+             id="use1055" />
+          <use
+             xlink:href="#000"
+             transform="translate(140)"
+             id="use1057" />
+          <use
+             xlink:href="#000"
+             transform="translate(160)"
+             id="use1059" />
+          <use
+             xlink:href="#000"
+             transform="translate(180)"
+             id="use1061" />
+          <use
+             xlink:href="#000"
+             transform="translate(200)"
+             id="use1063" />
+          <use
+             xlink:href="#000"
+             transform="translate(220)"
+             id="use1065" />
+          <use
+             xlink:href="#000"
+             transform="translate(240)"
+             id="use1067" />
+          <use
+             xlink:href="#000"
+             transform="translate(260)"
+             id="use1069" />
+          <use
+             xlink:href="#000"
+             transform="translate(280)"
+             id="use1071" />
+          <use
+             xlink:href="#000"
+             transform="translate(300)"
+             id="use1073" />
+          <use
+             xlink:href="#000"
+             transform="translate(320)"
+             id="use1075" />
+          <use
+             xlink:href="#000"
+             transform="translate(340)"
+             id="use1077" />
+          <use
+             xlink:href="#000"
+             transform="translate(360)"
+             id="use1079" />
+          <use
+             xlink:href="#000"
+             transform="translate(380)"
+             id="use1081" />
+        </g>
+      </g>
+      <g
+         id="wavelane_3_0"
+         transform="translate(0,95)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text1084"><tspan
+             id="tspan1086">flush_IfId_ExDmem</tspan></text>
+        <g
+           id="wavelane_draw_3_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#000"
+             transform="translate(0)"
+             id="use1089" />
+          <use
+             xlink:href="#000"
+             transform="translate(20)"
+             id="use1091" />
+          <use
+             xlink:href="#0m1"
+             transform="translate(40)"
+             id="use1093" />
+          <use
+             xlink:href="#111"
+             transform="translate(60)"
+             id="use1095" />
+          <use
+             xlink:href="#1m0"
+             transform="translate(80)"
+             id="use1097" />
+          <use
+             xlink:href="#000"
+             transform="translate(100)"
+             id="use1099" />
+          <use
+             xlink:href="#000"
+             transform="translate(120)"
+             id="use1101" />
+          <use
+             xlink:href="#000"
+             transform="translate(140)"
+             id="use1103" />
+          <use
+             xlink:href="#000"
+             transform="translate(160)"
+             id="use1105" />
+          <use
+             xlink:href="#000"
+             transform="translate(180)"
+             id="use1107" />
+          <use
+             xlink:href="#000"
+             transform="translate(200)"
+             id="use1109" />
+          <use
+             xlink:href="#000"
+             transform="translate(220)"
+             id="use1111" />
+          <use
+             xlink:href="#000"
+             transform="translate(240)"
+             id="use1113" />
+          <use
+             xlink:href="#000"
+             transform="translate(260)"
+             id="use1115" />
+          <use
+             xlink:href="#000"
+             transform="translate(280)"
+             id="use1117" />
+          <use
+             xlink:href="#000"
+             transform="translate(300)"
+             id="use1119" />
+          <use
+             xlink:href="#000"
+             transform="translate(320)"
+             id="use1121" />
+          <use
+             xlink:href="#000"
+             transform="translate(340)"
+             id="use1123" />
+          <use
+             xlink:href="#000"
+             transform="translate(360)"
+             id="use1125" />
+          <use
+             xlink:href="#000"
+             transform="translate(380)"
+             id="use1127" />
+        </g>
+      </g>
+      <g
+         id="wavelane_4_0"
+         transform="translate(0,125)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text1130"><tspan
+             id="tspan1132">ID_EX_ctrlIn</tspan></text>
+        <g
+           id="wavelane_draw_4_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(0)"
+             id="use1135" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(20)"
+             id="use1137" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(40)"
+             id="use1139" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(60)"
+             id="use1141" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(80)"
+             id="use1143" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(100)"
+             id="use1145" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(120)"
+             id="use1147" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(140)"
+             id="use1149" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(160)"
+             id="use1151" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(180)"
+             id="use1153" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(200)"
+             id="use1155" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(220)"
+             id="use1157" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(240)"
+             id="use1159" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(260)"
+             id="use1161" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(280)"
+             id="use1163" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(300)"
+             id="use1165" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(320)"
+             id="use1167" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(340)"
+             id="use1169" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(360)"
+             id="use1171" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(380)"
+             id="use1173" />
+          <text
+             x="26"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1175"><tspan
+               id="tspan1177">normal</tspan></text>
+          <text
+             x="126"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1179"><tspan
+               id="tspan1181">0</tspan></text>
+          <text
+             x="296"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1183"><tspan
+               id="tspan1185">normal</tspan></text>
+        </g>
+      </g>
+      <g
+         id="wavelane_5_0"
+         transform="translate(0,155)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text1188"><tspan
+             id="tspan1190">EX_DMEM_ctrlIn</tspan></text>
+        <g
+           id="wavelane_draw_5_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(0)"
+             id="use1193" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(20)"
+             id="use1195" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(40)"
+             id="use1197" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(60)"
+             id="use1199" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(80)"
+             id="use1201" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(100)"
+             id="use1203" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(120)"
+             id="use1205" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(140)"
+             id="use1207" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(160)"
+             id="use1209" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(180)"
+             id="use1211" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(200)"
+             id="use1213" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(220)"
+             id="use1215" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(240)"
+             id="use1217" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(260)"
+             id="use1219" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(280)"
+             id="use1221" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(300)"
+             id="use1223" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(320)"
+             id="use1225" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(340)"
+             id="use1227" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(360)"
+             id="use1229" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(380)"
+             id="use1231" />
+          <text
+             x="26"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1233"><tspan
+               id="tspan1235">normal</tspan></text>
+          <text
+             x="156"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1237"><tspan
+               id="tspan1239">0</tspan></text>
+          <text
+             x="326"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1241"><tspan
+               id="tspan1243">normal</tspan></text>
+        </g>
+      </g>
+      <g
+         id="wavelane_6_0"
+         transform="translate(0,185)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text1246"><tspan
+             id="tspan1248">ID_EX_ctrlOut</tspan></text>
+        <g
+           id="wavelane_draw_6_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(0)"
+             id="use1251" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(20)"
+             id="use1253" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(40)"
+             id="use1255" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(60)"
+             id="use1257" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(80)"
+             id="use1259" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(100)"
+             id="use1261" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(120)"
+             id="use1263" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(140)"
+             id="use1265" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(160)"
+             id="use1267" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(180)"
+             id="use1269" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(200)"
+             id="use1271" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(220)"
+             id="use1273" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(240)"
+             id="use1275" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(260)"
+             id="use1277" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(280)"
+             id="use1279" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(300)"
+             id="use1281" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(320)"
+             id="use1283" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(340)"
+             id="use1285" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(360)"
+             id="use1287" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(380)"
+             id="use1289" />
+          <text
+             x="36"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1291"><tspan
+               id="tspan1293">normal</tspan></text>
+          <text
+             x="166"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1295"><tspan
+               id="tspan1297">0</tspan></text>
+          <text
+             x="326"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1299"><tspan
+               id="tspan1301">normal</tspan></text>
+        </g>
+      </g>
+      <g
+         id="wavelane_7_0"
+         transform="translate(0,215)">
+        <text
+           x="-10"
+           y="15"
+           class="info"
+           text-anchor="end"
+           xml:space="preserve"
+           id="text1304"><tspan
+             id="tspan1306">EX_DMEM_ctrlOut</tspan></text>
+        <g
+           id="wavelane_draw_7_0"
+           transform="translate(0, 0)">
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(0)"
+             id="use1309" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(20)"
+             id="use1311" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(40)"
+             id="use1313" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(60)"
+             id="use1315" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(80)"
+             id="use1317" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(100)"
+             id="use1319" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(120)"
+             id="use1321" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(140)"
+             id="use1323" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(160)"
+             id="use1325" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(180)"
+             id="use1327" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(200)"
+             id="use1329" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(220)"
+             id="use1331" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(240)"
+             id="use1333" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(260)"
+             id="use1335" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(280)"
+             id="use1337" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(300)"
+             id="use1339" />
+          <use
+             xlink:href="#vmv-2-2"
+             transform="translate(320)"
+             id="use1341" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(340)"
+             id="use1343" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(360)"
+             id="use1345" />
+          <use
+             xlink:href="#vvv-2"
+             transform="translate(380)"
+             id="use1347" />
+          <text
+             x="36"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1349"><tspan
+               id="tspan1351">normal</tspan></text>
+          <text
+             x="206"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1353"><tspan
+               id="tspan1355">0</tspan></text>
+          <text
+             x="366"
+             y="15"
+             text-anchor="middle"
+             xml:space="preserve"
+             id="text1357"><tspan
+               id="tspan1359">normal</tspan></text>
+        </g>
+      </g>
+      <g
+         id="wavearcs_0" />
+      <g
+         id="wavegaps_0">
+        <g
+           id="wavegap_0_0"
+           transform="translate(0,5)" />
+        <g
+           id="wavegap_1_0"
+           transform="translate(0,35)" />
+        <g
+           id="wavegap_2_0"
+           transform="translate(0,65)" />
+        <g
+           id="wavegap_3_0"
+           transform="translate(0,95)" />
+        <g
+           id="wavegap_4_0"
+           transform="translate(0,125)" />
+        <g
+           id="wavegap_5_0"
+           transform="translate(0,155)" />
+        <g
+           id="wavegap_6_0"
+           transform="translate(0,185)" />
+        <g
+           id="wavegap_7_0"
+           transform="translate(0,215)" />
+      </g>
+    </g>
+    <g
+       id="groups_0">
+      <g
+         id="g1372" />
+    </g>
+  </g>
+</svg>

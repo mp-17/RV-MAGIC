@@ -1,0 +1,12 @@
+{signal: [
+  {name: 'clk', wave: 'p....'},
+  {name: 'Hazard detection', wave: '23..2...............', data: ["", "Ctrl hzd"], period: 0.25},
+  {name: 'flush_IdEx', wave: '010.......', period: 0.5},
+  {name: 'flush_IfId_ExDmem', wave: '010.......', period: 0.5},
+  {name: 'ID_EX_ctrlIn', wave: '2..2.....2..........', data: ["normal", "0", "normal"], period: 0.25},
+  {name: 'EX_DMEM_ctrlIn', wave: '2..2........2.......', data: ["normal", "0", "normal"], period: 0.25},
+  {name: 'ID_EX_ctrlOut', wave: '2...2.......2.......', data: ["normal", "0", "normal"], period: 0.25},
+  {name: 'EX_DMEM_ctrlOut', wave: '2...2...........2...', data: ["normal", "0", "normal"], period: 0.25},
+],
+  config:{hscale:2},
+}
