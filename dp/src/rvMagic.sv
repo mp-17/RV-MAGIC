@@ -22,6 +22,7 @@ module rvMagic (
             // FWU signals
             // CU signals
             CU_RF_write,
+            CU_immType,
             // Others
             NEXT_ADDR_SEL_CU_jumpOrBranch,
             ifId_FLUSH_FF_q;
@@ -35,7 +36,8 @@ module rvMagic (
     logic [`RF_ADDR_WIDTH-1:0]  DMEM_WB_writeAddr;
     logic [`WORD_WIDTH-1:0] JUMP_WB_MUX_out,
                             RF_dataOut0,
-                            RF_dataOut1;
+                            RF_dataOut1,
+                            IMM_GEN_immediate;
 
 
     /* Module instantiations */
@@ -127,6 +129,12 @@ module rvMagic (
         .dataOut1  (RF_dataOut1)
     );
     
+    // IMM_GEN
+    immgen IMM_GEN(
+    	.instruction (ifId_FLUSH_MUX_out),
+        .imm_type    (CU_immType),
+        .immediate   (IMM_GEN_immediate)
+    );
     
     
 
