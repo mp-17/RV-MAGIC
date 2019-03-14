@@ -109,6 +109,8 @@
 `define RV32I_OPCODE_START 0
 `define RV32I_FUNCT3_START 12
 `define RV32I_SHAMT_START 20
+`define RV32I_RS1_START 15
+`define RV32I_RS2_START 20
 
 
 // operations
