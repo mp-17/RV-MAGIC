@@ -2,6 +2,7 @@
 */
 
 `include "../../common/src/rv32i_defs.sv"
+`include "../../alu/src/alu_defs.sv"
 
 module rvMagic (
     input clk, rst_n,
@@ -23,6 +24,14 @@ module rvMagic (
             // CU signals
             CU_RF_write,
             CU_immType,
+            CU_D_MEM_write,
+            CU_D_MEM_read,
+            CU_D_MEM_mode,
+            CU_RS2_IMM_ALU_SRC_MUX_sel,
+            CU_DMEM_ALU_WB_MUX_sel,
+            CU_jump,
+            CU_branch,
+            CU_jalr,
             // Others
             NEXT_ADDR_SEL_CU_jumpOrBranch,
             ifId_FLUSH_FF_q;
@@ -38,6 +47,7 @@ module rvMagic (
                             RF_dataOut0,
                             RF_dataOut1,
                             IMM_GEN_immediate;
+    logic [`ALU_CTL_WIDTH-1:0] ALU_DECODER_ctl;
 
 
     /* Module instantiations */
@@ -118,7 +128,7 @@ module rvMagic (
     );
     
     // RF
-    rf RF(
+    rf RF (
     	.clk       (clk),
         .regWrite  (CU_RF_write),
         .readAddr0 (ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH]),
@@ -130,10 +140,33 @@ module rvMagic (
     );
     
     // IMM_GEN
-    immgen IMM_GEN(
+    immgen IMM_GEN (
     	.instruction (ifId_FLUSH_MUX_out),
         .imm_type    (CU_immType),
         .immediate   (IMM_GEN_immediate)
+    );
+    
+    // CU
+    cu CU (
+    	.instruction             (ifId_FLUSH_MUX_out),
+        .imm_type                (CU_immType),
+        .D_MEM_write             (CU_D_MEM_write),
+        .D_MEM_read              (CU_D_MEM_read),
+        .D_MEM_mode              (CU_D_MEM_mode),
+        .RF_write                (CU_RF_write),
+        .RS2_IMM_ALU_SRC_MUX_sel (CU_RS2_IMM_ALU_SRC_MUX_sel),
+        .DMEM_ALU_WB_MUX_sel     (CU_DMEM_ALU_WB_MUX_sel),
+        .branch                  (CU_branch),
+        .jump                    (CU_jump),
+        .jalr                    (CU_jalr)
+    );
+
+    // ALU_DECODER
+    alu_decoder ALU_DECODER (
+    	.opcode (ifId_FLUSH_MUX_out[`RV32I_OPCODE_START+:RV32I_OPCODE_WIDTH]),
+        .funct3 (ifId_FLUSH_MUX_out[`RV32I_FUNCT3_START+:RV32I_FUNCT3_WIDTH]),
+        .funct7 (ifId_FLUSH_MUX_out[`RV32I_FUNCT7_START+:RV32I_FUNCT7_WIDTH]),
+        .ctl    (ALU_DECODER_ctl)
     );
     
     
