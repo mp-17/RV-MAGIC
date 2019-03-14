@@ -52,7 +52,8 @@ module rvMagic (
                             ID_EX_nextPc,
                             EX_DMEM_nextPc,
                             EX_DMEM_jumpAddr,
-                            EX_DMEM_jalrAddr;
+                            EX_DMEM_jalrAddr,
+                            DMEM_WB_nextPc;
     logic [`INSTR_WIDTH-1:0]    ifId_FLUSH_MUX_out;
     logic [`RF_ADDR_WIDTH-1:0]  DMEM_WB_rd,
                                 ID_EX_rs1,
@@ -73,7 +74,8 @@ module rvMagic (
                             RS2_ALU_FWD_MUX_out,
                             RS2_IMM_ALU_SRC_MUX_out,
                             ALU_out,
-                            EX_DMEM_memDataIn;
+                            EX_DMEM_memDataIn,
+                            DMEM_aluOut;
     logic [`ALU_CTL_WIDTH-1:0]  ALU_DECODER_ctl,
                                 ID_EX_aluCtl;
     logic [`IDEX_CTRL_WIDTH-1:0]    ID_EX_controls,
@@ -221,7 +223,7 @@ module rvMagic (
             2 * `ADDR_WIDTH + 
             2 * `WORD_WIDTH + 
             `ALU_CTL_WIDTH +
-            9
+            `IDEX_CTRL_WIDTH
         )
     )
     ID_EX (
@@ -320,7 +322,12 @@ module rvMagic (
     // EX_DMEM
     register 
     #(
-        .NB ()
+        .NB (
+            2 * `RF_ADDR_WIDTH + 
+            2 * `ADDR_WIDTH + 
+            2 * `WORD_WIDTH + 
+            `EXDMEM_CTRL_WIDTH
+        )
     )
     EX_DMEM (
     	.clk   (clk),
@@ -359,6 +366,53 @@ module rvMagic (
         .sel (NEXT_ADDR_SEL_CU_jalrOut),
         .out (BRJAL_JALR_MUX_out)
     );
+
+    // DMEM_FWD_MUX
+    mux2 
+    #(
+        .NB (`ADDR_WIDTH)
+    )
+    DMEM_FWD_MUX (
+    	.in0 (EX_DMEM_aluOut),
+        .in1 (DMEM_ALU_WB_MUX_out),
+        .sel (FWU_fwdWriteData),
+        .out (D_MEM_dataIn)
+    );
+
+    // D_MEM interface
+    assign D_MEM_memWrite = EX_DMEM_controls[2];
+    assign D_MEM_memRead = EX_DMEM_controls[3];
+    assign D_MEM_memMode = EX_DMEM_controls[4];
+    
+    // DMEM_WB
+    register 
+    #(
+        .NB (
+            `WORD_WIDTH +
+            `ADDR_WIDTH + 
+            `WORD_WIDTH + 
+            `DMEMWB_CTRL_WIDTH
+        )
+    )
+    DMEM_WB (
+    	.clk   (clk),
+        .rst_n (rst_n),
+        .clr   (0),
+        .en    (1),
+        .d     ({
+            EX_DMEM_rd,                                     // d5
+            EX_DMEM_nextPc,                                 // d4
+            EX_DMEM_aluOut,                                 // d3
+            {EX_DMEM_controls[5], EX_DMEM_controls[1:0]}    // d[2:0]
+        }),
+        .q     ({
+            DMEM_WB_rd,         // q5
+            DMEM_WB_nextPc,     // q4
+            DMEM_aluOut,        // q3
+            DMEM_WB_controls,   // q[2:0]
+        })
+    );
+    
     
     
     /* Control units */
