@@ -4,8 +4,15 @@
 `include "../../common/src/rv32i_defs.sv"
 
 module rvMagic (
-    input clk,
-    input rst_n
+    input clk, rst_n,
+    // Instruction memory interface
+    output [`ADDR_WIDTH-1:0] I_MEM_dataIn,
+    output I_MEM_memRead,
+    input [`INSTR_WIDTH-1:0] I_MEM_dataOut,
+    // Data memory interface
+    output [`ADDR_WIDTH-1:0] D_MEM_dataIn,
+    output D_MEM_memRead, D_MEM_memWrite, D_MEM_memMode,
+    input [`WORD_WIDTH-1:0] D_MEM_dataOut
 );
 
     /* Signal declarations */
@@ -63,6 +70,10 @@ module rvMagic (
         .d     ({NEXT_PC_ADDER_out, PC_q}),
         .q     ({IF_ID_nextPc, IF_ID_pc})
     );
+
+    // I_MEM interface
+    assign I_MEM_memRead = HDU_stall_n;
+    assign I_MEM_dataIn = PC_q;
     
     
 
