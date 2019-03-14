@@ -41,8 +41,7 @@ module memory
                     `BYTE_MEMORY_MODE: dataOut <= mem_array[address];
                     `HALFWORD_MEMORY_MODE: dataOut <= {mem_array[address+1], mem_array[address]};
                     `WORD_MEMORY_MODE: dataOut <= {mem_array[address+3], mem_array[address+2], mem_array[address+1], mem_array[address]};
-                    // NOP is default, sets output to 0
-                    default: dataOut <= 0; //$error("Invalid addressable unit specified.");
+                    default: $error("Invalid addressable unit specified.");
                 endcase
             end
             else if (memWrite) begin
@@ -50,8 +49,7 @@ module memory
                     `BYTE_MEMORY_MODE: mem_array[address] <= dataIn[7:0];
                     `HALFWORD_MEMORY_MODE: {mem_array[address+1], mem_array[address]} <= dataIn[15:0];
                     `WORD_MEMORY_MODE: {mem_array[address+3], mem_array[address+2], mem_array[address+1], mem_array[address]} <= dataIn;
-                    // does not do anything otherwise, can be left if needed for testing
-                    //default: $error("Invalid addressable unit specified.");
+                    default: $error("Invalid addressable unit specified.");
                 endcase
             end
         else $error("Memory error: memRead and memWrite active at the same time.");

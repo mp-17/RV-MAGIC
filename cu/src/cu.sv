@@ -19,7 +19,7 @@ module cu
         imm_type = `NOP_TYPE;
         D_MEM_write = 0;
         D_MEM_read = 0;
-        D_MEM_mode = `NOP_MEMORY_MODE;
+        D_MEM_mode = `BYTE_MEMORY_MODE;
         RF_regDest = 0;
         RF_write = 0;
         RS2_IMM_ALU_SRC_MUX_sel = 0;
