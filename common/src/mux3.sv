@@ -5,7 +5,7 @@
 
 `include "../../common/src/rv32i_defs.sv"
 
-module mux2(in0, in1, in2, sel, out);
+module mux3(in0, in1, in2, sel, out);
    // Parameter
    parameter NB = `WORD_WIDTH; // data width
 
