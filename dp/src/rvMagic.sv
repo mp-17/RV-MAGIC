@@ -362,7 +362,7 @@ module rvMagic (
     )
     BRJAL_JALR_MUX (
     	.in0 (EX_DMEM_jumpAddr),
-        .in1 (EX_DMEM_WB_aluOut),
+        .in1 ({EX_DMEM_WB_aluOut[`WORD_WIDTH-1:1], 0}),
         .sel (NEXT_ADDR_SEL_CU_jalrOut),
         .out (BRJAL_JALR_MUX_out)
     );
