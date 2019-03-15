@@ -206,6 +206,22 @@ The \texttt{jump} control signal is used also in the write-back stage, to select
 
 In any case, the IMEM pipe register, together with IF/ID, ID/EX and EX/DMEM ones, have to be flushed. This brings to a performance loss of 4 instructions for each taken branch or executed jump.
 
+For details about the \texttt{NEXT\_ADDR\_SEL\_CU}, refer to figure \ref{fig:next_addr_sel_cu} and \ref{fig:next_addr_sel_cu_internalLogic}.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.5]{../next_addr_sel_cu/ref/schematic/next_addr_sel_cu.png}
+    \caption{Next address selection CU, for jumps and branch management}
+    \label{fig:next_addr_sel_cu}
+\end{figure}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.4]{../next_addr_sel_cu/ref/schematic/next_addr_sel_cu_internalLogic.png}
+    \caption{Next address selection CU internal logic}
+    \label{fig:next_addr_sel_cu_internalLogic}
+\end{figure}
+
 \subsubsection{Next address generation}
 The next address is chosen by means of two multiplexers:
 \begin{itemize}
@@ -248,7 +264,7 @@ When data cannot be forwarded, then the pipeline must be inevitably stalled by p
 
 Moreover, when a branch is taken or an unconditional jump occurs, a similar action of flushing the entire pipeline to get rid of invalid instructions already in execution must be taken.
 
-Both this occurrences are handled by the Hazard Detection Unit, that according to the aforementioned checks, outputs three signals:
+Both this occurrences are handled by the Hazard Detection Unit (figure \ref{fig:hdu}), that according to the aforementioned checks, outputs three signals:
 \begin{itemize}
     \item \texttt{stall\_n}: active low, is connected to the enable of the Program Counter and the IF/ID pipe register to prevent them from changing in the event of a stall.
     \item \texttt{flushIdEx}: to drive the multiplexer inserting the NOP in the ID/EX register, that will propagate to the rest of the pipeline, in case of a stall or a jump.
@@ -261,14 +277,13 @@ Both this occurrences are handled by the Hazard Detection Unit, that according t
     \caption{Hazard Detection Unit}
     \label{fig:hdu}
 \end{figure}
-
-A resume is reported in Table \ref{tab:hdu_output}:
+A summary of the possible cases when this can occur is reported in table \ref{tab:hdu_output}:
 
 \begin{table}[hbtp]
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
-                        & \textit{\textbf{stall\_N}} & \textit{\textbf{flush\_IdEx}} & \textit{\textbf{flush\_IfId\_ExDmem}} \\ \hline
+                        & \texttt{stall\_N} & \texttt{flush\_IdEx} & \texttt{flush\_IfId\_ExDmem} \\ \hline
 \textbf{No Hazard}      & 0                          & 0                             & 0                                     \\ \hline
 \textbf{Control Hazard} & 0                          & 1                             & 1                                     \\ \hline
 \textbf{Data Hazard}    & 1                          & 1                             & 0                                     \\ \hline
@@ -277,10 +292,12 @@ A resume is reported in Table \ref{tab:hdu_output}:
 \label{tab:hdu_output}
 \end{table}
 
-\paragraph{Inserting a NOP} The NOP instruction is not present in the RISC-V ISA. It is possible to emulate it though, using an \textbf{ADDI x0 x0 0}. This instruction does nothing, because the register x0 is hardwired to reference. The instruction NOP belongs to the set of pseudo-assembly instructions: they are translated in RISC-V language on the fly by the assembler, and they exist for programmers ease only.
-For an effective NOP insertion in the IF/ID stage there's the need for a sequential control of the multiplexer which drive the source of the RF. There is no way of doing it before the pipe register, unless a NOP instruction is already present somewhere in memory.
+\subsubsection{Inserting a NOP} 
+The NOP instruction is not present in the RISC-V ISA. It is possible to emulate it though, using an \texttt{ADDI x0 x0 0}. This instruction does nothing, because the register x0 is hardwired to value 0. The instruction NOP belongs to the set of pseudo-assembly instructions: they are translated in RISC-V language on the fly by the assembler, and they exist for programmers ease only.
 
-In figure \ref{fig:hzd_management} a high level DP for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is depicted in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded. For details about the \textbf{NEXT\_ADDR\_SEL\_CU}, refer to figure \ref{fig:next_addr_sel_cu} and \ref{fig:next_addr_sel_cu_internalLogic}.
+For an effective NOP insertion in the IF/ID stage there is the need for a sequential control of the multiplexer which drive the source of the RF. There is no way of doing it before the pipe register, unless a NOP instruction is already present somewhere in memory.
+
+In figure \ref{fig:hzd_management} a high level datapath for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is shown in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded. 
 
 \begin{figure}[hbtp]
     \centering
@@ -294,20 +311,6 @@ In figure \ref{fig:hzd_management} a high level DP for hazard management is depi
     \includegraphics[scale=0.8]{../hzd_management/ref/timing/hzd_management_timing.png}
     \caption{Hazard management timing}
     \label{fig:hzd_management_timing}
-\end{figure}
-
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[scale=0.5]{../next_addr_sel_cu/ref/schematic/next_addr_sel_cu.png}
-    \caption{Next address selection CU, for jumps and branch management}
-    \label{fig:next_addr_sel_cu}
-\end{figure}
-
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[scale=0.4]{../next_addr_sel_cu/ref/schematic/next_addr_sel_cu_internalLogic.png}
-    \caption{Next address selection CU internal logic}
-    \label{fig:next_addr_sel_cu_internalLogic}
 \end{figure}
 
 \subsection{Control Unit (CU)}
