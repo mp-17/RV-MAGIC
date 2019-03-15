@@ -21,7 +21,6 @@ module cu
         D_MEM_write = 0;
         D_MEM_read = 0;
         D_MEM_mode = `BYTE_MEMORY_MODE;
-        RF_regDest = 0;
         RF_write = 0;
         RS1_PC_ALU_SRC_MUX_sel = 0;
         RS2_IMM_ALU_SRC_MUX_sel = 0;
@@ -35,20 +34,26 @@ module cu
             imm_type = `U_TYPE;
             DMEM_ALU_WB_MUX_sel = 0; // ALU
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_AUIPC_OPCODE)
         begin
             imm_type = `U_TYPE;
+            RS1_PC_ALU_SRC_MUX_sel = 1; // PC
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_JAL_OPCODE)
         begin
             imm_type = `J_TYPE;
             jump = 1;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_JALR_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_JALR_FUNCT3)
         begin
             imm_type = `I_TYPE;
             jalr = 1;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_BEQ_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_BEQ_FUNCT3)
         begin
@@ -86,6 +91,7 @@ module cu
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `BYTE_MEMORY_MODE;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_LH_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_LH_FUNCT3)
         begin
@@ -93,6 +99,7 @@ module cu
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `HALFWORD_MEMORY_MODE;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_LW_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_LW_FUNCT3)
         begin
@@ -100,6 +107,7 @@ module cu
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `WORD_MEMORY_MODE;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_LBU_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_LBU_FUNCT3)
         begin
@@ -107,6 +115,7 @@ module cu
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `BYTE_MEMORY_MODE;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_LHU_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_LHU_FUNCT3)
         begin
@@ -114,6 +123,7 @@ module cu
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `HALFWORD_MEMORY_MODE;
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SB_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SB_FUNCT3)
         begin
@@ -138,114 +148,133 @@ module cu
             imm_type = `I_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SLTI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SLTI_FUNCT3)
         begin
             imm_type = `I_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SLTIU_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SLTIU_FUNCT3)
         begin
             imm_type = `I_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_XORI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_XORI_FUNCT3)
         begin
             imm_type = `I_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_ORI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_ORI_FUNCT3)
         begin
             imm_type = `I_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_ANDI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_ANDI_FUNCT3)
         begin
             imm_type = `I_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SLLI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SLLI_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SLLI_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate --> uses rs2 position but it is the same as lowest bits of immediate --> we need the value directly, not the value from the regfile
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SRLI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SRLI_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SRLI_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate --> uses rs2 position but it is the same as lowest bits of immediate --> we need the value directly, not the value from the regfile
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SRAI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SRAI_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SRAI_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate --> uses rs2 position but it is the same as lowest bits of immediate --> we need the value directly, not the value from the regfile
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_ADD_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_ADD_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_ADD_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SUB_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SUB_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SUB_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SLL_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SLL_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SLL_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SLT_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SLT_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SLT_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SLTU_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SLTU_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SLTU_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_XOR_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_XOR_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_XOR_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SRL_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SRL_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SRL_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_SRA_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_SRA_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_SRA_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_OR_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_OR_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_OR_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == RV32I_AND_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == RV32I_AND_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == RV32I_AND_FUNCT7)
         begin
             imm_type = `R_TYPE;
             RS2_IMM_ALU_SRC_MUX_sel = 0; // Rs2
             DMEM_ALU_WB_MUX_sel = 0; // ALU
+            RF_write = 1;
         end
     end
 endmodule
