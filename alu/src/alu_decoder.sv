@@ -11,6 +11,7 @@ module alu_decoder (
     always_comb begin
         case (opcode)
             `RV32_LOAD, `RV32_STORE: ctl = `ALU_ADD;
+            `RV32_AUIPC: ctl = `ALU_AUIPC;
             `RV32_BRANCH: 
                 case (funct3)
                     `FUNCT3_BEQ:    ctl = `ALU_SEQ;
