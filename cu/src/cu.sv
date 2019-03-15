@@ -9,6 +9,7 @@ module cu
     output D_MEM_write, D_MEM_read, // control signal for the DMEM. "mode" is for bit width selection. #Old: MemWrite, MemRead, -
     output [`MEMORY_MODE_WIDTH-1:0] D_MEM_mode,
     output RF_write, // write control signal for the RF. #Old: RegWrite
+    output RS1_PC_ALU_SRC_MUX_sel, // sel for the mux on the second input (b) of the ALU. Select either IMM or $(Rs2). #Old: ALUSrc
     output RS2_IMM_ALU_SRC_MUX_sel, // sel for the mux on the second input (b) of the ALU. Select either IMM or $(Rs2). #Old: ALUSrc
     output DMEM_ALU_WB_MUX_sel, // sel for the mux in WB stage. Let pass either DMEM_dataOut or ALU_out. #Old: MemtoReg
     output branch, jump, jalr // asserted if the instruction is respectivly a branch, a JAL, a JALR. #OLD: Branch
@@ -22,6 +23,7 @@ module cu
         D_MEM_mode = `BYTE_MEMORY_MODE;
         RF_regDest = 0;
         RF_write = 0;
+        RS1_PC_ALU_SRC_MUX_sel = 0;
         RS2_IMM_ALU_SRC_MUX_sel = 0;
         DMEM_ALU_WB_MUX_sel = 0;
         branch = 0;

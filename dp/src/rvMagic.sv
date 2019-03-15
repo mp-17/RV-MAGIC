@@ -4,7 +4,7 @@
 `include "../../common/src/rv32i_defs.sv"
 `include "../../alu/src/alu_defs.sv"
 
-`define IDEX_CTRL_WIDTH 9
+`define IDEX_CTRL_WIDTH 10
 `define EXDMEM_CTRL_WIDTH 8
 `define DMEMWB_CTRL_WIDTH 3
 
@@ -32,6 +32,7 @@ module rvMagic (
             CU_D_MEM_write,
             CU_D_MEM_read,
             CU_D_MEM_mode,
+            CU_RS1_PC_ALU_SRC_MUX_sel,
             CU_RS2_IMM_ALU_SRC_MUX_sel,
             CU_DMEM_ALU_WB_MUX_sel,
             CU_jump,
@@ -200,6 +201,7 @@ module rvMagic (
     )
     idEx_FLUSH_MUX (
     	.in0 ({
+    		CU_RS1_PC_ALU_SRC_MUX_sel,  // [9]
             CU_RS2_IMM_ALU_SRC_MUX_sel, // [8]
             CU_jalr,                    // [7]
             CU_branch,                  // [6]
@@ -232,28 +234,28 @@ module rvMagic (
         .clr   (0),
         .en    (1),
         .d     ({
-            ifId_FLUSH_MUX_out[`RV32I_RS2_START+:`RF_ADDR_WIDTH],   // d17
-            ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH],   // d16
-            ifId_FLUSH_MUX_out[`RV32I_RD_START+:`RF_ADDR_WIDTH],    // d15
-            IF_ID_nextPc,                                           // d14
-            IF_ID_pc,                                               // d13
-            IMM_GEN_immediate,                                      // d12
-            RF_dataOut1,                                            // d11 
-            RF_dataOut0,                                            // d10 
-            ALU_DECODER_ctl,                                        // d9 
-            idEx_FLUSH_MUX_out                                      // d[8:0]
+            ifId_FLUSH_MUX_out[`RV32I_RS2_START+:`RF_ADDR_WIDTH],   // d18
+            ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH],   // d17
+            ifId_FLUSH_MUX_out[`RV32I_RD_START+:`RF_ADDR_WIDTH],    // d16
+            IF_ID_nextPc,                                           // d15
+            IF_ID_pc,                                               // d14
+            IMM_GEN_immediate,                                      // d13
+            RF_dataOut1,                                            // d12
+            RF_dataOut0,                                            // d11 
+            ALU_DECODER_ctl,                                        // d10 
+            idEx_FLUSH_MUX_out                                      // d[9:0]
         }),
         .q     ({
-            ID_EX_rs2,          // q17
-            ID_EX_rs1,          // q16
-            ID_EX_rd,           // q15
-            ID_EX_nextPc,       // q14
-            ID_EX_pc,           // q13
-            ID_EX_immediate,    // q12
-            ID_EX_dataOut1,     // q11
-            ID_EX_dataOut0,     // q10
-            ID_EX_aluCtl,       // q9
-            ID_EX_controls      // q[8:0]
+            ID_EX_rs2,          // q18
+            ID_EX_rs1,          // q17
+            ID_EX_rd,           // q16
+            ID_EX_nextPc,       // q15
+            ID_EX_pc,           // q14
+            ID_EX_immediate,    // q13
+            ID_EX_dataOut1,     // q12
+            ID_EX_dataOut0,     // q11
+            ID_EX_aluCtl,       // q10
+            ID_EX_controls      // q[9:0]
         })
     );
     
@@ -296,6 +298,18 @@ module rvMagic (
         .out (RS2_ALU_FWD_MUX_out)
     );    
 
+    // RS1_PC_ALU_SRC_MUX
+    mux2 
+    #(
+        .NB (`WORD_WIDTH)
+    )
+    RS1_PC_ALU_SRC_MUX (
+    	.in0 (RS1_ALU_FWD_MUX_out),
+        .in1 (ID_EX_pc),
+        .sel (ID_EX_controls[9]),
+        .out (RS1_PC_ALU_SRC_MUX_out)
+    );
+
     // RS2_IMM_ALU_SRC_MUX
     mux2 
     #(
@@ -310,7 +324,7 @@ module rvMagic (
     
     // ALU
     alu ALU (
-    	.a   (RS1_ALU_FWD_MUX_out),
+    	.a   (RS1_PC_ALU_SRC_MUX_out),
         .b   (RS2_IMM_ALU_SRC_MUX_out),
         .ctl (ID_EX_aluCtl),
         .out (ALU_out)
@@ -348,7 +362,7 @@ module rvMagic (
             EX_DMEM_rd,         // q12
             EX_DMEM_nextPc,     // q11
             EX_DMEM_jumpAddr,   // q10
-            EX_DMEM_WB_aluOut,     // q9
+            EX_DMEM_WB_aluOut,  // q9
             EX_DMEM_memDataIn,  // q8
             EX_DMEM_controls    // q[7:0]
         })
@@ -447,6 +461,7 @@ module rvMagic (
         .D_MEM_read              (CU_D_MEM_read),
         .D_MEM_mode              (CU_D_MEM_mode),
         .RF_write                (CU_RF_write),
+        .RS2_IMM_ALU_SRC_MUX_sel (CU_RS1_PC_ALU_SRC_MUX_sel),
         .RS2_IMM_ALU_SRC_MUX_sel (CU_RS2_IMM_ALU_SRC_MUX_sel),
         .DMEM_ALU_WB_MUX_sel     (CU_DMEM_ALU_WB_MUX_sel),
         .branch                  (CU_branch),
@@ -484,6 +499,13 @@ module rvMagic (
     );
 
     // NEXT_ADDR_SEL_CU
-    // !!!! MISSING !!!!
+    next_addr_sel_cu NEXT_ADDR_SEL_CU (
+    	.branchIn     (EX_DMEM_controls[6])
+    	.compResult   (EX_DMEM_WB_aluOut[0]),
+    	.jumpIn       (EX_DMEM_controls[5]),
+    	.jalrIn       (EX_DMEM_controls[7]),
+    	.jalrOut      (NEXT_ADDR_SEL_CU_jalrOut),
+    	.jumpOrBranch (NEXT_ADDR_SEL_CU_jumpOrBranch)
+    );
     
 endmodule
