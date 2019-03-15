@@ -232,12 +232,20 @@ The next address is chosen by means of two multiplexers:
 
 \section{Control}
 \subsection{Forwarding Unit (FWU)}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[]{../fwu/ref/schematic/fwu.pdf}
+    \caption{Forwarding Unit}
+    \label{fig:fwu}
+\end{figure}
+
 Forwarding allows to avoid stalling the pipeline when a data hazard occurs between two subsequent instructions, if the needed data is already available in a following pipe stage. 
 In this five stage pipeline results are written to the destination register during the write back stage, three clock cycles after the operand read in the decode stage. This means that, if an instruction modifies a certain register, only instructions starting from the third after the original would read the correct new data, or equivalently that up to two bubble should be inserted in case of a data hazard.
 
 Forwarding simply bypasses data to the beginning of the execution stage (i.e. at the ALU inputs) if the required results are already present at the ALU output or in the following memory access stage. 
 
-To do so, the logic performs some checks:
+To do so, the logic of the FWU (figure~\ref{fig:fwu}) performs some checks:
 \begin{itemize}
     \item Check that the earlier in the pipe actually modifies some register (\texttt{regWrite} is asserted) and that the address does not point to register \texttt{x0}.
     \item Compare the destination register in the EX/MEM stage with both source register in the ID/EX stage and, if there is a match, drives the selection signal of the corresponding ALU input multiplexer to select the previous ALU output (\texttt{fwdA/fwdB} $= 10$).
@@ -251,13 +259,13 @@ The designed forwarding unit handles also the another special case of data hazar
 
 In this case the FWU checks that the two involved instructions are actually a load (\texttt{memToReg} asserted in the MEM/WB stage) and a store (\texttt{memWrite} asserted in the EX/MEM stage) and that the destination and source registers are the same, and if that is the case drives the control of the multiplexer selecting the memory data input to choose the memory output.
 
-Figure \ref{fig:fwu} shows the complete FWU with all inputs on which decisions are taken and the three multiplexer control outputs.
+Figure \ref{fig:fwu_5stages} shows the FWU with all inputs on which decisions are taken and the three output signals controlling the related multiplexers in each pipeline stage of the core.
 
 \begin{figure}[hbtp]
     \centering
-    \includegraphics[]{../fwu/ref/schematic/fwu.pdf}
-    \caption{Forwarding Unit}
-    \label{fig:fwu}
+    \includegraphics[width=\textwidth]{../fwu/ref/schematic/fwu_5stages.pdf}
+    \caption{Forwarding Unit connection to the datapath of the core}
+    \label{fig:fwu_5stages}
 \end{figure}
 
 \subsection{Hazard Detection Unit (HDU)}
