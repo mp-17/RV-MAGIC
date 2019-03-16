@@ -1,0 +1,13 @@
+# List of instructions to test forwarding
+addi x1, x0, 56
+and x3, x1, x2
+
+addi x13, x1, 253
+sub x7, x5, x6
+xor x3, x13, x2
+
+addi x1, x0, 45
+nop
+nop
+lw x2, 16(x1)
+sw x2, 32(x1)
