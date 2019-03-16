@@ -4,8 +4,8 @@
 `include "../../common/src/rv32i_defs.sv"
 `include "../../alu/src/alu_defs.sv"
 
-`define IDEX_CTRL_WIDTH 10
-`define EXDMEM_CTRL_WIDTH 8
+`define IDEX_CTRL_WIDTH 11
+`define EXDMEM_CTRL_WIDTH 9
 `define DMEMWB_CTRL_WIDTH 3
 
 module rvMagic (
@@ -17,8 +17,9 @@ module rvMagic (
     // Data memory interface
     output [`ADDR_WIDTH-1:0] D_MEM_addr,
     output [`WORD_WIDTH-1:0] D_MEM_dataIn,
-    output D_MEM_memRead, D_MEM_memWrite, D_MEM_memMode,
-    input  D_MEM_dataOut
+    output D_MEM_memRead, D_MEM_memWrite, 
+    output [`MEMORY_MODE_WIDTH-1:0] D_MEM_memMode,
+    input [`INST_WIDTH-1:0] D_MEM_dataOut
 );
 
     /**** Signal declarations ****/
@@ -29,18 +30,18 @@ module rvMagic (
             // FWU signals
             // CU signals
             CU_RF_write,
-            CU_immType,
             CU_D_MEM_write,
             CU_D_MEM_read,
-            CU_D_MEM_mode,
             CU_RS1_PC_ALU_SRC_MUX_sel,
             CU_RS2_IMM_ALU_SRC_MUX_sel,
             CU_DMEM_ALU_WB_MUX_sel,
             CU_jump,
             CU_branch,
-            CU_jalr,
+            CU_jalr;
+    logic [`MEMORY_MODE_WIDTH-1:0]  CU_D_MEM_mode;
+    logic [`IMMEDIATE_SELECTION_WIDTH-1:0] CU_immType;
             // Others
-            NEXT_ADDR_SEL_CU_jumpOrBranch,
+    logic    NEXT_ADDR_SEL_CU_jumpOrBranch,
             ifId_FLUSH_FF_q,
             FWU_fwdWriteData,
             NEXT_ADDR_SEL_CU_jalrOut;
@@ -88,7 +89,6 @@ module rvMagic (
     logic [`DMEMWB_CTRL_WIDTH-1:0]  DMEM_WB_controls;
     logic [1:0] FWU_fwdA, FWU_fwdB;
 
-
     /**** Module instantiations ****/
     /* IF stage */
     // PC
@@ -99,7 +99,7 @@ module rvMagic (
     PC (
     	.clk   (clk),
         .rst_n (rst_n),
-        .clr   (0),
+        .clr   (1'b0),
         .en    (HDU_stall_n),
         .d     (NEXT_PC_MUX_out),
         .q     (PC_q)
@@ -128,7 +128,7 @@ module rvMagic (
     IF_ID (
     	.clk   (clk),
         .rst_n (rst_n),
-        .clr   (0),
+        .clr   (1'b0),
         .en    (HDU_stall_n),
         .d     ({   NEXT_PC_ADDER_out,  // d1 
                     PC_q                // d0
@@ -163,8 +163,8 @@ module rvMagic (
     ifId_FLUSH_FF (
     	.clk   (clk),
         .rst_n (rst_n),
-        .clr   (0),
-        .en    (1),
+        .clr   (1'b0),
+        .en    (1'b1),
         .d     (HDU_flush_IfId_ExMem),
         .q     (ifId_FLUSH_FF_q)
     );
@@ -208,13 +208,13 @@ module rvMagic (
             CU_jalr,                    // [7]
             CU_branch,                  // [6]
             CU_jump,                    // [5]
-            CU_D_MEM_mode,              // [4]
+            CU_D_MEM_mode,              // [4] two bits
             CU_D_MEM_read,              // [3]
             CU_D_MEM_write,             // [2]
             CU_DMEM_ALU_WB_MUX_sel,     // [1]
             CU_RF_write                 // [0]
         }),
-        .in1 (0),
+        .in1 (`IDEX_CTRL_WIDTH'b0),
         .sel (HDU_flush_IdEx),
         .out (idEx_FLUSH_MUX_out)
     );
@@ -233,8 +233,8 @@ module rvMagic (
     ID_EX (
     	.clk   (clk),
         .rst_n (rst_n),
-        .clr   (0),
-        .en    (1),
+        .clr   (1'b0),
+        .en    (1'b1),
         .d     ({
             ifId_FLUSH_MUX_out[`RV32I_RS2_START+:`RF_ADDR_WIDTH],   // d18
             ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH],   // d17
@@ -245,7 +245,7 @@ module rvMagic (
             RF_dataOut1,                                            // d12
             RF_dataOut0,                                            // d11 
             ALU_DECODER_ctl,                                        // d10 
-            idEx_FLUSH_MUX_out                                      // d[9:0]
+            idEx_FLUSH_MUX_out                                      // (d9 downto d0) // signal on eleven bits
         }),
         .q     ({
             ID_EX_rs2,          // q18
@@ -257,7 +257,7 @@ module rvMagic (
             ID_EX_dataOut1,     // q12
             ID_EX_dataOut0,     // q11
             ID_EX_aluCtl,       // q10
-            ID_EX_controls      // q[9:0]
+            ID_EX_controls      // (q9 downto q0) // signal on eleven bits
         })
     );
     
@@ -268,8 +268,8 @@ module rvMagic (
         .NB (`EXDMEM_CTRL_WIDTH)
     )
     exDmem_FLUSH_MUX (
-    	.in0 (ID_EX_controls[7:0]),
-        .in1 (0),
+    	.in0 (ID_EX_controls[8:0]),    // from q7 to q0 // q4 = ID_EX_controls[5:4] is a signal on 2 bits
+        .in1 (`EXDMEM_CTRL_WIDTH'b0),
         .sel (HDU_flush_IfId_ExMem),
         .out (exDmem_FLUSH_MUX_out)
     );
@@ -348,8 +348,8 @@ module rvMagic (
     EX_DMEM (
     	.clk   (clk),
         .rst_n (rst_n),
-        .clr   (0),
-        .en    (1),
+        .clr   (1'b0),
+        .en    (1'b1),
         .d     ({
             ID_EX_rs2,              // d13 (wrongly d12 in the schematic)
             ID_EX_rd,               // d12
@@ -357,7 +357,7 @@ module rvMagic (
             BR_JAL_ADDER_out,       // d10
             ALU_out,                // d9
             RS2_ALU_FWD_MUX_out,    // d8
-            ID_EX_controls[7:0]     // d[7:0]
+            ID_EX_controls[8:0]     // (d7 downto d0) // signal on nine bits
         }),
         .q     ({
             EX_DMEM_rs2,        // q13
@@ -366,7 +366,7 @@ module rvMagic (
             EX_DMEM_jumpAddr,   // q10
             EX_DMEM_WB_aluOut,  // q9
             EX_DMEM_memDataIn,  // q8
-            EX_DMEM_controls    // q[7:0]
+            EX_DMEM_controls    // (q7 downto q0) // signal on nine bits
         })
     );
 
@@ -398,7 +398,7 @@ module rvMagic (
     // D_MEM interface
     assign D_MEM_memWrite = EX_DMEM_controls[2];
     assign D_MEM_memRead = EX_DMEM_controls[3];
-    assign D_MEM_memMode = EX_DMEM_controls[4];
+    assign D_MEM_memMode = EX_DMEM_controls[5:4];
     assign D_MEM_dataIn = EX_DMEM_memDataIn;
     assign D_MEM_addr = DMEM_FWD_MUX_out;
     
@@ -415,13 +415,13 @@ module rvMagic (
     DMEM_WB (
     	.clk   (clk),
         .rst_n (rst_n),
-        .clr   (0),
-        .en    (1),
+        .clr   (1'b0),
+        .en    (1'b1),
         .d     ({
             EX_DMEM_rd,                                     // d5
             EX_DMEM_nextPc,                                 // d4
             EX_DMEM_WB_aluOut,                                 // d3
-            {EX_DMEM_controls[5], EX_DMEM_controls[1:0]}    // d[2:0]
+            {EX_DMEM_controls[6], EX_DMEM_controls[1:0]}    // d[2:0]
         }),
         .q     ({
             DMEM_WB_rd,         // q5
@@ -504,10 +504,10 @@ module rvMagic (
 
     // NEXT_ADDR_SEL_CU
     next_addr_sel_cu NEXT_ADDR_SEL_CU (
-    	.branchIn     (EX_DMEM_controls[6]),
+    	.branchIn     (EX_DMEM_controls[7]),
     	.compResult   (EX_DMEM_WB_aluOut[0]),
-    	.jumpIn       (EX_DMEM_controls[5]),
-    	.jalrIn       (EX_DMEM_controls[7]),
+    	.jumpIn       (EX_DMEM_controls[6]),
+    	.jalrIn       (EX_DMEM_controls[8]),
     	.jalrOut      (NEXT_ADDR_SEL_CU_jalrOut),
     	.jumpOrBranch (NEXT_ADDR_SEL_CU_jumpOrBranch)
     );
