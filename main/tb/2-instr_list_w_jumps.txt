@@ -1,0 +1,46 @@
+# Unconditional jumps
+# addi is only used to have a known value
+jal x2, 8
+addi x3, x0, 5
+nop
+nop
+jalr x4, 3(x3)
+
+# Conditional jumps (taken branch)
+# test one branch at a time
+# because jump to PC+16 probably takes nowhere
+addi x1, x0, 9
+addi x2, x0, 9
+nop
+nop
+beq x1, x2, 16
+
+addi x1, x0, 9
+addi x2, x0, 10
+nop
+nop
+bne x1, x2, 16
+
+addi x1, x0, -9
+addi x2, x0, 10
+nop
+nop
+blt x1, x2, 16
+
+addi x1, x0, 10
+addi x2, x0, -9
+nop
+nop
+bge x1, x2, 16
+
+addi x1, x0, 9
+addi x2, x0, 10
+nop
+nop
+bltu x1, x2, 16
+
+addi x1, x0, 10
+addi x2, x0, 9
+nop
+nop
+bgeu x1, x2, 16
