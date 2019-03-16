@@ -1,6 +1,8 @@
 // RV-MAGIC main testbench //
 //
 
+`timescale 1ns/100ps
+
 `include "../../common/src/rv32i_defs.sv"
 `include "../../main/tb/mainTB_param.sv"
 
@@ -9,27 +11,27 @@ module main_tb;
 	// TB main signals
 	logic	clk,
 			rst_n;
+
 	// Instruction memory interface
 	logic 	I_MEM_memRead,
-			I_MEM_memWrite,
-			I_MEM_memMode;
+			I_MEM_memWrite;
+	logic [`MEMORY_MODE_WIDTH-1:0]	I_MEM_memMode;
 	logic [`INST_WIDTH-1:0]	I_MEM_dataIn,
 							I_MEM_dataOut;
 	logic [`ADDR_WIDTH-1:0]	I_MEM_addr;
+
 	// Data memory interface
 	logic	D_MEM_memRead,
-			D_MEM_memWrite,
-			D_MEM_memMode;
+			D_MEM_memWrite;
+	logic [`MEMORY_MODE_WIDTH-1:0]	D_MEM_memMode;
 	logic [`INST_WIDTH-1:0]	D_MEM_dataIn,
 							D_MEM_dataOut;
 	logic [`ADDR_WIDTH-1:0]	D_MEM_addr;
 
 	// clock generation
-	always
-		begin
-			clk <= 1; #`T_clk/2
-			clk <= 0; #`T_clk/2
-		end
+	initial clk = 1;
+    const integer half_T_clk = `T_clk/2;
+    always #(half_T_clk) clk = ~clk;
 
 	// reset generation
 	initial

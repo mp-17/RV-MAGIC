@@ -9,11 +9,8 @@ vlib work
 # map "work" name to work" folder
 vmap work work
 
-# compile all the def files
-vlog -work work -sv ../../common/src/rv32i_defs.sv
-vlog -work work -sv ../../common/src/*.sv
-
 # compile all the src files
 vlog -work work -sv ../../*/src/*.sv
 
 # compile the TB files
+vlog -work work -sv ../../main/tb/*.sv
