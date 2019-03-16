@@ -20,7 +20,8 @@ module mux3(in0, in1, in2, sel, out);
          2'b00: out = in0;
          2'b01: out = in1;
          2'b10: out = in2;
-         default: $error("Select signal out of range (2'b11).");
+         2'b11: $error("Select signal out of range (2'b11).");
+         default: $warning("Select signal value out of {00, 01, 10, 11}");
       endcase
    end
 

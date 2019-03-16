@@ -14,3 +14,6 @@ vlog -work work -sv ../../*/src/*.sv
 
 # compile the TB files
 vlog -work work -sv ../../main/tb/*.sv
+
+# sim command
+vsim work.main_tb

@@ -35,7 +35,7 @@ module memory
 
     // sync read/write
     always_ff @ (posedge clk) begin
-        assert(~(memRead & memWrite))
+        assert(~(memRead & memWrite)) begin
             if (memRead) begin
                 case (addrUnit)
                     `BYTE_MEMORY_MODE: dataOut <= mem_array[address];
@@ -52,6 +52,7 @@ module memory
                     default: $error("Invalid addressable unit specified.");
                 endcase
             end
+        end
         else $error("Memory error: memRead and memWrite active at the same time.");
     end
 endmodule

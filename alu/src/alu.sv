@@ -47,7 +47,7 @@ module alu (
             // AUIPC
             `ALU_AUIPC:  out = a + (b << 12);
             // default case sets out to zero (should be unreachable)
-            default: $display("ALU error: undefined ctl value."); 
+            default: $error("ALU error: undefined ctl value."); 
         endcase
     end
 

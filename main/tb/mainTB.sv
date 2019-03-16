@@ -36,7 +36,6 @@ module main_tb;
 	// reset generation
 	initial
 		begin
-			rst_n <= 1; #10
 			rst_n <= 0; #5
 			rst_n <= 1;
 		end 
@@ -49,8 +48,8 @@ module main_tb;
     // IMEM instantiation
     memory 
     #(
-        .ADDR_WIDTH(`ADDR_WIDTH),
-        .WORD_WIDTH(32),
+        .ADDR_WIDTH(`MEM_ADDR_WIDTH),
+        .WORD_WIDTH(`WORD_WIDTH),
         .INIT_FILE(`INSTRUCTIONS_FILE)
     )
     IMEM(
@@ -58,7 +57,7 @@ module main_tb;
         .memRead(I_MEM_memRead),
         .memWrite(I_MEM_memWrite),
         .addrUnit(I_MEM_memMode),
-        .address(I_MEM_addr),
+        .address(I_MEM_addr[`MEM_ADDR_WIDTH-1:0]),
         .dataIn(I_MEM_dataIn),
         .dataOut(I_MEM_dataOut)
     );
@@ -66,8 +65,8 @@ module main_tb;
     // DMEM instantiation
     memory 
     #(
-        .ADDR_WIDTH(`ADDR_WIDTH),
-        .WORD_WIDTH(32),
+        .ADDR_WIDTH(`MEM_ADDR_WIDTH),
+        .WORD_WIDTH(`WORD_WIDTH),
         .INIT_FILE(`RANDOM_DATA_FILE)
     )
     DMEM(
@@ -75,7 +74,7 @@ module main_tb;
         .memRead(D_MEM_memRead),
         .memWrite(D_MEM_memWrite),
         .addrUnit(D_MEM_memMode),
-        .address(D_MEM_addr),
+        .address(D_MEM_addr[`MEM_ADDR_WIDTH-1:0]),
         .dataIn(D_MEM_dataIn),
         .dataOut(D_MEM_dataOut)
     );
