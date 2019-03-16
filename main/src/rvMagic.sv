@@ -1,5 +1,10 @@
 /* Complete datapath of the RISC-V core
 */
+//
+// BE AWARE:    there is no 1:1 correspondence between bit index and signal index 
+//              when the CU signals are taken into account, because one signal is
+//              represented using two bits. Therefore "d4" is not the fourth bit
+//              of a signal.
 
 `include "../../common/src/rv32i_defs.sv"
 `include "../../alu/src/alu_defs.sv"
@@ -56,6 +61,7 @@ module rvMagic (
                             EX_DMEM_nextPc,
                             EX_DMEM_jumpAddr,
                             EX_DMEM_jalrAddr,
+                            BR_JAL_ADDER_out,
                             DMEM_FWD_MUX_out,
                             DMEM_WB_nextPc;
     logic [`INST_WIDTH-1:0]    ifId_FLUSH_MUX_out;
@@ -76,6 +82,7 @@ module rvMagic (
                             DMEM_ALU_WB_MUX_out,
                             RS1_ALU_FWD_MUX_out,
                             RS2_ALU_FWD_MUX_out,
+                            RS1_PC_ALU_SRC_MUX_out,
                             RS2_IMM_ALU_SRC_MUX_out,
                             ALU_out,
                             EX_DMEM_memDataIn,
@@ -203,16 +210,16 @@ module rvMagic (
     )
     idEx_FLUSH_MUX (
     	.in0 ({
-    		CU_RS1_PC_ALU_SRC_MUX_sel,  // [9]
-            CU_RS2_IMM_ALU_SRC_MUX_sel, // [8]
-            CU_jalr,                    // [7]
-            CU_branch,                  // [6]
-            CU_jump,                    // [5]
-            CU_D_MEM_mode,              // [4] two bits
-            CU_D_MEM_read,              // [3]
-            CU_D_MEM_write,             // [2]
-            CU_DMEM_ALU_WB_MUX_sel,     // [1]
-            CU_RF_write                 // [0]
+    		CU_RS1_PC_ALU_SRC_MUX_sel,  // [9] // b10
+            CU_RS2_IMM_ALU_SRC_MUX_sel, // [8] // b9
+            CU_jalr,                    // [7] // b8
+            CU_branch,                  // [6] // b7
+            CU_jump,                    // [5] // b6
+            CU_D_MEM_mode,              // [4] // b5 b4 // two bits!
+            CU_D_MEM_read,              // [3] // b3
+            CU_D_MEM_write,             // [2] // b2
+            CU_DMEM_ALU_WB_MUX_sel,     // [1] // b1
+            CU_RF_write                 // [0] // b0
         }),
         .in1 (`IDEX_CTRL_WIDTH'b0),
         .sel (HDU_flush_IdEx),
@@ -225,7 +232,7 @@ module rvMagic (
         .NB (
             3 * `RF_ADDR_WIDTH + 
             2 * `ADDR_WIDTH + 
-            2 * `WORD_WIDTH + 
+            3 * `WORD_WIDTH + 
             `ALU_CTL_WIDTH +
             `IDEX_CTRL_WIDTH
         )
@@ -308,7 +315,7 @@ module rvMagic (
     RS1_PC_ALU_SRC_MUX (
     	.in0 (RS1_ALU_FWD_MUX_out),
         .in1 (ID_EX_pc),
-        .sel (ID_EX_controls[9]),
+        .sel (ID_EX_controls[10]),
         .out (RS1_PC_ALU_SRC_MUX_out)
     );
 
@@ -320,7 +327,7 @@ module rvMagic (
     RS2_IMM_ALU_SRC_MUX (
     	.in0 (RS2_ALU_FWD_MUX_out),
         .in1 (ID_EX_immediate),
-        .sel (ID_EX_controls[8]),
+        .sel (ID_EX_controls[9]),
         .out (RS2_IMM_ALU_SRC_MUX_out)
     );
     
@@ -351,13 +358,13 @@ module rvMagic (
         .clr   (1'b0),
         .en    (1'b1),
         .d     ({
-            ID_EX_rs2,              // d13 (wrongly d12 in the schematic)
+            ID_EX_rs2,              // d13
             ID_EX_rd,               // d12
             ID_EX_nextPc,           // d11
             BR_JAL_ADDER_out,       // d10
             ALU_out,                // d9
             RS2_ALU_FWD_MUX_out,    // d8
-            ID_EX_controls[8:0]     // (d7 downto d0) // signal on nine bits
+            exDmem_FLUSH_MUX_out     // (d7 downto d0) // signal on nine bits
         }),
         .q     ({
             EX_DMEM_rs2,        // q13
@@ -378,7 +385,7 @@ module rvMagic (
     )
     BRJAL_JALR_MUX (
     	.in0 (EX_DMEM_jumpAddr),
-        .in1 ({EX_DMEM_WB_aluOut[`WORD_WIDTH-1:1], 0}),
+        .in1 ({EX_DMEM_WB_aluOut[`WORD_WIDTH-1:1], 1'b0}),
         .sel (NEXT_ADDR_SEL_CU_jalrOut),
         .out (BRJAL_JALR_MUX_out)
     );
@@ -406,7 +413,7 @@ module rvMagic (
     register 
     #(
         .NB (
-            `WORD_WIDTH +
+            `RF_ADDR_WIDTH +
             `ADDR_WIDTH + 
             `WORD_WIDTH + 
             `DMEMWB_CTRL_WIDTH
