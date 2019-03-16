@@ -19,7 +19,7 @@
 module hdu (
     input [`RF_ADDR_WIDTH-1:0] ifidRs1, ifidRs2, idexRd,
     input ifidMemWrite, idexMemRead, branchOrJump,
-    output stall_n, flushIdEx, flushIfIdExMem
+    output logic stall_n, flushIdEx, flushIfIdExMem
 );
 
     always_comb begin

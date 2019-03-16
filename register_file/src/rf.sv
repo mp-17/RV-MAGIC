@@ -3,7 +3,7 @@
 module rf
 #( // parameters
     localparam REGS = 1 << `RF_ADDR_WIDTH // 2^ADDR_WIDTH
-) 
+)
 (
     input clk, regWrite,
     input [`RF_ADDR_WIDTH-1:0] readAddr0, readAddr1, writeAddr,

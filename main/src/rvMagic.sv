@@ -11,13 +11,14 @@
 module rvMagic (
     input clk, rst_n,
     // Instruction memory interface
-    output [`ADDR_WIDTH-1:0] I_MEM_dataIn,
+    output [`ADDR_WIDTH-1:0] I_MEM_addr,
     output I_MEM_memRead,
     input [`INST_WIDTH-1:0] I_MEM_dataOut,
     // Data memory interface
-    output [`ADDR_WIDTH-1:0] D_MEM_dataIn,
+    output [`ADDR_WIDTH-1:0] D_MEM_addr,
+    output [`WORD_WIDTH-1:0] D_MEM_dataIn,
     output D_MEM_memRead, D_MEM_memWrite, D_MEM_memMode,
-    input [`WORD_WIDTH-1:0] D_MEM_dataOut
+    input  D_MEM_dataOut
 );
 
     /**** Signal declarations ****/
@@ -54,6 +55,7 @@ module rvMagic (
                             EX_DMEM_nextPc,
                             EX_DMEM_jumpAddr,
                             EX_DMEM_jalrAddr,
+                            DMEM_FWD_MUX_out,
                             DMEM_WB_nextPc;
     logic [`INST_WIDTH-1:0]    ifId_FLUSH_MUX_out;
     logic [`RF_ADDR_WIDTH-1:0]  DMEM_WB_rd,
@@ -138,7 +140,7 @@ module rvMagic (
 
     // I_MEM interface
     assign I_MEM_memRead = HDU_stall_n;
-    assign I_MEM_dataIn = PC_q;
+    assign I_MEM_addr = PC_q;
 
     /* ID stage */
     // ifId_FLUSH_MUX
@@ -390,13 +392,15 @@ module rvMagic (
     	.in0 (EX_DMEM_WB_aluOut),
         .in1 (DMEM_ALU_WB_MUX_out),
         .sel (FWU_fwdWriteData),
-        .out (D_MEM_dataIn)
+        .out (DMEM_FWD_MUX_out)
     );
 
     // D_MEM interface
     assign D_MEM_memWrite = EX_DMEM_controls[2];
     assign D_MEM_memRead = EX_DMEM_controls[3];
     assign D_MEM_memMode = EX_DMEM_controls[4];
+    assign D_MEM_dataIn = EX_DMEM_memDataIn;
+    assign D_MEM_addr = DMEM_FWD_MUX_out;
     
     // DMEM_WB
     register 
@@ -461,7 +465,7 @@ module rvMagic (
         .D_MEM_read              (CU_D_MEM_read),
         .D_MEM_mode              (CU_D_MEM_mode),
         .RF_write                (CU_RF_write),
-        .RS2_IMM_ALU_SRC_MUX_sel (CU_RS1_PC_ALU_SRC_MUX_sel),
+        .RS1_PC_ALU_SRC_MUX_sel  (CU_RS1_PC_ALU_SRC_MUX_sel),
         .RS2_IMM_ALU_SRC_MUX_sel (CU_RS2_IMM_ALU_SRC_MUX_sel),
         .DMEM_ALU_WB_MUX_sel     (CU_DMEM_ALU_WB_MUX_sel),
         .branch                  (CU_branch),
@@ -500,7 +504,7 @@ module rvMagic (
 
     // NEXT_ADDR_SEL_CU
     next_addr_sel_cu NEXT_ADDR_SEL_CU (
-    	.branchIn     (EX_DMEM_controls[6])
+    	.branchIn     (EX_DMEM_controls[6]),
     	.compResult   (EX_DMEM_WB_aluOut[0]),
     	.jumpIn       (EX_DMEM_controls[5]),
     	.jalrIn       (EX_DMEM_controls[7]),

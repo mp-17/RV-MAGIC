@@ -4,12 +4,12 @@ module immgen
 (
     input [`INST_WIDTH-1:0] instruction,
     input [`IMMEDIATE_SELECTION_WIDTH-1:0] imm_type, // we need the CU to tell us the type of instruction
-    output [`WORD_WIDTH-1:0] immediate
+    output logic [`WORD_WIDTH-1:0] immediate
 );
 
     always_comb begin
         case(imm_type)
-            I_TYPE :
+            `I_TYPE :
             begin
                 immediate[0] = instruction[20];
                 immediate[1+:4] = instruction[21+:4];
@@ -17,7 +17,7 @@ module immgen
                 for (int i = 0; i < 22; i++)
                     immediate[11+i] = instruction[31];
             end
-            S_TYPE :
+            `S_TYPE :
             begin
                 immediate[0] = instruction[7];
                 immediate[1+:4] = instruction[8+:4];
@@ -25,7 +25,7 @@ module immgen
                 for (int i = 0; i < 22; i++)
                     immediate[11+i] = instruction[31];
             end
-            B_TYPE :
+            `B_TYPE :
             begin
                 immediate[0] = 1'b0;
                 immediate[1+:4] = instruction[8+:4];
@@ -34,7 +34,7 @@ module immgen
                 for (int i = 0; i < 22; i++)
                     immediate[12+i] = instruction[31];
             end
-            U_TYPE :
+            `U_TYPE :
             begin
                 for (int i = 0; i < 12; i++)
                         immediate[i] = 0;
@@ -42,7 +42,7 @@ module immgen
                 immediate[20+:11] = instruction[20+:11];
                 immediate[31] = instruction[31];
             end
-            J_TYPE :
+            `J_TYPE :
             begin
                 immediate[0] = 1'b0;
                 immediate[1+:4] = instruction[21+:4];

@@ -15,7 +15,7 @@
     comparisons is just written in the result.
 */
 
-`include "alu_defs.sv"
+`include "../../alu/src/alu_defs.sv"
 `include "../../common/src/rv32i_defs.sv"
 
 module alu (
@@ -45,7 +45,7 @@ module alu (
             `ALU_SLTU:   out = a < b ? 1 : 0;
             `ALU_SGEU:   out = a >= b ? 1 : 0;
             // AUIPC
-            `ALU_AUIPC:  out = a + (b << 12)
+            `ALU_AUIPC:  out = a + (b << 12);
             // default case sets out to zero (should be unreachable)
             default: $display("ALU error: undefined ctl value."); 
         endcase
