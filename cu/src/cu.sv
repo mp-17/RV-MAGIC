@@ -93,6 +93,7 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_LB_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_LB_FUNCT3)
         begin
             imm_type = `I_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `BYTE_MEMORY_MODE;
@@ -101,6 +102,7 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_LH_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_LH_FUNCT3)
         begin
             imm_type = `I_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `HALFWORD_MEMORY_MODE;
@@ -109,6 +111,7 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_LW_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_LW_FUNCT3)
         begin
             imm_type = `I_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `WORD_MEMORY_MODE;
@@ -117,6 +120,7 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_LBU_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_LBU_FUNCT3)
         begin
             imm_type = `I_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `BYTE_MEMORY_MODE;
@@ -125,6 +129,7 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_LHU_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_LHU_FUNCT3)
         begin
             imm_type = `I_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             DMEM_ALU_WB_MUX_sel = 1; // DMEM
             D_MEM_read = 1;
             D_MEM_mode = `HALFWORD_MEMORY_MODE;
@@ -133,18 +138,21 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_SB_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_SB_FUNCT3)
         begin
             imm_type = `S_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             D_MEM_write = 1;
             D_MEM_mode = `BYTE_MEMORY_MODE;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_SH_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_SH_FUNCT3)
         begin
             imm_type = `S_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             D_MEM_write = 1;
             D_MEM_mode = `HALFWORD_MEMORY_MODE;
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_SW_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_SW_FUNCT3)
         begin
             imm_type = `S_TYPE;
+            RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate
             D_MEM_write = 1;
             D_MEM_mode = `WORD_MEMORY_MODE;
         end
