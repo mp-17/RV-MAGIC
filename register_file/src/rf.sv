@@ -5,7 +5,7 @@ module rf
     localparam REGS = 1 << `RF_ADDR_WIDTH // 2^ADDR_WIDTH
 )
 (
-    input clk, regWrite,
+    input clk, regWrite, rst_n,
     input [`RF_ADDR_WIDTH-1:0] readAddr0, readAddr1, writeAddr,
     input [`WORD_WIDTH-1:0] dataIn,
     output logic [`WORD_WIDTH-1:0] dataOut0, dataOut1
@@ -26,8 +26,13 @@ module rf
     end
 
     // synchronous write
-    always @ (posedge clk) begin
-        if (regWrite && (writeAddr != 0)) regs[writeAddr] <= dataIn;
+    always @ (posedge clk or negedge rst_n) begin
+    	if (rst_n == 0) begin
+    		for (integer i = 0; i < REGS; i++) begin
+    			regs[i] = `WORD_WIDTH'b0;
+    		end
+    	end
+    	else if (regWrite && (writeAddr != 0)) regs[writeAddr] <= dataIn;
     end
 
 endmodule

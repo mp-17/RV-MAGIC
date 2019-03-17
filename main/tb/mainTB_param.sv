@@ -1,6 +1,6 @@
 // main testbench related parameters 
-`define INSTRUCTIONS_FILE "../../main/tb/instructions.txt"
-`define RANDOM_DATA_FILE "../../main/tb/random_data.txt"
+`define INSTRUCTIONS_FILE "../../main/tb/mc/1-instr_list_no_jump.riscv"
+`define RANDOM_DATA_FILE "../../main/tb/mc/3-fwd_test.riscv"
 `define NUMBER_OF_INSTRUCTIONS 10
 
 // clock period

@@ -180,6 +180,7 @@ module rvMagic (
     rf RF (
     	.clk       (clk),
         .regWrite  (DMEM_WB_controls[0]),
+        .rst_n     (rst_n),
         .readAddr0 (ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH]),
         .readAddr1 (ifId_FLUSH_MUX_out[`RV32I_RS2_START+:`RF_ADDR_WIDTH]),
         .writeAddr (DMEM_WB_rd),
