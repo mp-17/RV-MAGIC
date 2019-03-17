@@ -5,8 +5,8 @@
 import readline
 
 # default file paths
-inFilePath = './private/1-instr_list_no_jump.intermediate'
-outFilePath = './private/1-instr_list_no_jump.riscv'
+inFilePath = 'private/3-fwd_test.intermediate'
+outFilePath = 'private/3-fwd_test.riscv'
 
 # take a binary string and convert it to hex without prefix
 def bin2hex(binaryStr):
@@ -48,7 +48,7 @@ def bin2litEndByte(inFilePath, outFilePath, binOrHex_outMode, instruction_width)
 					fOut.write(tmpByte + '\n')
 
 	except FileNotFoundError:
-		print('Error: at least one of the two files does not exist.', '\n')
+		print('Error: input file or output folder does not exist.', '\n')
 		exit(1)
 
 # autosufficiency of the script
