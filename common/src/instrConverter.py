@@ -36,7 +36,7 @@ def bin2litEndByte(inFilePath, outFilePath, binOrHex_outMode, instruction_width)
 			for binInstr in fIn:
 				for i in range(instruction_width, 0, -BYTE_WIDTH):
 					# RISC-v adopts little endian storage default
-					tmpByte_bin = binInstr[i-7:i]
+					tmpByte_bin = binInstr[i-8:i]
 					# convert the byte in hex
 					tmpByte_hex = bin2hex(tmpByte_bin)
 					# choose the correct format

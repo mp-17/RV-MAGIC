@@ -381,7 +381,17 @@ It is worth to note that the addressable space of the memory was reduced because
 The entire system is reset at the beginning of the simulation, and a parametric clock is fed to all the sequential elements. 
 An \textit{initial} statement inside the memory modules ensures the correct loading of the instructions/data inside them. To perform this task, the function \textit{\$readmemh} is used: it allows to read an ASCII text file in which are present hexadecimal data written in rows. Each row is assigned to a vector of the memory. 
 
-With the aid of the GUI of Modelsim, each signal was visually followed to check if the timing of the processor was respected. 
+With the aid of the GUI of Modelsim, each signal was visually followed to check if the timing of the processor was respected. The first tested code is the following:
+
+% ADD THE CODE
+
+\subparagraph*{lui x1, 37} The 20 bits immediate \textbf{37} = 00000000000000100101 is sign extended to 32 bits, then it is brought to the ALU for a 12-bits left shifting (with zero padding). The result is saved to the destination register. 
+\begin{enumerate}
+\item Immediate: 00000000000000100101 = 37
+\item Sign extension: 00000000000000000000000000100101 = 37
+\item Left shifting and zero padding: 00000000000000100101000000000000 = 151552
+\end{enumerate} 
+The result is saved in x1.
 
 \subsubsection{Assembler}\label{sec:assembler}
 
