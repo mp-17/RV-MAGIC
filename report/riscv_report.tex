@@ -396,7 +396,14 @@ The first instructions are LUI to load the RF with positive and negative values.
 \end{enumerate} 
 The result is saved in x1. 
 
-And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The previous instruction, i.e. the last LUI, is being decoded: for its completion there's the need for waiting for other four cycles. At this point (PC = 144) all the register file were checked to verify the correct storage of the data.
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=.8]{/home/matteo/git/RV-MAGIC/main/sim/plot/first_LUIs_validation.png}
+    \caption{RF loading verification}
+    \label{fig:first_LUIs_ver}
+\end{figure}
+
+And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The previous instruction, i.e. the last LUI, is being decoded: for its completion there's the need for waiting for other four cycles. At this point (PC = 144) all the register file were checked to verify the correct storage of the data (figure \ref{fig:first_LUIs_ver}).
 
 \subparagraph*{auipc x2, 6466} The 20 bits immediate \textbf{6466} is sign extended, left shifted and added to the content of the PC relative to the instruction itself (PC = 128).
 \begin{enumerate}
@@ -405,8 +412,9 @@ And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The pre
 \item Sum with PC: 00000001100101000010000010000000 = 26484864
 \end{enumerate} 
 The result is saved in x2. 
-
 The same procedure was followed to verify all the other instructions of the RV32I ISA.
+
+Once all the basic logical/arithmetical functions were verified in this soft way (not all the possible combinations were tested!), jumps and branches were taken into account.
 
 \subsubsection{Assembler}\label{sec:assembler}
 

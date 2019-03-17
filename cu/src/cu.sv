@@ -55,6 +55,8 @@ module cu
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_JALR_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_JALR_FUNCT3)
         begin
             imm_type = `I_TYPE;
+            RS1_PC_ALU_SRC_MUX_sel = 1;
+            RS2_IMM_ALU_SRC_MUX_sel = 1;
             RF_write = 1;
             jump = 1;
             jalr = 1;

@@ -1,10 +1,10 @@
 # Unconditional jumps
 # addi is only used to have a known value
-jal x2, 8
+jal x2, 2
 addi x3, x0, 5
 nop
 nop
-jalr x4, 3(x3)
+jalr x4, x3, 3
 
 # Conditional jumps (taken branch)
 # test one branch at a time
