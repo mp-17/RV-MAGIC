@@ -366,4 +366,23 @@ Figure \ref{fig:memory_timing} shows the usual timing diagram of this fully sync
     \label{fig:memory_timing}
 \end{figure}
 
+\subsection{Main}\label{sec:main}
+To test the whole processor, some patterns of instructions were develped. The main purposes were to check:
+\begin{enumerate}
+\item the correct behaviour of each instruction in a flow without hazards
+\item the correct management of all the hazards
+\end{enumerate}
+To achieve this in an easier way, an assembler was developed to support a translation from the RISC-V assembly to the machine code. A detailed discussion about this tool is provided in section \ref{sec:assembler}. Initially a search on the net was done to find a toolchain to convert high level languages like C in RV32I instructions, but a lot of issues arose and another strategies were chosen. The developing of an assembler is not critical, because of its static nature: it works like a decoder and it does not need to be "clever" like a compiler. Testing needs weren't critical and a string check-processing was enaugh. 
+
+\paragraph{Instructions}
+
+\paragraph{Testbench} The testbench was written in Verilog coherently with all the previous work. The entity instantiates the \textbf{DUV} (\textbf{D}evice \textbf{U}nder \textbf{V}erification) together with the two memories. It also handles the clock and reset generation.
+It is worth to note that the addressable space of the memory was reduced because a complete 32-bit one was not feasable due to space problems: only a subset of the PC bits was bound to the address line of the storage devices.
+The entire system is reset at the beginning of the simulation, and a parametric clock is fed to all the sequential elements. 
+An \textit{initial} statement inside the memory modules ensures the correct loading of the instructions/data inside them. To perform this task, the function \textit{\$readmemh} is used: it allows to read an ASCII text file in which are present hexadecimal data written in rows. Each row is assigned to a vector of the memory. 
+
+With the aid of the GUI of Modelsim, each signal was visually followed to check if the timing of the processor was respected. 
+
+\subsubsection{Assembler}\label{sec:assembler}
+
 \end{document}
