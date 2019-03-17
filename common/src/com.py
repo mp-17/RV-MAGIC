@@ -26,6 +26,7 @@
 #    dictionaries
 # ===================================================================
 
+import readline
 import datetime
 import sys
 
