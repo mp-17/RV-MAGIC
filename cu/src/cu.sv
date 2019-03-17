@@ -192,21 +192,21 @@ module cu
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_SLLI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_SLLI_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == `RV32I_SLLI_FUNCT7)
         begin
-            imm_type = `R_TYPE;
+            imm_type = `I_TYPE;
             RF_write = 1;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate --> uses rs2 position but it is the same as lowest bits of immediate --> we need the value directly, not the value from the regfile
             DMEM_ALU_WB_MUX_sel = 0; // ALU
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_SRLI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_SRLI_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == `RV32I_SRLI_FUNCT7)
         begin
-            imm_type = `R_TYPE;
+            imm_type = `I_TYPE;
             RF_write = 1;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate --> uses rs2 position but it is the same as lowest bits of immediate --> we need the value directly, not the value from the regfile
             DMEM_ALU_WB_MUX_sel = 0; // ALU
         end
         else if (instruction[`RV32I_OPCODE_START+:`RV32I_OPCODE_WIDTH] == `RV32I_SRAI_OPCODE && instruction[`RV32I_FUNCT3_START+:`RV32I_FUNCT3_WIDTH] == `RV32I_SRAI_FUNCT3 && instruction[`RV32I_FUNCT7_START+:`RV32I_FUNCT7_WIDTH] == `RV32I_SRAI_FUNCT7)
         begin
-            imm_type = `R_TYPE;
+            imm_type = `I_TYPE;
             RF_write = 1;
             RS2_IMM_ALU_SRC_MUX_sel = 1; // immediate --> uses rs2 position but it is the same as lowest bits of immediate --> we need the value directly, not the value from the regfile
             DMEM_ALU_WB_MUX_sel = 0; // ALU

@@ -1,6 +1,36 @@
-# U-type
-lui x1, 37
-auipc x2, 37
+lui x0, 37
+lui x1, 133
+lui x2, 65
+lui x3, -1
+lui x4, 0
+lui x5, 169
+lui x6, 55
+lui x7, 37
+lui x8, -464
+lui x9, 100003
+lui x10, 99
+lui x11, -3
+lui x12, 1515
+lui x13, 14
+lui x14, 37
+lui x15, 54
+lui x16, 64
+lui x17, 664
+lui x18, -4
+lui x19, 13
+lui x20, -66
+lui x21, -567
+lui x22, 887
+lui x23, 422
+lui x24, 354
+lui x25, 26
+lui x26, 14
+lui x27, -75
+lui x28, 65
+lui x29, 114
+lui x30, -35536
+lui x31, 66
+auipc x2, 6466
 
 # ALU instructions reg/imm
 addi x4, x3, -56
@@ -21,18 +51,18 @@ or x1, x30, x31
 xor x4, x2, x3
 sll x7, x5, x6
 srl x10, x8, x9
-srai x13, x11, x12 
+srai x13, x11, 12
 slt x16, x14, x15
 sltu x19, x17, x18
 
 # Load
-lb x21, 3(x20)
-lh x23, 8(x22)
-lbu x25, 34(x24)
-lhu x27, 45(x26)
-lw x29, 9(x28)
+lb x21, x20, 3
+lh x23, x22, 8
+lbu x25, x24, 34
+lhu x27, x26, 45
+lw x29, x28, 9
 
 # Store
-sb x31, 3(x30)
-sh x2, 23(x1)
-sw x4, 89(x3)
+sb x31, x30, 3
+sh x2, x1, 23
+sw x4, x3, 89

@@ -1,7 +1,7 @@
 // width-related constants
 `define INST_WIDTH      32
 `define ADDR_WIDTH      32
-`define MEM_ADDR_WIDTH  7 
+`define MEM_ADDR_WIDTH  10
 `define WORD_WIDTH      32
 `define HWORD_WIDTH     16
 `define BYTE_WIDTH      8

@@ -36,7 +36,7 @@ module main_tb;
 	// reset generation
 	initial
 		begin
-			rst_n <= 0; #5
+			rst_n <= 0; #2
 			rst_n <= 1;
 		end 
 

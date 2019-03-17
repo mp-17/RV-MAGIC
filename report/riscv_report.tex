@@ -385,31 +385,28 @@ With the aid of the GUI of Modelsim, each signal was visually followed to check 
 
 % ADD THE CODE
 
-\subparagraph*{lui x1, 37} The 20 bits immediate \textbf{37} = 00000000000000100101 is sign extended to 32 bits and 12-bits left shifted (with zero padding), then it is brought to the ALU to exit it without any processing. The result is saved to the destination register. 
+The first instructions are LUI to load the RF with positive and negative values. A writing to x0 is performed to verify its immutability.
+
+\subparagraph*{lui x0, 37} Nothing has to be saved in x0, because it is hardwired to gnd.
+
+\subparagraph*{lui x1, 133} The 20 bits immediate \textbf{133} = 00000000000010000101 is sign extended to 32 bits and 12-bits left shifted (with zero padding), then it is brought to the ALU to exit it without any processing. The result is saved to the destination register. 
 \begin{enumerate}
-\item Immediate: 00000000000000100101 = 37
-\item Sign extension: 00000000000000000000000000100101 = 37
-\item Left shifting and zero padding: 00000000000000100101000000000000 = 151552
+\item Immediate: 00000000000010000101 = 133
+\item Sign extension, left shifting and zero padding: 00000000000010000101000000000000 = 544768
 \end{enumerate} 
 The result is saved in x1. 
 
-\subparagraph*{auipc x2, 37} The 20 bits immediate \textbf{37} = 00000000000000100101 is sign extended and left shifted as for the LUI operation, but when it reaches the ALU it is added to the value of the PC, the one related to the AUIPC instruction.
-\begin{enumerate}
-\item Immediate: 00000000000000100101 = 37
-\item Sign extension: 00000000000000000000000000100101 = 37
-\item Left shifting and zero padding: 00000000000000100101000000000000 = 151552
-\item PC: 00000000000000000000000000000100 = 4
-\item Result: 00000000000000100101000000000100 = 151556
-\end{enumerate} 
-The result is saved in x2.
+And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The previous instruction, i.e. the last LUI, is being decoded: for its completion there's the need for waiting for other four cycles. At this point (PC = 144) all the register file were checked to verify the correct storage of the data.
 
-\subparagraph*{addi x4, x3, 56} The 12 bits immediate \textbf{56} = 000000111000 is sign extended to 32-bits and added to the content of the register x3, which is zero when the program starts after the reset. 
+\subparagraph*{auipc x2, 6466} The 20 bits immediate \textbf{6466} is sign extended, left shifted and added to the content of the PC relative to the instruction itself (PC = 128).
 \begin{enumerate}
-\item Immediate: 000000111000 = 56
-\item Sign extension: 00000000000000000000000000111000 = 56
-\item Sum with \$x3: 00000000000000000000000000111000 = 56
+\item Immediate: 00000001100101000010 = 6466
+\item Sign extension, left shifting and zero padding: 00000001100101000010000000000000 = 26484736
+\item Sum with PC: 00000001100101000010000010000000 = 26484864
 \end{enumerate} 
-The result is saved in x3.
+The result is saved in x2. 
+
+The same procedure was followed to verify all the other instructions of the RV32I ISA.
 
 \subsubsection{Assembler}\label{sec:assembler}
 
