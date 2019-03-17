@@ -60,7 +60,6 @@ module rvMagic (
                             ID_EX_nextPc,
                             EX_DMEM_nextPc,
                             EX_DMEM_jumpAddr,
-                            EX_DMEM_jalrAddr,
                             BR_JAL_ADDER_out,
                             DMEM_FWD_MUX_out,
                             DMEM_WB_nextPc;

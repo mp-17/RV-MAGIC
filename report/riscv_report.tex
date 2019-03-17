@@ -385,13 +385,31 @@ With the aid of the GUI of Modelsim, each signal was visually followed to check 
 
 % ADD THE CODE
 
-\subparagraph*{lui x1, 37} The 20 bits immediate \textbf{37} = 00000000000000100101 is sign extended to 32 bits, then it is brought to the ALU for a 12-bits left shifting (with zero padding). The result is saved to the destination register. 
+\subparagraph*{lui x1, 37} The 20 bits immediate \textbf{37} = 00000000000000100101 is sign extended to 32 bits and 12-bits left shifted (with zero padding), then it is brought to the ALU to exit it without any processing. The result is saved to the destination register. 
 \begin{enumerate}
 \item Immediate: 00000000000000100101 = 37
 \item Sign extension: 00000000000000000000000000100101 = 37
 \item Left shifting and zero padding: 00000000000000100101000000000000 = 151552
 \end{enumerate} 
-The result is saved in x1.
+The result is saved in x1. 
+
+\subparagraph*{auipc x2, 37} The 20 bits immediate \textbf{37} = 00000000000000100101 is sign extended and left shifted as for the LUI operation, but when it reaches the ALU it is added to the value of the PC, the one related to the AUIPC instruction.
+\begin{enumerate}
+\item Immediate: 00000000000000100101 = 37
+\item Sign extension: 00000000000000000000000000100101 = 37
+\item Left shifting and zero padding: 00000000000000100101000000000000 = 151552
+\item PC: 00000000000000000000000000000100 = 4
+\item Result: 00000000000000100101000000000100 = 151556
+\end{enumerate} 
+The result is saved in x2.
+
+\subparagraph*{addi x4, x3, 56} The 12 bits immediate \textbf{56} = 000000111000 is sign extended to 32-bits and added to the content of the register x3, which is zero when the program starts after the reset. 
+\begin{enumerate}
+\item Immediate: 000000111000 = 56
+\item Sign extension: 00000000000000000000000000111000 = 56
+\item Sum with \$x3: 00000000000000000000000000111000 = 56
+\end{enumerate} 
+The result is saved in x3.
 
 \subsubsection{Assembler}\label{sec:assembler}
 

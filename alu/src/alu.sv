@@ -44,8 +44,8 @@ module alu (
             `ALU_SGE:    out = $signed(a) >= $signed(b) ? 1 : 0;
             `ALU_SLTU:   out = a < b ? 1 : 0;
             `ALU_SGEU:   out = a >= b ? 1 : 0;
-            // AUIPC
-            `ALU_AUIPC:  out = a + (b << 12);
+            // LUI
+            `ALU_LUI:    out = b;
             // default case sets out to zero (should be unreachable)
             default: $error("ALU error: undefined ctl value."); 
         endcase

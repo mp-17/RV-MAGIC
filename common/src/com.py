@@ -30,6 +30,8 @@ import readline
 import datetime
 import sys
 
+from instrConverter import bin2litEndByte
+
 from rv32i_defs import *
 
 print("""\n> =================================================================
@@ -49,6 +51,12 @@ except IndexError:
    # Ask for output file name
    outFileName = ask_str('Input the output file name', 'private/mcode.txt')
 open(outFileName, 'w').close() # Prepare blank output file
+
+try:
+   convertInHex = sys.argv[3]
+except IndexError:   
+   # Ask if a conversion in HEX is needed
+   convertInHex = ask_str('Do you want to convert the result also in .riscv format, with instructions in HEX, one byte per row, using little endian storage format? Default is "y".', 'y')
 
 remainders = 3
 
@@ -138,3 +146,10 @@ while True:
    except: # Unexpected errors, not handled
       print('# Unexpected Error: {}. Exiting now...'.format(sys.exc_info()[0]))
       raise
+
+# convert the bin file to an hex file in little endian format, one byte per row
+dontConvertList = ['n', 'N', 'no', 'No', 0]
+if convertInHex in dontConvertList:
+   pass
+else:
+   bin2litEndByte(outFileName, outFileName + '.riscv', 'hex', 32)

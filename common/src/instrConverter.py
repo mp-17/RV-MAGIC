@@ -5,8 +5,8 @@
 import readline
 
 # default file paths
-inFilePath = 'private/3-fwd_test.intermediate'
-outFilePath = 'private/3-fwd_test.riscv'
+inFilePath = 'private/2-instr_list_w_jumps.intermediate'
+outFilePath = 'private/2-instr_list_w_jumps.riscv'
 
 # take a binary string and convert it to hex without prefix
 def bin2hex(binaryStr):

@@ -3,7 +3,7 @@ lui x1, 37
 auipc x2, 37
 
 # ALU instructions reg/imm
-addi x4, x3, 56
+addi x4, x3, -56
 andi x6, x5, 255
 ori x8, x7, 255
 xori x10, x9, 255

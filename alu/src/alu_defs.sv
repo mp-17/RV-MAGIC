@@ -17,5 +17,5 @@
 `define ALU_SLT     `ALU_CTL_WIDTH'hA   // set if less than
 `define ALU_SGE     `ALU_CTL_WIDTH'hB   // set if greater or equal
 `define ALU_SLTU    `ALU_CTL_WIDTH'hC   // set if less than (unsigned)
-`define ALU_SGEU    `ALU_CTL_WIDTH'hD   // set if greater or equal (unsigned)
-`define ALU_AUIPC   `ALU_CTL_WIDTH'hE   // AUIPC = PC + (imm << 12)           
+`define ALU_SGEU    `ALU_CTL_WIDTH'hD   // set if greater or equal (unsigned)      
+`define ALU_LUI  	`ALU_CTL_WIDTH'hE   // LUI = imm << 12
