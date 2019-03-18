@@ -2,24 +2,14 @@
 # RV32I ISA (with a few insrtuctions omitted). These are required
 # for com.py to run.
 
-usage = """Usage:
-- If run without arguments, the script will ask for everything
-  that's necessary
-- If run with arguments, they are:
-  argv[1]: Name of the source file relative to 
-           "/RV-MAGIC/main/tb/assembly/" 
-  argv[2]: Condition to perform hex conversion of the output
-           machine code. Write "n", "0", "no" case insensitive to 
-           say that you don't need it\n"""
-
 import os
 
 # ======================== FUNCTIONS ================================
 # ------------------------ GET ROOT DIR -----------------------------
 # Thanks Marco!
 def get_root(repo_name):
-    cwd = os.getcwd()
-    return cwd[0:cwd.find(repo_name) + len(repo_name)]
+   cwd = os.getcwd()
+   return cwd[0:cwd.find(repo_name) + len(repo_name)]
 
 # ------------------------ ASK STRING -------------------------------
 # Ask for a string (name of a file etc)
@@ -36,18 +26,22 @@ def chk_cmt(word):
 # ------------------ PSEUDOINSTRUCTIONS HANDLER ---------------------
 # Pseudoinstruction handler. Substitutes pseudo instructions with
 # proper ones. Also expands imm(reg) assembly syntax.
+instrArgs = ['']*3
 def pseudo_handler(instruction):
-	i = 1
-	for arg in instruction[1:]:
-		if arg.find('(') != -1:
-			temp = arg.split('(')
-			instruction[i] = temp[1].rstrip(')')
-			instruction.insert(i+1, temp[0])
-		i += 1
-	try:
-		return pseudoInstr[instruction[0].upper()]
-	except KeyError:
-		return instruction
+   global instrArgs
+   i = 1
+   try:
+      for arg in instruction[1:]:
+         if arg.find('(') != -1:
+            temp = arg.split('(')
+            instruction[i] = temp[1].rstrip(')')
+            instruction.insert(i+1, temp[0])
+         instrArgs[i-1] = arg
+         i += 1
+      update_pseudo_dic()
+      return pseudoInstr[instruction[0].upper()]
+   except KeyError:
+      return instruction
    
 def get_dict(key, dictionary):
    try:
@@ -90,7 +84,7 @@ def gen_shamt(shamtParam):
 # ----------------------- 2'S COMPLEMENT STRING ---------------------
 # I couldn't find a way to properly show 2's complement
 def twos_comp(num, nBits):
-		return '{0:b}'.format(((~abs(num)) + 1) & ((1 << nBits) - 1))
+      return '{0:b}'.format(((~abs(num)) + 1) & ((1 << nBits) - 1))
 
 # -------------------- IMMEDIATE GENERATOR --------------------------
 # Immediate generator. Meh... Could be improved but I'm tired.
@@ -270,10 +264,45 @@ fields = {
 }
 
 # ---------------------- PSEUDOINSTRUCTIONS -------------------------
-pseudoInstr = {
-#  |name     |instr       |param1    |param2    |param3    
-   'NOP':   ['addi',      'x0',      'x0',      '0']
-}
+# Only a subset of pseudoinstructions is supported. Those requiring
+# more than one instruction as output are not implemented yet
+pseudoInstr = {}
+def update_pseudo_dic():
+   global pseudoInstr
+   pseudoInstr = {
+      #  |name     |instr     |param1        |param2        |param3    
+      # NOP
+      'NOP' :  ['addi',    'x0',          'x0',          '0'            ],
+      # Two's complement
+      'NEG' :  ['sub',     instrArgs[0],  'x0',          instrArgs[1]   ],
+      # One's complement
+      'NOT' :  ['xori',    instrArgs[0],  instrArgs[1],  '-1'           ],
+      # Compare
+      'SNEZ':  ['sltu',    instrArgs[0],  'x0',          instrArgs[1]   ],
+      'SLTZ':  ['slt',     instrArgs[0],  instrArgs[1],  'x0'           ],
+      'SGTZ':  ['slt',     instrArgs[0],  'x0',          instrArgs[1]   ],
+      'SEQZ':  ['sltiu',   instrArgs[0],  instrArgs[1],  '1'            ],
+      # Branches
+      'BEQZ':  ['beq',     instrArgs[0],  'x0',          instrArgs[1]   ],
+      'BNEZ':  ['bne',     instrArgs[0],  'x0',          instrArgs[1]   ],
+      'BLEZ':  ['bge',     'x0',          instrArgs[0],  instrArgs[1]   ],
+      'BGEZ':  ['bge',     instrArgs[0],  'x0',          instrArgs[1]   ],
+      'BLTZ':  ['blt',     instrArgs[0],  'x0',          instrArgs[1]   ],
+      'BGTZ':  ['blt',     'x0',          instrArgs[0],  instrArgs[1]   ],
+      'BGT' :  ['blt',     instrArgs[1],  instrArgs[0],  instrArgs[2]   ],
+      'BLE' :  ['bge',     instrArgs[1],  instrArgs[0],  instrArgs[2]   ],
+      'BGTU':  ['bltu',    instrArgs[1],  instrArgs[0],  instrArgs[2]   ],
+      'BLEU' : ['bgeu',    instrArgs[1],  instrArgs[0],  instrArgs[2]   ],
+      # Jump & Link
+      'J'   :  ['jal',     'x0',          instrArgs[0]                  ],
+      'JR'  :  ['jalr',    'x0',          instrArgs[0],  '0'            ],
+      'RET' :  ['jalr',    'x0',          'x1',          '0'            ],
+      # "TAIL [offset]" and CSR pseudoinstructions not supported
+      # Load immediate
+      'LI'  :  ['addi',    instrArgs[0],  'x0',          instrArgs[1]   ],
+      # Move
+      'MV'  :  ['addi',    instrArgs[0],  instrArgs[1],  '0'            ]
+   }
 
 # ----------------------- REGISTER NAMES ----------------------------
 altNames = {
