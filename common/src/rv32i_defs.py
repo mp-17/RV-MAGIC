@@ -68,7 +68,7 @@ def twos_comp(num, nBits):
 
 # -------------------- IMMEDIATE GENERATOR --------------------------
 # Immediate generator. Meh... Could be improved but I'm tired.
-def imm_gen(instrType, uns, immParam):
+def imm_gen(instrType, immParam):
    try: 
       immVal = int(immParam)
    except ValueError:
@@ -76,20 +76,13 @@ def imm_gen(instrType, uns, immParam):
       raise SyntaxError
    else:
       if instrType == 'I':
-         if uns == 'U':
-            if immVal < 0 or immVal >= 1 << 12:
-               print(f'# Error!\n# Immediate value "{immVal}" out of range.')
-               raise SyntaxError
-            else:
-               return ['{0:012b}'.format(immVal), '']
+         if immVal < -(1 << 11) or immVal >= 1 << 11:
+            print(f'# Error!\n# Immediate value "{immVal}" out of range.')
+            raise SyntaxError
+         elif immVal < 0:
+            return [twos_comp(immVal, 12), '']
          else:
-            if immVal < -(1 << 11) or immVal >= 1 << 11:
-               print(f'# Error!\n# Immediate value "{immVal}" out of range.')
-               raise SyntaxError
-            elif immVal < 0:
-               return [twos_comp(immVal, 12), '']
-            else:
-               return ['{0:012b}'.format(immVal), '']
+            return ['{0:012b}'.format(immVal), '']
       
       elif instrType == 'S':
          if immVal < 0 or immVal >= 1 << 12:
@@ -99,29 +92,18 @@ def imm_gen(instrType, uns, immParam):
             return ['{0:07b}'.format(immVal >> 5), '{0:05b}'.format(immVal & ((1 << 5) -1))]
       
       elif instrType == 'B':
-         if uns == 'U':
-            if immVal < 0 or immVal >= 1 << 13:
-               print(f'# Error!\n# Immediate value "{immVal}" out of range.')
-               raise SyntaxError
-            elif immVal % 2:
-               print(f'# Error!\n# Invalid branch target "{immVal}", it must be even.)')
-               raise SyntaxError
-            else:
-               immStr = '{0:012b}'.format(immVal >> 1)
-               return [immStr[0]+immStr[2:8], immStr[8:]+immStr[1]]
+         if immVal < -(1 << 12) or immVal >= 1 << 12:
+            print(f'# Error!1n# Immediate value "{immVal}" out of range.')
+            raise SyntaxError
+         elif immVal % 2:
+            print(f'# Error!\n# Invalid branch target "{immVal}", it must be even.)')
+            raise SyntaxError
+         elif immVal < 0:
+            immStr = twos_comp(immVal >> 1, 12)
+            return [immStr[0]+immStr[2:8], immStr[8:]+immStr[1]]
          else:
-            if immVal < -(1 << 12) or immVal >= 1 << 12:
-               print(f'# Error!1n# Immediate value "{immVal}" out of range.')
-               raise SyntaxError
-            elif immVal % 2:
-               print(f'# Error!\n# Invalid branch target "{immVal}", it must be even.)')
-               raise SyntaxError
-            elif immVal < 0:
-               immStr = twos_comp(immVal >> 1, 12)
-               return [immStr[0]+immStr[2:8], immStr[8:]+immStr[1]]
-            else:
-               immStr = '{0:012b}'.format(immVal >> 1)
-               return [immStr[0]+immStr[2:8], immStr[8:]+immStr[1]]
+            immStr = '{0:012b}'.format(immVal >> 1)
+            return [immStr[0]+immStr[2:8], immStr[8:]+immStr[1]]
       
       elif instrType == 'U':
          if immVal < -(1 << 19) or immVal >= 1 << 19:

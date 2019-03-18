@@ -109,7 +109,7 @@ while True:
                elif instrFields[j] == 'shamt':
                   mInstr[1] = gen_shamt(param)
                elif instrFields[j] == 'imm':
-                  imm = imm_gen(instrType, instrName[-1], param)
+                  imm = imm_gen(instrType, param)
                   mInstr[0] = imm[0]
                   mInstr[4] += imm[1]
                else:
