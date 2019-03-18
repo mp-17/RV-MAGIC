@@ -1,4 +1,5 @@
-addi x3, x0, 5
+addi x1, x0, 9
+addi x2, x0, 10
 nop
 nop
-jalr x4, 3(x3)
+bltu x1, x2, 16
