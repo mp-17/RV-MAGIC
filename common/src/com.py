@@ -18,6 +18,16 @@
 # - Only the "nop" pseudoinstruction is supported for now. Others
 #   will be added in the near future
 #
+# Usage:
+# - If run without arguments, the script will ask for everything
+#   that's necessary
+# - If run with arguments, they are:
+#   argv[1]: Name of the source file relative to 
+#            "/RV-MAGIC/main/tb/assembly/" 
+#   argv[2]: Condition to perform hex conversion of the output
+#            machine code. Write "n", "0", "no" case insensitive to 
+#            say that you don't need it
+#
 # com.py will exit with the following codes:
 # 0. Success! Everything went fine (most likely)
 # 1. Cannot open the requested assembly input file
@@ -34,36 +44,51 @@ from instrConverter import bin2litEndByte
 
 from rv32i_defs import *
 
+assDir = '/main/tb/assembly'
+binDir = '/main/tb/bin_mc'
+hexDir = '/main/tb/hex_mc'
+
 print("""\n> =================================================================
 >              {date} - Welcome to com.py
 > =================================================================\n""".format(date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+
+if sys.argv[1] == 'help' or sys.argv[1] == 'h' or sys.argv[1] == '--help' or sys.argv[1] == '-h':
+   print(usage)
+   sys.exit(0) # Terminate
+
+# Get repo's root directory
+repoRoot = get_root('RV-MAGIC')
+inPath = repoRoot+assDir
+binOutPath = repoRoot+binDir
+hexOutPath = repoRoot+hexDir
 
 # Check if the assembly file is passed as argument
 try:
    fileName = sys.argv[1]
 except IndexError:
    # Ask for the name of the assembly file
-   fileName = ask_str('Input the assembly file name', 'private/test.txt')
+   fileName = ask_str('Input the assembly file name relative to "{}"'.format(assDir), '/private/ass_test.txt')
+else:
+   fileName = '/' + fileName.split('/')[-1]
+
+inFileName = inPath + fileName
+binOutFileName = binOutPath + fileName.split('.')[0] + '.mc'
+hexOutFileName = hexOutPath + fileName.split('.')[0] + '.riscv'
 
 try:
-   outFileName = sys.argv[2]
-except IndexError:   
-   # Ask for output file name
-   outFileName = ask_str('Input the output file name', 'private/mcode.txt')
-open(outFileName, 'w').close() # Prepare blank output file
-
-try:
-   convertInHex = sys.argv[3]
+   convertInHex = sys.argv[2]
 except IndexError:   
    # Ask if a conversion in HEX is needed
-   convertInHex = ask_str('Do you want to convert the result also in .riscv format, with instructions in HEX, one byte per row, using little endian storage format? Default is "y".', 'y')
+   convertInHex = ask_str('Do you want to convert the result also in .riscv format, with instructions in HEX,\n  one byte per row, using little endian storage format?', 'y')
+
+open(binOutFileName, 'w').close() # Prepare blank output file
 
 remainders = 3
 
 while True:
    try:
-      with open(fileName, 'r') as assembly:
-         print('\n> Assembling "'+fileName+'"...')
+      with open(inFileName, 'r') as assembly:
+         print('\n> Assembling "'+inFileName+'"...')
          i = 1
          # Parse the assembly file
          for line in assembly:
@@ -121,18 +146,18 @@ while True:
             print(f'{instrFields[3]}-type: ', end='')
             mInstrPrint = ' '.join(mInstr).strip()
             print(mInstrPrint) # Print final result
-            with open(outFileName, 'a') as mcode:
+            with open(binOutFileName, 'a') as mcode:
                mcode.write(''.join(mInstr)+'\n') # Also print machine code to the output file
                
       break
 
    # Exception handling
    except OSError: # Error opening file
-      print('# Error. '+' File "'+fileName+'" does not exist. '+str(remainders)+' attempt(s) remaining.')
+      print('# Error. '+' File "'+inFileName+'" does not exist. '+str(remainders)+' attempt(s) remaining.')
       if not remainders: 
          print('\n> An error occurred while opening the assembly file. Exiting now...')
          sys.exit(1)
-      fileName = ask_str('Input the assembly file name', 'private/test.txt')
+      inFileName = ask_str('Input the assembly file name', 'private/test.txt')
       remainders -= 1
 
    except SyntaxError:
@@ -147,9 +172,14 @@ while True:
       print('# Unexpected Error: {}. Exiting now...'.format(sys.exc_info()[0]))
       raise
 
+print()
+print('> BIN file successfully created:\n\t{}\n'.format(binOutFileName))
+
 # convert the bin file to an hex file in little endian format, one byte per row
 dontConvertList = ['n', 'N', 'no', 'No', 0]
 if convertInHex in dontConvertList:
    pass
 else:
-   bin2litEndByte(outFileName, outFileName + '.riscv', 'hex', 32)
+   bin2litEndByte(binOutFileName, hexOutFileName, 'hex', 32)
+   # Print hex file location
+   print('> HEX file successfully created:\n\t{}\n'.format(hexOutFileName))

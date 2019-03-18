@@ -2,7 +2,25 @@
 # RV32I ISA (with a few insrtuctions omitted). These are required
 # for com.py to run.
 
+usage = """Usage:
+- If run without arguments, the script will ask for everything
+  that's necessary
+- If run with arguments, they are:
+  argv[1]: Name of the source file relative to 
+           "/RV-MAGIC/main/tb/assembly/" 
+  argv[2]: Condition to perform hex conversion of the output
+           machine code. Write "n", "0", "no" case insensitive to 
+           say that you don't need it\n"""
+
+import os
+
 # ======================== FUNCTIONS ================================
+# ------------------------ GET ROOT DIR -----------------------------
+# Thanks Marco!
+def get_root(repo_name):
+    cwd = os.getcwd()
+    return cwd[0:cwd.find(repo_name) + len(repo_name)]
+
 # ------------------------ ASK STRING -------------------------------
 # Ask for a string (name of a file etc)
 def ask_str(message='Say something', default='something'):
