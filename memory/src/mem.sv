@@ -27,9 +27,13 @@ module memory
 
     // declare memory array (of bytes)
     logic [7:0] mem_array [0:ROWS-1];
+    integer i;
 
     // initialize memory by reading INIT_FILE
     initial begin
+        for (i = 0; i < ROWS; i = i+1) begin
+            mem_array[i] = 0;
+        end
         $readmemh(INIT_FILE, mem_array);
     end
 

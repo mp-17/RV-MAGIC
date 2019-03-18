@@ -1,0 +1,4 @@
+addi x3, x0, 5
+nop
+nop
+jalr x4, 3(x3)
