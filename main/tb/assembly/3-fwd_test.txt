@@ -11,3 +11,6 @@ nop
 nop
 lw x2, 16(x1)
 sw x2, 32(x1)
+
+lw t0, 0(x0) # Load from DMEM[0] 
+addi x1, t0, 1 # Add 1 and save to t0 (x5)

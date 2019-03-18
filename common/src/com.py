@@ -69,13 +69,13 @@ hexOutPath = repoRoot+hexDir
 # Check if the assembly file is passed as argument
 try:
    fileName = sys.argv[1]
+   inFileName = fileName
 except IndexError:
    # Ask for the name of the assembly file
    fileName = ask_str('Input the assembly file name relative to "{}"'.format(assDir), '/private/ass_test.txt')
-else:
-   fileName = '/' + fileName.split('/')[-1]
+   inFileName = inPath + fileName
 
-inFileName = inPath + fileName
+fileName = '/' + fileName.split('/')[-1]
 binOutFileName = binOutPath + fileName.split('.')[0] + '.mc'
 hexOutFileName = hexOutPath + fileName.split('.')[0] + '.riscv'
 

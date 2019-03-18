@@ -45,7 +45,8 @@ def bin2litEndByte(inFilePath, outFilePath, binOrHex_outMode, instruction_width)
 					else:
 						tmpByte = tmpByte_hex
 					# write the byte
-					fOut.write(tmpByte + '\n')
+					fOut.write(tmpByte + ' ')
+				fOut.write('\n')
 
 	except FileNotFoundError:
 		print('Error: input file or output folder does not exist.', '\n')
