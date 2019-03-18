@@ -52,7 +52,7 @@ print("""\n> =================================================================
 >              {date} - Welcome to com.py
 > =================================================================\n""".format(date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-if sys.argv[1] == 'help' or sys.argv[1] == 'h' or sys.argv[1] == '--help' or sys.argv[1] == '-h':
+if sys.argv[1] == 'help' or sys.argv[1] == 'h' or sys.argv[1] == '--help' or sys.argv[1] == '-h' or sys.argv[1] == '0':
    print(usage)
    sys.exit(0) # Terminate
 
@@ -94,7 +94,7 @@ while True:
          for line in assembly:
             words = line.split()
             if chk_cmt(line[0]): continue # Check if the entire line is commented
-            aInstrPrint = str(i)+') '
+            aInstrPrint = '{:6}'.format(str(i) + ') ')
             i += 1
 
             # Parse line and check for comments
@@ -112,7 +112,7 @@ while True:
             instrName = aInstr[0].upper()
             instrParam = aInstr[1:]
 
-            print(f'>\t{aInstrPrint:25}=>\t', end=' ') # Print assembly instruction being processed
+            print(f'>\t{aInstrPrint:28}=>\t', end=' ') # Print assembly instruction being processed
             
             # Assemble machine instruction 
             # 1) funct7, funct3, opcode ("fixed part")
@@ -176,7 +176,7 @@ print()
 print('> BIN file successfully created:\n\t{}\n'.format(binOutFileName))
 
 # convert the bin file to an hex file in little endian format, one byte per row
-dontConvertList = ['n', 'N', 'no', 'No', 0]
+dontConvertList = ['n', 'N', 'no', 'No', '0', 0]
 if convertInHex in dontConvertList:
    pass
 else:

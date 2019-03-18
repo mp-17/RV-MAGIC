@@ -36,10 +36,17 @@ def chk_cmt(word):
 # ------------------ PSEUDOINSTRUCTIONS HANDLER ---------------------
 # Pseudoinstruction handler. Substitutes pseudo instr. with proper one
 def pseudo_handler(instruction):
-   try:
-      return pseudoInstr[instruction[0].upper()]
-   except KeyError:
-      return instruction
+	i = 1
+	for arg in instruction[1:]:
+		if arg.find('(') != -1:
+			temp = arg.split('(')
+			instruction[i] = temp[1].rstrip(')')
+			instruction.insert(i+1, temp[0])
+		i += 1
+	try:
+		return pseudoInstr[instruction[0].upper()]
+	except KeyError:
+		return instruction
    
 def get_dict(key, dictionary):
    try:
