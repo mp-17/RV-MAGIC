@@ -36,7 +36,7 @@ module alu_decoder (
                     `FUNCT3_AND:        ctl = `ALU_AND;
                     default: $display("ALU decoder error: unknown funct3 field for arithmetic instruction.");                
                     endcase
-            default: $error("ALU decoder error: unknown opcode field for ALU instruction.");
+            default: ctl = 0;
         endcase
     end
 endmodule

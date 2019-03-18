@@ -4,4 +4,4 @@
 `define NUMBER_OF_INSTRUCTIONS 10
 
 // clock period
-`define T_clk 4
+`define T_clk 10
