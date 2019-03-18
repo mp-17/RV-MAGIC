@@ -1,7 +1,7 @@
 // RV-MAGIC main testbench //
 //
 
-`timescale 1ns/100ps
+`timescale 1ns/1ns
 
 `include "../../common/src/rv32i_defs.sv"
 `include "../../main/tb/mainTB_param.sv"
@@ -36,7 +36,7 @@ module main_tb;
 	// reset generation
 	initial
 		begin
-			rst_n <= 0; #2
+			rst_n <= 0; #12
 			rst_n <= 1;
 		end 
 

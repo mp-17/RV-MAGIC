@@ -17,3 +17,5 @@ vlog -work work -sv ../../main/tb/*.sv
 
 # sim command
 vsim work.main_tb
+do ../sim/wave.do
+run 450 ns

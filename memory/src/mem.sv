@@ -52,6 +52,7 @@ module memory
                     default: $error("Invalid addressable unit specified.");
                 endcase
             end
+            else dataOut <= 0;
         end
         else $error("Memory error: memRead and memWrite active at the same time.");
     end
