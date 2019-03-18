@@ -34,7 +34,8 @@ def chk_cmt(word):
    return (True if word[0] == '#' or word[0] == '\n' else False)
 
 # ------------------ PSEUDOINSTRUCTIONS HANDLER ---------------------
-# Pseudoinstruction handler. Substitutes pseudo instr. with proper one
+# Pseudoinstruction handler. Substitutes pseudo instructions with
+# proper ones. Also expands imm(reg) assembly syntax.
 def pseudo_handler(instruction):
 	i = 1
 	for arg in instruction[1:]:
