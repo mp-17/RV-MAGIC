@@ -1,3 +1,4 @@
+# U-type
 lui x0, 37
 lui x1, 133
 lui x2, 65
@@ -51,7 +52,7 @@ or x1, x30, x31
 xor x4, x2, x3
 sll x7, x5, x6
 srl x10, x8, x9
-srai x13, x11, 12
+sra x13, x11, x12
 slt x16, x14, x15
 sltu x19, x17, x18
 
@@ -59,10 +60,14 @@ sltu x19, x17, x18
 lb x21, x20, 3
 lh x23, x22, 8
 lbu x25, x24, 34
-lhu x27, x26, 45
+lhu x27, x26, -1
 lw x29, x28, 9
 
 # Store
 sb x31, x30, 3
 sh x2, x1, 23
 sw x4, x3, 89
+
+# U-type
+lui x1, 37
+auipc x2, 37
