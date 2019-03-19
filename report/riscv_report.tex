@@ -413,7 +413,6 @@ First of all each instruction was individually tested to assure the correct beha
 
 \paragraph{Register loads}
 To test each register of the register file, as well as to make sure that register \texttt{x0} does not change, a series of consecutive \texttt{lui} instructions was used, trying with both positive and negative values.
-
 The \texttt{auipc} instruction was tested as well at this point.
 
 \begin{verbatim}
@@ -425,6 +424,15 @@ The \texttt{auipc} instruction was tested as well at this point.
     ...
     auipc x2, 6466
 \end{verbatim}
+
+As an example, figure \ref{fig:first_LUIs_ver} shows the completion of the register file loading test.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=.8]{../report/img/first_LUIs_validation.png}
+    \caption{RF loading verification}
+    \label{fig:first_LUIs_ver}
+\end{figure}
 
 \paragraph{Immediate ALU instructions}
 Next, we tried all ALU operations involving immediate operands.
@@ -472,36 +480,60 @@ Finally all load and stores were tested, on all the different data widths.
     sw x4, x3, 89
 \end{verbatim}
 
-The first instructions are LUI to load the RF with positive and negative values. A writing to x0 is performed to verify its immutability.
+\subsubsection{Branches and control hazard test}
+The next step was the test of all kinds of branch instructions, both taken and not taken, to verify at the same time the correct behavior of the HDU in case of taken branch and subsequent stall.
 
-\subparagraph*{lui x0, 37} Nothing has to be saved in x0, because it is hardwired to gnd.
+\paragraph{Unconditional jumps}
+First of all, the two unconditional jump instructions were tested, namely \texttt{jal} and \texttt{jalr}. The initial \texttt{addi} of the second case was inserted only to have a known value in register \texttt{x3}.
+\begin{verbatim}
+    jal x2, 2
 
-\subparagraph*{lui x1, 133} The 20 bits immediate \textbf{133} = 00000000000010000101 is sign extended to 32 bits and 12-bits left shifted (with zero padding), then it is brought to the ALU to exit it without any processing. The result is saved to the destination register.
-\begin{enumerate}
-\item Immediate: 00000000000010000101 = 133
-\item Sign extension, left shifting and zero padding: 00000000000010000101000000000000 = 544768
-\end{enumerate}
-The result is saved in x1.
+    addi x3, x0, 5
+    nop
+    nop
+    jalr x4, x3, 3
+\end{verbatim}
 
-% \begin{figure}[hbtp]
-%     \centering
-%     \includegraphics[scale=.8]{../main/sim/plot/first_LUIs_validation.png}
-%     \caption{RF loading verification}
-%     \label{fig:first_LUIs_ver}
-% \end{figure}
+In this case, the important things to notice are the correct evolution of the program counter after the jump (along with the right generation of the address and LSB masking) and the correct generation of the CU signals \texttt{jumpOrBranch} and \texttt{jalr}, as well as \texttt{stall_n} from the HDU, to disable the PC and the IF/ID pipe register.
 
-And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The previous instruction, i.e. the last LUI, is being decoded: for its completion there's the need for waiting for other four cycles. At this point (PC = 144) all the register file were checked to verify the correct storage of the data (figure \ref{fig:first_LUIs_ver}).
+\paragraph{Branches}
+A similar procedure was used to test branches. 
+\begin{verbatim}
+    addi x1, x0, 9
+    addi x2, x0, 9
+    nop
+    nop
+    beq x1, x2, 16
+\end{verbatim}
 
-\subparagraph*{auipc x2, 6466} The 20 bits immediate \textbf{6466} is sign extended, left shifted and added to the content of the PC relative to the instruction itself (PC = 128).
-\begin{enumerate}
-\item Immediate: 00000001100101000010 = 6466
-\item Sign extension, left shifting and zero padding: 00000001100101000010000000000000 = 26484736
-\item Sum with PC: 00000001100101000010000010000000 = 26484864
-\end{enumerate}
-The result is saved in x2.
-The same procedure was followed to verify all the other instructions of the RV32I ISA.
+\subsubsection{Data hazards and forwarding}
+The last set of instructions was aimed at testing the correct behavior of the HDU and FWU under all conditions.
 
-Once all the basic logical/arithmetical functions were verified in this soft way (not all the possible combinations were tested!), jumps and branches were taken into account.
+The first case is the forwarding of the previous ALU result:
+\begin{verbatim}
+    addi x1, x0, 56
+    and x3, x1, x2
+\end{verbatim}
+
+Next, forwarding can also occur from the ALU result of two cycles earlier:
+addi x13, x1, 253
+sub x7, x5, x6
+xor x3, x13, x2
+
+Finally, forwarding between load and store was tested:
+\begin{verbatim}
+    addi x1, x0, 45
+    nop
+    nop
+    lw x2, 16(x1)
+    sw x2, 32(x1)
+\end{verbatim}
+
+The hazard detection was tested with a load followed by another using instruction:
+\begin{verbatim}
+    lw t0, 0(x0)
+    addi x1, t0, 1 
+\end{verbatim}
 
 \subsection{Assembler}\label{sec:assembler}
 
