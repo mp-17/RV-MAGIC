@@ -63,6 +63,7 @@ module rvMagic (
                             EX_DMEM_jumpAddr,
                             BR_JAL_ADDER_out,
                             DMEM_ADDR_FWD_MUX_out,
+                            DMEM_ADDR_FWD_ADDER_out,
                             DMEM_WB_nextPc;
     logic [`INST_WIDTH-1:0]    ifId_FLUSH_MUX_out;
     logic [`RF_ADDR_WIDTH-1:0]  DMEM_WB_rd,
@@ -435,7 +436,7 @@ module rvMagic (
     );
 
     // DMEM_ADDR_FWD_ADDER
-    assign DMEM_ADDR_FWD_MUX_out = D_MEM_dataOut + EX_DMEM_immediate;
+    assign DMEM_ADDR_FWD_ADDER_out = D_MEM_dataOut + EX_DMEM_immediate;
 
     // D_MEM interface
     assign D_MEM_memWrite = EX_DMEM_controls[2];
@@ -543,7 +544,7 @@ module rvMagic (
         .fwdA          (FWU_fwdA),
         .fwdB          (FWU_fwdB),
         .fwdWriteData  (FWU_fwdWriteData),
-        .fwdWriteAddr   (FWU_fwdWriteAddr)
+        .fwdWriteAddr  (FWU_fwdWriteAddr)
     );
 
     // NEXT_ADDR_SEL_CU
