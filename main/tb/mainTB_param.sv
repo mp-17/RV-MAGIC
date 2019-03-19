@@ -1,5 +1,5 @@
 // main testbench related parameters 
-`define INSTRUCTIONS_FILE "/home/michi/Documents/git-projects/RV-MAGIC/main/tb/hex_mc/fwd_load_alu.riscv"
+`define INSTRUCTIONS_FILE "../../main/tb/hex_mc/1-instr_list_no_jump.riscv"
 `define RANDOM_DATA_FILE "../../main/tb/hex_mc/dmemh.mem"
 `define NUMBER_OF_INSTRUCTIONS 10
 
