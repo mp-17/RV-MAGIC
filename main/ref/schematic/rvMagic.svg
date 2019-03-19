@@ -150,7 +150,7 @@
        inkscape:collect="always">
       <path
          transform="scale(0.4) rotate(180) translate(10,0)"
-         style="fill-rule:evenodd;stroke:#ff8400;stroke-width:1pt;stroke-opacity:1;fill:#ff8400;fill-opacity:1"
+         style="fill-rule:evenodd;stroke:#00b6ff;stroke-width:1pt;stroke-opacity:1;fill:#00b6ff;fill-opacity:1"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
          id="path30333" />
     </marker>
@@ -271,7 +271,7 @@
       <path
          id="path9688"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#00b6ff;stroke-width:1pt;stroke-opacity:1;fill:#00b6ff;fill-opacity:1"
+         style="fill-rule:evenodd;stroke:#ff8400;stroke-width:1pt;stroke-opacity:1;fill:#ff8400;fill-opacity:1"
          transform="scale(0.4) rotate(180) translate(10,0)" />
     </marker>
     <marker
@@ -3043,9 +3043,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568542"
-     inkscape:cx="378.77713"
-     inkscape:cy="760.36219"
+     inkscape:zoom="0.99999999"
+     inkscape:cx="1083.7822"
+     inkscape:cy="1213.0631"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
