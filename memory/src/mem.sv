@@ -30,12 +30,13 @@ module memory
     integer i;
 
     // initialize memory by reading INIT_FILE
-    initial begin
-        for (i = 0; i < ROWS; i = i+1) begin
-            mem_array[i] = 0;
-        end
-        $readmemh(INIT_FILE, mem_array);
-    end
+    // initial begin
+    //     for (i = 0; i < ROWS; i = i+1) begin
+    //         mem_array[i] = 0;
+    //     end
+    //     $readmemh(INIT_FILE, mem_array);
+    // end
+    initial $readmemh(INIT_FILE, mem_array);
 
     // sync read/write
     always_ff @ (posedge clk) begin

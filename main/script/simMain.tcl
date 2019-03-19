@@ -19,3 +19,8 @@ vlog -work work -sv ../../main/tb/*.sv
 vsim work.main_tb
 do ../sim/wave.do
 run 450 ns
+
+# Zoom
+wave zoom in
+wave cursor time -time 0ns 1
+wave cursor see -at 0 1

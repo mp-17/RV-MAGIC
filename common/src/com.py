@@ -43,6 +43,7 @@ info = """# ================================ INFO =============================
 import readline
 import datetime
 import sys
+import os
 
 from instrConverter import bin2litEndByte
 
@@ -56,7 +57,7 @@ print("""\n> =================================================================
 >              {date} - Welcome to com.py
 > =================================================================\n""".format(date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-if len(sys.argv) > 1 and (sys.argv[1] == 'help' or sys.argv[1] == 'h' or sys.argv[1] == '--help' or sys.argv[1] == '-h' or sys.argv[1] == '0'):
+if len(sys.argv) > 1 and (sys.argv[1] in ['help', 'h', '--help', '-h', '0']):
    print(info)
    sys.exit(0) # Terminate
 
@@ -187,3 +188,33 @@ else:
    bin2litEndByte(binOutFileName, hexOutFileName, 'hex', 32)
    # Print hex file location
    print('> HEX file successfully created:\n\t{}\n'.format(hexOutFileName))
+   try:
+      simCode = sys.argv[3]
+   except IndexError:
+      simCode = ask_str('Do you want to simulate the produced code (y/n)?', 'No')
+   # Ask if simulation is required
+   if simCode.upper() in ['Y', 'YES', 'YEP']:
+      notFound = True
+      oldFile = []
+      with open(repoRoot+'/main/tb/mainTB_param.sv') as tbParam:
+         tbParamLines = tbParam.readlines()
+         i = 0
+         for line in tbParamLines:
+            if 'INSTRUCTIONS_FILE' in line:
+               oldFile[:] = tbParamLines[:]
+               tbParamLines[i] = '`define INSTRUCTIONS_FILE "{}"\n'.format(hexOutFileName)
+               notFound = False
+               break
+            i += 1
+      if notFound:
+         print('# Error. Missing parameter "INSTRUCTION_FILE".')
+         sys.exit(4)
+      else:
+         with open(repoRoot+'/main/tb/mainTB_param.sv', 'w') as tbParam:
+            tbParam.write(''.join(tbParamLines))
+         print('> Running Modelsim...')
+         os.system("""cd {}/main/sim/\nvsim -do ../script/simMain.tcl""".format(repoRoot))
+         with open(repoRoot+'/main/tb/mainTB_param.sv', 'w') as tbParam:
+            tbParam.write(''.join(oldFile))
+
+         
