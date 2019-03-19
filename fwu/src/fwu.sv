@@ -11,10 +11,10 @@
 `include "../../common/src/rv32i_defs.sv"
 
 module fwu (
-    input [`RF_ADDR_WIDTH-1:0] idexRs1, idexRs2, exmemRs2, exmemRd, memwbRd,
+    input [`RF_ADDR_WIDTH-1:0] idexRs1, idexRs2, exmemRs1, exmemRs2, exmemRd, memwbRd,
     input exmemRegWrite, exmemMemWrite, memwbRegWrite, memwbMemToReg,
     output logic [1:0] fwdA, fwdB,
-    output logic fwdWriteData
+    output logic fwdWriteData, fwdWriteAddr
 );
 
     always_comb begin
@@ -39,5 +39,11 @@ module fwu (
             fwdWriteData = 1; // forward from previous load result
         else 
             fwdWriteData = 0; // don't forward
+
+        // Data memory address input
+        if (memwbMemToReg && exmemMemWrite && (memwbRd != 0) && (memwbRd == exmemRs1))
+            fwdWriteAddr = 1; // forward from previous load result
+        else 
+            fwdWriteAddr = 0; // don't forward
     end
 endmodule

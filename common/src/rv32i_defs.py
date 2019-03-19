@@ -29,13 +29,19 @@ def chk_cmt(word):
 instrArgs = ['']*3
 def pseudo_handler(instruction):
    global instrArgs
-   i = 1
    try:
+      i = 1
       for arg in instruction[1:]:
          if arg.find('(') != -1:
             temp = arg.split('(')
             instruction[i] = temp[1].rstrip(')')
-            instruction.insert(i+1, temp[0])
+            if fields[instruction[0].upper()][3] == 'S':
+               instruction.insert(3, temp[0])
+            else:
+               instruction.insert(i+1, temp[0])
+         i += 1
+      i = 1
+      for arg in instruction[1:]:
          instrArgs[i-1] = arg
          i += 1
       update_pseudo_dic()
