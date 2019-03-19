@@ -50,8 +50,9 @@ module rvMagic (
             ifId_FLUSH_FF_q,
             FWU_fwdWriteData,
             NEXT_ADDR_SEL_CU_jalrOut;
-    logic [`ADDR_WIDTH-1:0] NEXT_PC_MUX_out, 
+    logic [`ADDR_WIDTH-1:0] NEXT_PC_MUX_out,
                             PC_q, 
+                            IMEM_ADDR_MUX_out 
                             NEXT_PC_ADDER_out,
                             BRJAL_JALR_MUX_out,
                             IF_ID_pc,
@@ -144,9 +145,21 @@ module rvMagic (
         })          
     );
 
+    // IMEM_ADDR_MUX
+    mux2 
+    #(
+        .NB (`ADDR_WIDTH)
+    )
+    IMEM_ADDR_MUX (
+    	.in0 (IF_ID_pc),
+        .in1 (PC_q),
+        .sel (HDU_stall_n),
+        .out (IMEM_ADDR_MUX_out) // the actual selected instruction
+    );
+
     // I_MEM interface
-    assign I_MEM_memRead = HDU_stall_n;
-    assign I_MEM_addr = PC_q;
+    assign I_MEM_memRead = 1'b1;
+    assign I_MEM_addr = IMEM_ADDR_MUX_out;
 
     /* ID stage */
     // ifId_FLUSH_MUX
