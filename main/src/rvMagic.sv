@@ -52,7 +52,7 @@ module rvMagic (
             NEXT_ADDR_SEL_CU_jalrOut;
     logic [`ADDR_WIDTH-1:0] NEXT_PC_MUX_out,
                             PC_q, 
-                            IMEM_ADDR_MUX_out 
+                            IMEM_ADDR_MUX_out, 
                             NEXT_PC_ADDER_out,
                             BRJAL_JALR_MUX_out,
                             IF_ID_pc,
