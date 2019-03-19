@@ -99,9 +99,9 @@ The complete list of operation that the ALU can perform is the following (in the
 \begin{enumerate}
     \item Add
     \item Subtract
-    \item AND 
-    \item OR 
-    \item XOR 
+    \item AND
+    \item OR
+    \item XOR
     \item Left shift
     \item Right shift
     \item Right shift with sign extension
@@ -148,7 +148,7 @@ There are two classes of instructions which can lead to a modification of the se
 \begin{enumerate}
 	\item Branches
 	\item Jumps
-\end{enumerate} 
+\end{enumerate}
 The former is a conditional change of the usual choice of the next address to be put in the PC, whereas the latter is unconditional. The condition, whenever present, is always based on the result of an ALU comparison.
 
 \paragraph{Branch} instructions exist in different flavours, depending on which comparison has to be performed between the content of two registers. Here follows a list of all of them:
@@ -159,11 +159,11 @@ The former is a conditional change of the usual choice of the next address to be
 	\item BGE (branch if greater or equal than)
 	\item BLTU (branch if less than unsigned)
 	\item BGEU (branch if greater or equal unsigned)
-\end{enumerate} 
+\end{enumerate}
 All these instructions belong to the B-type ones (figure \ref{fig:formats}). They have an immediate field split along the word, which indicates an effective immediate divided by two. Indeed, with a RISC-V standard architecture it is possible to address this way an halfword at most, but never the single byte.
 The effective immediate is calculated with a bit reorganization, a sign extension and a left shift of one position, to reach the final 32-bit width.
 
-The instruction contains also the addresses of two registers, whose content will be compared by the ALU to decide whether to take the branch or not. 
+The instruction contains also the addresses of two registers, whose content will be compared by the ALU to decide whether to take the branch or not.
 To distinguish which type of comparison is needed, it is necessary to know the instruction field funct3.
 
 \paragraph{Jump} instructions can be of two types, each bringing to a different hardware path for the data:
@@ -175,7 +175,7 @@ To distinguish which type of comparison is needed, it is necessary to know the i
 A jump instruction is unconditional, but still need for an address computation. This operation is different for the two instructions: for JAL it is sufficient to use the same hardware used for branch address computation, whereas JALR requires the non shifted immediate to be added to the content of a register (the next address is not derived by the current one).
 
 \subsubsection{Instruction execution}
-Since no \textbf{BPU} (\textbf{B}ranch \textbf{P}rediction \textbf{U}nit) is present in the design, a "branch not taken" assumption is always made when the content of the PC is updated and the decoded instruction is a branch. The simplest way to manage a branch is to delay the decision until the execution stage, waiting for the ALU to do the comparison. The effective decision is then taken in the DMEM stage, not to exacerbate a path which can be critical by itself. 
+Since no \textbf{BPU} (\textbf{B}ranch \textbf{P}rediction \textbf{U}nit) is present in the design, a "branch not taken" assumption is always made when the content of the PC is updated and the decoded instruction is a branch. The simplest way to manage a branch is to delay the decision until the execution stage, waiting for the ALU to do the comparison. The effective decision is then taken in the DMEM stage, not to exacerbate a path which can be critical by itself.
 Also the calculation of the next address, which involves the immediate and the program counter, is performed in the execution stage.
 
 A possible improvement could be to anticipate the comparison and the next address calculation in the decoding stage, but to keep the design simple the first solution was chosen, as this would imply additional hardware.
@@ -200,10 +200,10 @@ To control the multiplexers for the next address selection, there's the need for
 	\item The result of the comparison.
 	\item If the instruction is a JALR.
 \end{enumerate}
-The main CU generates two signals \texttt{branch} and \texttt{jump} which percolate along the pipeline, to allow the ``Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result. 
+The main CU generates two signals \texttt{branch} and \texttt{jump} which percolate along the pipeline, to allow the ``Next address selection CU" to solve the first two points. The result of a comparison is simply the LSB of the ALU result.
 The main CU thus has to generate another signal \texttt{jalr} to indicate a JALR instruction.
 
-The \texttt{jump} control signal is used also in the write-back stage, to select the right input for the register file. If a jump is performed, the data to be written in the destination register is the "next" address after the jump instruction. 
+The \texttt{jump} control signal is used also in the write-back stage, to select the right input for the register file. If a jump is performed, the data to be written in the destination register is the "next" address after the jump instruction.
 
 In any case, the IMEM pipe register, together with IF/ID, ID/EX and EX/DMEM ones, have to be flushed. This brings to a performance loss of 4 instructions for each taken branch or executed jump.
 
@@ -240,10 +240,10 @@ The next address is chosen by means of two multiplexers:
     \label{fig:fwu}
 \end{figure}
 
-Forwarding allows to avoid stalling the pipeline when a data hazard occurs between two subsequent instructions, if the needed data is already available in a following pipe stage. 
+Forwarding allows to avoid stalling the pipeline when a data hazard occurs between two subsequent instructions, if the needed data is already available in a following pipe stage.
 In this five stage pipeline results are written to the destination register during the write back stage, three clock cycles after the operand read in the decode stage. This means that, if an instruction modifies a certain register, only instructions starting from the third after the original would read the correct new data, or equivalently that up to two bubble should be inserted in case of a data hazard.
 
-Forwarding simply bypasses data to the beginning of the execution stage (i.e. at the ALU inputs) if the required results are already present at the ALU output or in the following memory access stage. 
+Forwarding simply bypasses data to the beginning of the execution stage (i.e. at the ALU inputs) if the required results are already present at the ALU output or in the following memory access stage.
 
 To do so, the logic of the FWU (figure~\ref{fig:fwu}) performs some checks:
 \begin{itemize}
@@ -255,7 +255,7 @@ To do so, the logic of the FWU (figure~\ref{fig:fwu}) performs some checks:
 Note that, according to the list above, forwarding gives precedence to data present in the EX/MEM stage over the MEM/WB stage if the same register is present in both, as the former contains the latest result.
 
 \subsubsection{Load/store forwarding}
-The designed forwarding unit handles also the another special case of data hazard that occurs when a load is followed immediately by a store to the same memory location, such as in memory to memory copies. 
+The designed forwarding unit handles also the another special case of data hazard that occurs when a load is followed immediately by a store to the same memory location, such as in memory to memory copies.
 
 In this case the FWU checks that the two involved instructions are actually a load (\texttt{memToReg} asserted in the MEM/WB stage) and a store (\texttt{memWrite} asserted in the EX/MEM stage) and that the destination and source registers are the same, and if that is the case drives the control of the multiplexer selecting the memory data input to choose the memory output.
 
@@ -301,12 +301,12 @@ A summary of the possible cases when this can occur is reported in table \ref{ta
 \label{tab:hdu_output}
 \end{table}
 
-\subsubsection{Inserting a NOP} 
+\subsubsection{Inserting a NOP}
 The NOP instruction is not present in the RISC-V ISA. It is possible to emulate it though, using an \texttt{ADDI x0 x0 0}. This instruction does nothing, because the register x0 is hardwired to value 0. The instruction NOP belongs to the set of pseudo-assembly instructions: they are translated in RISC-V language on the fly by the assembler, and they exist for programmers ease only.
 
 For an effective NOP insertion in the IF/ID stage there is the need for a sequential control of the multiplexer which drive the source of the RF. There is no way of doing it before the pipe register, unless a NOP instruction is already present somewhere in memory.
 
-In figure \ref{fig:hzd_management} a high level datapath for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is shown in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded. 
+In figure \ref{fig:hzd_management} a high level datapath for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is shown in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded.
 
 \begin{figure}[hbtp]
     \centering
@@ -323,6 +323,32 @@ In figure \ref{fig:hzd_management} a high level datapath for hazard management i
 \end{figure}
 
 \subsection{Control Unit (CU)}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[scale=0.3]{../cu/ref/schematic/cu.png}
+    \caption{Control Unit and the units connected to it}
+    \label{fig:cu}
+\end{figure}
+
+The Control Unit is shown in figure \ref{fig:cu}. It is a combinational component, because all the synchronization is done in the pipeline registers. It basically reads the opcode and other eventual flags (funct3, funct7) to determine the format of the instruction used in the immediate generator, as well as other flags.
+
+These flags are about memory commands (read, write, how much to read/write), register-file commands (write, address is generated in the remaining datapath), MUX commands (to decide the inputs to use for the ALU) and branch/jump commands.
+
+There are two commands which are a bit less standardized, to tell the memory the dimension to access (byte, halfword, word) and to tell apart the different jump conditions like branch, jal, jalr.
+
+It is implemented in a behavioral way, to avoid possible risks, and all the parameters are defined as constants, to be easily updated if needed.
+
+\subsection{Immediate Generator (ImmGen)}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[]{../immgen/ref/schematic/immgen.png}
+    \caption{Immediate Generator}
+    \label{fig:immgen}
+\end{figure}
+
+The Immediate Generator (show in figure \ref{fig:immgen}) is needed to gather the correct bits from the different instruction formats. The type of instruction is signalled by the Control Unit, and the output is the reconstructed immediate in the same cycle, since it is a combinational component.
 
 \section{Main architecture}
 The main architecture is depicted in figure \ref{fig:rv-magic_main}. One multiplexer was added in the execution stage to add the support for the AUIPC operation.
@@ -372,14 +398,14 @@ To test the whole processor, some patterns of instructions were develped. The ma
 \item the correct behaviour of each instruction in a flow without hazards
 \item the correct management of all the hazards
 \end{enumerate}
-To achieve this in an easier way, an assembler was developed to support a translation from the RISC-V assembly to the machine code. A detailed discussion about this tool is provided in section \ref{sec:assembler}. Initially a search on the net was done to find a toolchain to convert high level languages like C in RV32I instructions, but a lot of issues arose and another strategies were chosen. The developing of an assembler is not critical, because of its static nature: it works like a decoder and it does not need to be "clever" like a compiler. Testing needs weren't critical and a string check-processing was enaugh. 
+To achieve this in an easier way, an assembler was developed to support a translation from the RISC-V assembly to the machine code. A detailed discussion about this tool is provided in section \ref{sec:assembler}. Initially a search on the net was done to find a toolchain to convert high level languages like C in RV32I instructions, but a lot of issues arose and another strategies were chosen. The developing of an assembler is not critical, because of its static nature: it works like a decoder and it does not need to be "clever" like a compiler. Testing needs weren't critical and a string check-processing was enaugh.
 
 \paragraph{Instructions}
 
 \paragraph{Testbench} The testbench was written in Verilog coherently with all the previous work. The entity instantiates the \textbf{DUV} (\textbf{D}evice \textbf{U}nder \textbf{V}erification) together with the two memories. It also handles the clock and reset generation.
 It is worth to note that the addressable space of the memory was reduced because a complete 32-bit one was not feasable due to space problems: only a subset of the PC bits was bound to the address line of the storage devices.
-The entire system is reset at the beginning of the simulation, and a parametric clock is fed to all the sequential elements. 
-An \textit{initial} statement inside the memory modules ensures the correct loading of the instructions/data inside them. To perform this task, the function \textit{\$readmemh} is used: it allows to read an ASCII text file in which are present hexadecimal data written in rows. Each row is assigned to a vector of the memory. 
+The entire system is reset at the beginning of the simulation, and a parametric clock is fed to all the sequential elements.
+An \textit{initial} statement inside the memory modules ensures the correct loading of the instructions/data inside them. To perform this task, the function \textit{\$readmemh} is used: it allows to read an ASCII text file in which are present hexadecimal data written in rows. Each row is assigned to a vector of the memory.
 
 With the aid of the GUI of Modelsim, each signal was visually followed to check if the timing of the processor was respected. The first tested code is the following:
 
@@ -389,12 +415,12 @@ The first instructions are LUI to load the RF with positive and negative values.
 
 \subparagraph*{lui x0, 37} Nothing has to be saved in x0, because it is hardwired to gnd.
 
-\subparagraph*{lui x1, 133} The 20 bits immediate \textbf{133} = 00000000000010000101 is sign extended to 32 bits and 12-bits left shifted (with zero padding), then it is brought to the ALU to exit it without any processing. The result is saved to the destination register. 
+\subparagraph*{lui x1, 133} The 20 bits immediate \textbf{133} = 00000000000010000101 is sign extended to 32 bits and 12-bits left shifted (with zero padding), then it is brought to the ALU to exit it without any processing. The result is saved to the destination register.
 \begin{enumerate}
 \item Immediate: 00000000000010000101 = 133
 \item Sign extension, left shifting and zero padding: 00000000000010000101000000000000 = 544768
-\end{enumerate} 
-The result is saved in x1. 
+\end{enumerate}
+The result is saved in x1.
 
 \begin{figure}[hbtp]
     \centering
@@ -410,8 +436,8 @@ And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The pre
 \item Immediate: 00000001100101000010 = 6466
 \item Sign extension, left shifting and zero padding: 00000001100101000010000000000000 = 26484736
 \item Sum with PC: 00000001100101000010000010000000 = 26484864
-\end{enumerate} 
-The result is saved in x2. 
+\end{enumerate}
+The result is saved in x2.
 The same procedure was followed to verify all the other instructions of the RV32I ISA.
 
 Once all the basic logical/arithmetical functions were verified in this soft way (not all the possible combinations were tested!), jumps and branches were taken into account.
