@@ -360,7 +360,7 @@ The main architecture is depicted in figure \ref{fig:rv-magic_main}. One multipl
     \label{fig:rv-magic_main}
 \end{figure}
 
-\section{Testbench}
+\section{Simulation}
 \subsection{Memory}\label{sec:memory}
 Some kind of memory model is needed in order to perform a full simulation of the processor core. Given that the design of a full fledged memory subsystem is beyond the scope of this experience, we resorted to a simple behavioral model of a synchronous memory.
 
@@ -392,24 +392,85 @@ Figure \ref{fig:memory_timing} shows the usual timing diagram of this fully sync
     \label{fig:memory_timing}
 \end{figure}
 
-\subsection{Main}\label{sec:main}
-To test the whole processor, some patterns of instructions were develped. The main purposes were to check:
+\subsection{Testing procedure}\label{sec:main}
+To test the whole processor, some patterns of instructions were developed. The main purposes were to check:
 \begin{enumerate}
-\item the correct behaviour of each instruction in a flow without hazards
+\item the correct behavior of each instruction in a flow without hazards
 \item the correct management of all the hazards
 \end{enumerate}
-To achieve this in an easier way, an assembler was developed to support a translation from the RISC-V assembly to the machine code. A detailed discussion about this tool is provided in section \ref{sec:assembler}. Initially a search on the net was done to find a toolchain to convert high level languages like C in RV32I instructions, but a lot of issues arose and another strategies were chosen. The developing of an assembler is not critical, because of its static nature: it works like a decoder and it does not need to be "clever" like a compiler. Testing needs weren't critical and a string check-processing was enaugh.
+To achieve this in an easier way, an assembler was developed to support a translation from the RISC-V assembly to the machine code. A detailed discussion about this tool is provided in section \ref{sec:assembler}. Initially a search on the net was done to find a toolchain to convert high level languages like C in RV32I instructions, but a lot of issues arose and other strategies were chosen. The developing of an assembler is not critical, because of its static nature: it works like a decoder and it does not need to be ``clever" like a compiler. Testing needs weren't critical and a string check processing was enough.
 
-\paragraph{Instructions}
+\subsubsection{Testbench} The testbench was written in SystemVerilog coherently with all the previous work. The entity instantiates the \textbf{DUV} (\textbf{D}evice \textbf{U}nder \textbf{V}erification) together with the two memories. It also handles the clock and reset generation.
+It is worth to note that the addressable space of the memory was reduced because a complete 32-bit one was not feasible due to space problems: only a subset of the PC bits was bound to the address line of the storage devices.
 
-\paragraph{Testbench} The testbench was written in Verilog coherently with all the previous work. The entity instantiates the \textbf{DUV} (\textbf{D}evice \textbf{U}nder \textbf{V}erification) together with the two memories. It also handles the clock and reset generation.
-It is worth to note that the addressable space of the memory was reduced because a complete 32-bit one was not feasable due to space problems: only a subset of the PC bits was bound to the address line of the storage devices.
 The entire system is reset at the beginning of the simulation, and a parametric clock is fed to all the sequential elements.
-An \textit{initial} statement inside the memory modules ensures the correct loading of the instructions/data inside them. To perform this task, the function \textit{\$readmemh} is used: it allows to read an ASCII text file in which are present hexadecimal data written in rows. Each row is assigned to a vector of the memory.
+An \texttt{initial} statement inside the memory modules ensures the correct loading of the instructions/data inside them. To perform this task, the function \texttt{\$readmemh} is used: it allows to read an ASCII text file in which are present hexadecimal data written in rows. Each row is assigned to a memory location.
 
-With the aid of the GUI of Modelsim, each signal was visually followed to check if the timing of the processor was respected. The first tested code is the following:
+With the aid of the ModelSim GUI, each signal was visually followed to check if the timing of the processor was respected. 
 
-% ADD THE CODE
+\subsubsection{Single instructions test}
+First of all each instruction was individually tested to assure the correct behavior of the whole pipeline mechanism.
+
+\paragraph{Register loads}
+To test each register of the register file, as well as to make sure that register \texttt{x0} does not change, a series of consecutive \texttt{lui} instructions was used, trying with both positive and negative values.
+
+The \texttt{auipc} instruction was tested as well at this point.
+
+\begin{verbatim}
+    lui x0, 37
+    lui x1, 133
+    lui x2, 65
+    lui x3, -1
+    lui x4, 0
+    ...
+    auipc x2, 6466
+\end{verbatim}
+
+\paragraph{Immediate ALU instructions}
+Next, we tried all ALU operations involving immediate operands.
+
+\begin{verbatim}
+    addi x4, x3, -56
+    andi x6, x5, 255
+    ori x8, x7, 255
+    xori x10, x9, 255
+    slli x12, x11, 3 
+    srli x14, x13, 4
+    srai x16, x15, 8
+    slti x18, x17, 0
+    sltiu x20, x19, 5
+\end{verbatim}
+
+\paragraph{Register ALU instructions}
+Then, the same instructions were tried with both operands being read from the register file.
+
+\begin{verbatim}
+    add x23, x21, x22
+    sub x26, x24, x25
+    and x29, x27, x28
+    or x1, x30, x31
+    xor x4, x2, x3
+    sll x7, x5, x6
+    srl x10, x8, x9
+    srai x13, x11, 12
+    slt x16, x14, x15
+    sltu x19, x17, x18
+\end{verbatim}
+
+\paragraph{Load and stores}
+Finally all load and stores were tested, on all the different data widths.
+
+\begin{verbatim}
+    lb x21, x20, 3
+    lh x23, x22, 8
+    lbu x25, x24, 34
+    lhu x27, x26, 45
+    lw x29, x28, 9
+
+    sb x31, x30, 3
+    sh x2, x1, 23
+    sw x4, x3, 89
+\end{verbatim}
 
 The first instructions are LUI to load the RF with positive and negative values. A writing to x0 is performed to verify its immutability.
 
@@ -422,12 +483,12 @@ The first instructions are LUI to load the RF with positive and negative values.
 \end{enumerate}
 The result is saved in x1.
 
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[scale=.8]{/home/matteo/git/RV-MAGIC/main/sim/plot/first_LUIs_validation.png}
-    \caption{RF loading verification}
-    \label{fig:first_LUIs_ver}
-\end{figure}
+% \begin{figure}[hbtp]
+%     \centering
+%     \includegraphics[scale=.8]{../main/sim/plot/first_LUIs_validation.png}
+%     \caption{RF loading verification}
+%     \label{fig:first_LUIs_ver}
+% \end{figure}
 
 And so on. At the fetch of AUIPC the PC is equal to $4 \times 32 = 128$. The previous instruction, i.e. the last LUI, is being decoded: for its completion there's the need for waiting for other four cycles. At this point (PC = 144) all the register file were checked to verify the correct storage of the data (figure \ref{fig:first_LUIs_ver}).
 
@@ -442,6 +503,6 @@ The same procedure was followed to verify all the other instructions of the RV32
 
 Once all the basic logical/arithmetical functions were verified in this soft way (not all the possible combinations were tested!), jumps and branches were taken into account.
 
-\subsubsection{Assembler}\label{sec:assembler}
+\subsection{Assembler}\label{sec:assembler}
 
 \end{document}
