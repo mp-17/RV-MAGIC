@@ -1,17 +1,17 @@
 main:
-li sp, 32
-li x5, 7
-li x6, 2
-jal ra, 8 # FIB
-j 72 # EXIT
+    li sp, 32
+    li x5, 7
+    li x6, 2
+    jal ra, fib
+    j exit
 
-# FIB:
-    bge x5, x6, 12 # REC 
+fib:
+    bge x5, x6, rec
     addi x7, x5, 0
     jalr x0, 0(ra)
     # Handled Base Case
 
-# REC:
+rec:
     # Handling Rec. Case
 
     addi sp, sp, -12
@@ -19,13 +19,13 @@ j 72 # EXIT
     sw x5, 4(sp)
 
     addi x5, x5, -1
-    jal ra, -28 # FIB
+    jal ra, fib
 
 
     sw x7, 8(sp)
     lw x5, 4(sp)
     addi x5, x5, -2
-    jal ra, -44 # FIB 
+    jal ra, fib
 
     lw x13, 8(sp)
     add x7, x13, x7
@@ -35,4 +35,4 @@ j 72 # EXIT
     addi sp, sp, 12
     jalr x0, 0(ra)
 
-# EXIT:
+exit:
