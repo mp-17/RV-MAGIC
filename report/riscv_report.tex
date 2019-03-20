@@ -9,7 +9,6 @@
 \usepackage{siunitx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{listings}
 
 \sisetup{exponent-product=\cdot}
 
@@ -262,15 +261,15 @@ The designed forwarding unit handles also the another special case of data hazar
 In this case the FWU compares the destination register in MEM/WB stage with both the source registers in the EM/MEM stage. If the earlier instruction, in MEM/WB, is a load (\texttt{memwbMemToReg} is asserted) and the current instruction in EX/MEM is a store (\texttt{exmemMemWrite} is asserted):
 \begin{itemize}
     \item If the match is on \texttt{rs1} field, it means that the value just read from the memory is used as base address for the following store instruction. Therefore, \texttt{DMEM\_ADDR\_FWD\_ADDER} sums the store instruction immediate field present in the EX/MEM pipe register to that value, and the result is selected by \texttt{DMEM\_ADDR\_FWD\_MUX} as the data memory \textbf{address} input. The following two lines of assembly code show this case:
-    \begin{lstlisting}
+    \begin{verbatim}
         lw x5, 0(x0)
         sw x6, 4(x5)
-    \end{lstlisting}
+    \end{verbatim}
     \item Otherwise, if the match is on \texttt{rs2} field, the value just read from the memory has to be forwarded to the memory \textbf{data} input by \texttt{DMEM\_DATA\_FWD\_MUX}. This second possibility is shown below:
-    \begin{lstlisting}
+    \begin{verbatim}
         lw x5, 0(x0)
         sw x5, 4(x6)
-    \end{lstlisting}
+    \end{verbatim}
 \end{itemize}
 
 This design allows the processor to cover every type of data hazard that can be solved by forwarding earlier results, as proven by the simulation results, leaving uncovered only the case of a load instruction followed by another instruction using that value that is not a store operation. In this case the processors stalls the pipeline inserting a \texttt{nop} instruction. This situation is handled by the Hazard Detection Unit (HDU, section \ref{sec:HDU}).
@@ -553,7 +552,8 @@ The hazard detection was tested with a load followed by another using instructio
     addi x1, t0, 1 
 \end{verbatim}
 
-\subsection{Assembler}\label{sec:assembler}
-
+% ASSEMBLER section 
+% \label{sec:assembler}
+\input{sec/compy.tex}
 
 \end{document}
