@@ -32,10 +32,6 @@ module rvMagic (
             HDU_stall_n,
             HDU_flush_IdEx,
             HDU_flush_IfId_ExMem,
-            // HDU enable signal
-            delayed_reset_1,
-            delayed_reset_2,
-            HDU_enable,
             // FWU signals
             // CU signals
             CU_RF_write,
@@ -183,18 +179,13 @@ module rvMagic (
     );
     
     // ifId_FLUSH_FF
-    register 
-    #(
-        .NB (1)
-    )
-    ifId_FLUSH_FF (
-    	.clk   (clk),
-        .rst_n (rst_n),
-        .clr   (1'b0),
-        .en    (1'b1),
-        .d     (HDU_flush_IfId_ExMem),
-        .q     (ifId_FLUSH_FF_q)
-    );
+    always_ff @ (posedge clk, negedge rst_n) begin
+        if (rst_n == 0)
+            ifId_FLUSH_FF_q <= 1'b1;
+        else
+            ifId_FLUSH_FF_q <= HDU_flush_IfId_ExMem;
+        end
+    end
     
     // RF
     rf RF (
@@ -361,7 +352,7 @@ module rvMagic (
     );
     
     // BR_JAL_ADDER
-    assign BR_JAL_ADDER_out = ID_EX_immediate + ID_EX_pc;
+    assign BR_JAL_ADDER_out = (ID_EX_immediate << 1) + ID_EX_pc;
 
     // EX_DMEM
     register 
@@ -521,11 +512,6 @@ module rvMagic (
     );
 
     // HDU
-    always_ff @ (posedge clk) begin
-        delayed_reset_1 <= rst_n;
-        delayed_reset_2 <= delayed_reset_1;
-        HDU_enable <= delayed_reset_2;
-    end
 
     hdu HDU (
     	.ifidRs1        (ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH]),
@@ -534,7 +520,6 @@ module rvMagic (
         .ifidMemWrite   (CU_D_MEM_write),
         .idexMemRead    (ID_EX_controls[3]),
         .branchOrJump   (NEXT_ADDR_SEL_CU_jumpOrBranch),
-        .enable         (HDU_enable),
         .stall_n        (HDU_stall_n),
         .flushIdEx      (HDU_flush_IdEx),
         .flushIfIdExMem (HDU_flush_IfId_ExMem)
