@@ -35,11 +35,16 @@ def pseudo_handler(instruction):
          if arg.find('(') != -1:
             temp = arg.split('(')
             instruction[i] = temp[1].rstrip(')')
-            if fields[instruction[0].upper()][3] == 'S':
-               instruction.insert(3, temp[0])
-            else:
-               instruction.insert(i+1, temp[0])
+            # if fields[instruction[0].upper()][3] == 'S':
+            #    instruction.insert(3, temp[0])
+            # else:
+            instruction.insert(i+1, temp[0])
          i += 1
+      try:
+         if fields[instruction[0].upper()][3] == 'S':
+            instruction[1], instruction[2] = instruction[2], instruction[1]
+      except KeyError:
+         pass
       i = 1
       for arg in instruction[1:]:
          instrArgs[i-1] = arg

@@ -184,7 +184,6 @@ module rvMagic (
             ifId_FLUSH_FF_q <= 1'b1;
         else
             ifId_FLUSH_FF_q <= HDU_flush_IfId_ExMem;
-        end
     end
     
     // RF

@@ -14,14 +14,14 @@ j 72 # EXIT
     # Handling Rec. Case
 
     addi sp, sp, -12
-    sw 0(sp), x1
-    sw 4(sp), x5
+    sw x1, 0(sp)
+    sw x5, 4(sp)
 
     addi x5, x5, -1
     jal ra, -28 # FIB
 
 
-    sw 8(sp), x7
+    sw x7, 8(sp)
     lw x5, 4(sp)
     addi x5, x5, -2
     jal ra, -44 # FIB 
