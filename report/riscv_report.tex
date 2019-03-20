@@ -9,6 +9,7 @@
 \usepackage{siunitx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
 
 \sisetup{exponent-product=\cdot}
 
@@ -247,18 +248,32 @@ Forwarding simply bypasses data to the beginning of the execution stage (i.e. at
 
 To do so, the logic of the FWU (figure~\ref{fig:fwu}) performs some checks:
 \begin{itemize}
-    \item Check that the earlier in the pipe actually modifies some register (\texttt{regWrite} is asserted) and that the address does not point to register \texttt{x0}.
-    \item Compare the destination register in the EX/MEM stage with both source register in the ID/EX stage and, if there is a match, drives the selection signal of the corresponding ALU input multiplexer to select the previous ALU output (\texttt{fwdA/fwdB} $= 10$).
+    \item Check that the earlier instruction in the pipe actually modifies some register (\texttt{regWrite} is asserted) and that the address does not point to register \texttt{x0}.
+    \item Compare the destination register in the EX/MEM stage with both source register in the ID/EX stage and, if there is a match, drives the selection signal of the corresponding ALU input multiplexer (\texttt{RS\{1,2\}\_ALU\_FWD\_MUX}) to select the previous ALU output (\texttt{fwdA/fwdB} $= 10$).
     \item Otherwise, compare the destination register in the MEM/WB stage with both source register in the ID/EX stage and, if there is a match, drives the selection signal of the corresponding ALU input multiplexer to select the result currently in the memory access stage (\texttt{fwdA/fwdB} $= 01$).
 \end{itemize}
 
 Note that, according to the list above, forwarding gives precedence to data present in the EX/MEM stage over the MEM/WB stage if the same register is present in both, as the former contains the latest result.
 
 \subsubsection{Load/store forwarding}
+\label{sec:load_store_fwd}
 The designed forwarding unit handles also the another special case of data hazard that occurs when a load is followed immediately by a store to the same memory location, such as in memory to memory copies.
 
-In this case the FWU checks that the two involved instructions are actually a load (\texttt{memToReg} asserted in the MEM/WB stage) and a store (\texttt{memWrite} asserted in the EX/MEM stage) and that the destination and source registers are the same, and if that is the case drives the control of the multiplexer selecting the memory data input to choose the memory output.
+In this case the FWU compares the destination register in MEM/WB stage with both the source registers in the EM/MEM stage. If the earlier instruction, in MEM/WB, is a load (\texttt{memwbMemToReg} is asserted) and the current instruction in EX/MEM is a store (\texttt{exmemMemWrite} is asserted):
+\begin{itemize}
+    \item If the match is on \texttt{rs1} field, it means that the value just read from the memory is used as base address for the following store instruction. Therefore, \texttt{DMEM\_ADDR\_FWD\_ADDER} sums the store instruction immediate field present in the EX/MEM pipe register to that value, and the result is selected by \texttt{DMEM\_ADDR\_FWD\_MUX} as the data memory \textbf{address} input. The following two lines of assembly code show this case:
+    \begin{lstlisting}
+        lw x5, 0(x0)
+        sw x6, 4(x5)
+    \end{lstlisting}
+    \item Otherwise, if the match is on \texttt{rs2} field, the value just read from the memory has to be forwarded to the memory \textbf{data} input by \texttt{DMEM\_DATA\_FWD\_MUX}. This second possibility is shown below:
+    \begin{lstlisting}
+        lw x5, 0(x0)
+        sw x5, 4(x6)
+    \end{lstlisting}
+\end{itemize}
 
+This design allows the processor to cover every type of data hazard that can be solved by forwarding earlier results, as proven by the simulation results, leaving uncovered only the case of a load instruction followed by another instruction using that value that is not a store operation. In this case the processors stalls the pipeline inserting a \texttt{nop} instruction. This situation is handled by the Hazard Detection Unit (HDU, section \ref{sec:HDU}).
 Figure \ref{fig:fwu_5stages} shows the FWU with all inputs on which decisions are taken and the three output signals controlling the related multiplexers in each pipeline stage of the core.
 
 \begin{figure}[hbtp]
@@ -269,9 +284,8 @@ Figure \ref{fig:fwu_5stages} shows the FWU with all inputs on which decisions ar
 \end{figure}
 
 \subsection{Hazard Detection Unit (HDU)}
-When data cannot be forwarded, then the pipeline must be inevitably stalled by preventing the fetch of a new instruction and inserting a bubble. Specifically, this happens when a data hazard occurs between a load (\texttt{memRead} asserted in the decode stage) and another using instruction (unless it is a store, for which forwarding accounts).
-
-Moreover, when a branch is taken or an unconditional jump occurs, a similar action of flushing the entire pipeline to get rid of invalid instructions already in execution must be taken.
+\label{sec:HDU}
+When data cannot be forwarded, then the pipeline must be inevitably stalled by preventing the fetch of a new instruction and inserting a bubble. Specifically, this happens when a data hazard occurs between a load (\texttt{memRead} asserted in the decode stage) and another instruction using the value read from the memory, unless it is a store, for which forwarding accounts as explained in section \ref{sec:load_store_fwd}. Moreover, when a branch is taken or an unconditional jump occurs, a similar action must be take and additionally the entire pipeline must be flushed, to get rid of invalid instructions already fetched decoded while waiting for the jump condition result or the destination address to be computed.
 
 Both this occurrences are handled by the Hazard Detection Unit (figure \ref{fig:hdu}), that according to the aforementioned checks, outputs three signals:
 \begin{itemize}
@@ -305,6 +319,10 @@ A summary of the possible cases when this can occur is reported in table \ref{ta
 The NOP instruction is not present in the RISC-V ISA. It is possible to emulate it though, using an \texttt{ADDI x0 x0 0}. This instruction does nothing, because the register x0 is hardwired to value 0. The instruction NOP belongs to the set of pseudo-assembly instructions: they are translated in RISC-V language on the fly by the assembler, and they exist for programmers ease only.
 
 For an effective NOP insertion in the IF/ID stage there is the need for a sequential control of the multiplexer which drive the source of the RF. There is no way of doing it before the pipe register, unless a NOP instruction is already present somewhere in memory.
+
+Particular caution must be taken when the first instruction after the reset is de-asserted modifies the behaviour of the processor for the next cycles. This is the case of a \texttt{jal} instruction stored in the first instruction memory location. While the reset signal is asserted, this instruction continues to be fetched, since there's no way to reset the synchronous reset. The \texttt{jal} instruction enters the next pipeline stages as soon as the reset signal is de-asserted (even in the middle of a cycle, since it is asynchronous), and the CU issues a flush of the next fetched instructions, including the one that is fetched on the next cycle after the reset signal is de-asserted, that is of course the \texttt{jal} instruction itself. When this happens, the control signals used to compute and use the destination address of the jump are therefore overridden by the flushed issued before. The \texttt{IFID\_FLUSH\_FF} must therefore be reset to \texttt{1} instead of \texttt{0}, to propagate a \texttt{nop} instruction as long as the reset signal is asserted. This way, no real instruction enters the pipeline before the reset is released, allowing the first instruction in the memory to be properly executed, whatever it is.
+
+Notice that another possible solution is to change the Control Unit from a simple combinational network to a Finite State Machine. However, to avoid state explosion and complex pipeline synchronization, a Mealy approach could have been used in place of a Moore one. This means that the output control signals would have been functions of the input ones (like in a combinational network) and the present state. Since the state change is a synchronous event during normal operation, the control signals would have been be issued only in states different from \texttt{RST}. 
 
 In figure \ref{fig:hzd_management} a high level datapath for hazard management is depicted. Moreover, a timing diagram to show how instructions are flushed is shown in figure \ref{fig:hzd_management_timing}. The three instructions which follow a jump or a taken branch are discarded.
 
@@ -348,7 +366,7 @@ It is implemented in a behavioral way, to avoid possible risks, and all the para
     \label{fig:immgen}
 \end{figure}
 
-The Immediate Generator (show in figure \ref{fig:immgen}) is needed to gather the correct bits from the different instruction formats. The type of instruction is signalled by the Control Unit, and the output is the reconstructed immediate in the same cycle, since it is a combinational component.
+The Immediate Generator (show in figure \ref{fig:immgen}) is needed to produce the correct immediate bit sequence from each different instruction formats. The type of instruction is inferred by the Control Unit, and the output is the reconstructed immediate. The immediate generation is done in the same cycle, since this is a combinational component.
 
 \section{Main architecture}
 The main architecture is depicted in figure \ref{fig:rv-magic_main}. One multiplexer was added in the execution stage to add the support for the AUIPC operation.
@@ -494,7 +512,7 @@ First of all, the two unconditional jump instructions were tested, namely \textt
     jalr x4, x3, 3
 \end{verbatim}
 
-In this case, the important things to notice are the correct evolution of the program counter after the jump (along with the right generation of the address and LSB masking) and the correct generation of the CU signals \texttt{jumpOrBranch} and \texttt{jalr}, as well as \texttt{stall_n} from the HDU, to disable the PC and the IF/ID pipe register.
+In this case, the important things to notice are the correct evolution of the program counter after the jump (along with the right generation of the address and LSB masking) and the correct generation of the CU signals \texttt{jumpOrBranch} and \texttt{jalr}, as well as \texttt{$stall_n$} from the HDU, to disable the PC and the IF/ID pipe register.
 
 \paragraph{Branches}
 A similar procedure was used to test branches. 
