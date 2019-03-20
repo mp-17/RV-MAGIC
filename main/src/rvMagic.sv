@@ -357,7 +357,7 @@ module rvMagic (
     );
     
     // BR_JAL_ADDER
-    assign BR_JAL_ADDER_out = (ID_EX_immediate << 1) + ID_EX_pc;
+    assign BR_JAL_ADDER_out = ID_EX_immediate + ID_EX_pc;
 
     // EX_DMEM
     register 
