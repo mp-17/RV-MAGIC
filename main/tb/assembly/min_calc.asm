@@ -17,4 +17,4 @@
 	add x4, x7, x0      # update min	                            56
 	jal x0, -44         # next element                              60    
 #done:
-	sw 0(x3), x4        # store the result                          64
+	sw x4, 0(x3)        # store the result                          64
