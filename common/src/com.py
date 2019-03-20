@@ -98,7 +98,7 @@ while True:
          # Parse the assembly file
          for line in assembly:
             words = line.split()
-            if chk_cmt(line[0]): continue # Check if the entire line is commented
+            if words == [] or chk_cmt(words[0]): continue # Check if the entire line is commented or empty
             aInstrPrint = '{:6}'.format(str(i) + ') ')
             i += 1
 
