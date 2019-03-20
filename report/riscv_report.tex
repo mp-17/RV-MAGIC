@@ -9,6 +9,7 @@
 \usepackage{siunitx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
 
 \sisetup{exponent-product=\cdot}
 
@@ -469,15 +470,15 @@ Then, the same instructions were tried with both operands being read from the re
 Finally all load and stores were tested, on all the different data widths.
 
 \begin{verbatim}
-    lb x21, x20, 3
-    lh x23, x22, 8
-    lbu x25, x24, 34
-    lhu x27, x26, 45
-    lw x29, x28, 9
+    lb x21, 3(x20)
+    lh x23, 8(x22)
+    lbu x25, 34(x24)
+    lhu x27, 45(x26)
+    lw x29, 9(x28)
 
-    sb x31, x30, 3
-    sh x2, x1, 23
-    sw x4, x3, 89
+    sb x31, 3(x30)
+    sh x2, 23(x1)
+    sw x4, 89(x3)
 \end{verbatim}
 
 \subsubsection{Branches and control hazard test}
@@ -494,7 +495,7 @@ First of all, the two unconditional jump instructions were tested, namely \textt
     jalr x4, x3, 3
 \end{verbatim}
 
-In this case, the important things to notice are the correct evolution of the program counter after the jump (along with the right generation of the address and LSB masking) and the correct generation of the CU signals \texttt{jumpOrBranch} and \texttt{jalr}, as well as \texttt{stall_n} from the HDU, to disable the PC and the IF/ID pipe register.
+In this case, the important things to notice are the correct evolution of the program counter after the jump (along with the right generation of the address and LSB masking) and the correct generation of the CU signals \texttt{jumpOrBranch} and \texttt{jalr}, as well as \texttt{stall\_n} from the HDU, to disable the PC and the IF/ID pipe register.
 
 \paragraph{Branches}
 A similar procedure was used to test branches. 
@@ -516,9 +517,12 @@ The first case is the forwarding of the previous ALU result:
 \end{verbatim}
 
 Next, forwarding can also occur from the ALU result of two cycles earlier:
-addi x13, x1, 253
-sub x7, x5, x6
-xor x3, x13, x2
+\begin{verbatim}
+    addi x13, x1, 253
+    sub x7, x5, x6
+    xor x3, x13, x2
+\end{verbatim}
+
 
 Finally, forwarding between load and store was tested:
 \begin{verbatim}
@@ -535,7 +539,35 @@ The hazard detection was tested with a load followed by another using instructio
     addi x1, t0, 1 
 \end{verbatim}
 
-\subsection{Assembler}\label{sec:assembler}
+In all the previous cases, the focus was on the interface signals of the HDU and FWU, as well as the correct stalling and flushing of the pipeline.
 
+\subsubsection{Complete program test}
+After having tested all single instructions and hazard scenario individually, a complete assembly program was tested, in order to verify the correctness of the design in a real application. The program in question (listed below) is the translation to RISC-V assembly of the test program provided for the laboratory experience on the MIPS processor, which computes the minimum absolute value among the elements of a vector.
+\begin{verbatim}
+#__start:
+    li x1, 7            # load x1 with 7 (number of elements)       0
+    li x2, 16           # put in x2 the address of v (16)           4
+    li x3, 8            # put in x3 the address of m (8)            8
+    lw x4, 0(x3)        # init x4 with max value (high)             12
+#loop:
+    beq x1, x0, 48      # check all elements have been tested       16
+    lw x5, 0(x2)        # load new element in x5                    20
+    srai x6, x5, 31     # apply shift to get sign mask in x6        24
+    xor x7, x5, x6      # x7 = sign(x5)^x5 (invert x5 if negative)  28
+    andi x6, x6, 1      # x6 &= 1 (carry in)                        32
+    add x7, x7, x6      # x7 += x6 (add the carry in)               36
+    addi x2, x2, 4      # point to next element                     40
+    addi x1, x1, -1     # decrease x1 by 1                          44
+    slt x8, x7, x4      # x8 = (x7 < x4) ? 1 : 0                    48
+    beq x8, x0, -36     # next element                              52
+    add x4, x7, x0      # update min                                56
+    jal x0, -44         # next element                              60    
+#done:
+    sw x4, 0(x3)        # store the result                          64
+\end{verbatim}
+
+\includepdf[pages={1-2}]{img/min_calc.pdf}
+
+\subsection{Assembler}\label{sec:assembler}
 
 \end{document}
