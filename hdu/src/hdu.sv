@@ -18,14 +18,14 @@
 
 module hdu (
     input [`RF_ADDR_WIDTH-1:0] ifidRs1, ifidRs2, idexRd,
-    input ifidMemWrite, idexMemRead, branchOrJump,
+    input ifidMemWrite, idexMemRead, branchOrJump, enable,
     output logic stall_n, flushIdEx, flushIfIdExMem
 );
 
     always_comb begin
-        if (branchOrJump) 
+        if (branchOrJump && enable) 
             {stall_n, flushIdEx, flushIfIdExMem} = 3'b111;
-        else if (idexMemRead && (idexRd != 0) && !ifidMemWrite && ((idexRd == ifidRs1) || (idexRd == ifidRs2))) 
+        else if ((idexMemRead && (idexRd != 0) && !ifidMemWrite && ((idexRd == ifidRs1) || (idexRd == ifidRs2))) && enable)
             {stall_n, flushIdEx, flushIfIdExMem} = 3'b010;
         else 
             {stall_n, flushIdEx, flushIfIdExMem} = 3'b100;

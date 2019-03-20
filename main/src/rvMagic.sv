@@ -32,6 +32,10 @@ module rvMagic (
             HDU_stall_n,
             HDU_flush_IdEx,
             HDU_flush_IfId_ExMem,
+            // HDU enable signal
+            delayed_reset_1,
+            delayed_reset_2,
+            HDU_enable,
             // FWU signals
             // CU signals
             CU_RF_write,
@@ -517,6 +521,12 @@ module rvMagic (
     );
 
     // HDU
+    always_ff @ (posedge clk) begin
+        delayed_reset_1 <= rst_n;
+        delayed_reset_2 <= delayed_reset_1;
+        HDU_enable <= delayed_reset_2;
+    end
+
     hdu HDU (
     	.ifidRs1        (ifId_FLUSH_MUX_out[`RV32I_RS1_START+:`RF_ADDR_WIDTH]),
         .ifidRs2        (ifId_FLUSH_MUX_out[`RV32I_RS2_START+:`RF_ADDR_WIDTH]),
@@ -524,6 +534,7 @@ module rvMagic (
         .ifidMemWrite   (CU_D_MEM_write),
         .idexMemRead    (ID_EX_controls[3]),
         .branchOrJump   (NEXT_ADDR_SEL_CU_jumpOrBranch),
+        .enable         (HDU_enable),
         .stall_n        (HDU_stall_n),
         .flushIdEx      (HDU_flush_IdEx),
         .flushIfIdExMem (HDU_flush_IfId_ExMem)

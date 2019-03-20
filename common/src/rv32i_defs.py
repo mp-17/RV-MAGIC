@@ -248,12 +248,12 @@ fields = {
    'SLTU':  ['rd',      'rs1',      'rs2',      'R'],
    'SLTIU': ['rd',      'rs1',      'imm',      'I'],
    # Branches
-   'BEQ':   ['rd',      'rs1',      'imm',      'B'],
-   'BNE':   ['rd',      'rs1',      'imm',      'B'],
-   'BLT':   ['rd',      'rs1',      'imm',      'B'],
-   'BGE':   ['rd',      'rs1',      'imm',      'B'],
-   'BLTU':  ['rd',      'rs1',      'imm',      'B'],
-   'BGEU':  ['rd',      'rs1',      'imm',      'B'],
+   'BEQ':   ['rs1',     'rs2',      'imm',      'B'],
+   'BNE':   ['rs1',     'rs2',      'imm',      'B'],
+   'BLT':   ['rs1',     'rs2',      'imm',      'B'],
+   'BGE':   ['rs1',     'rs2',      'imm',      'B'],
+   'BLTU':  ['rs1',     'rs2',      'imm',      'B'],
+   'BGEU':  ['rs1',     'rs2',      'imm',      'B'],
    # Jump & Link
    'JAL':   ['rd',      'imm',      '-',        'J'],
    'JALR':  ['rd',      'rs1',      'imm',      'I'],
