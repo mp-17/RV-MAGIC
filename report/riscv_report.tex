@@ -13,12 +13,41 @@
 
 \sisetup{exponent-product=\cdot}
 
-\title{Integrated System Architecture \\ Lab session 3 report - RISC-V special project}
 \author{Marco Andorno (247222)\\ Michele Caon (253027) \\ Alessio Colucci (251197) \\ Matteo Perotti (251453)}
 
 \begin{document}
-\maketitle
+\begin{center}
+\thispagestyle{empty}
+
+% INTESTAZIONE
+
+\textbf{\textsc{\Large Integrated Systems Architecture}}\\[1.0cm] 
+\textsc{\Large Politecnico di Torino}\\[0.5cm] 
+\textsc{\large Department of Electronics and Telecommunications
+}\\[1cm] 
+
+% TITOLO
+
+\huge \textbf{Laboratory 3: \\ RISC-V special project}
+
+\end{center}
+
+% AUTORI
+
+\vfill
+\large
+\begin{flushleft}
+\makeatletter
+\emph{Authors:}\\
+\@author \\
+\vspace{1cm}
+\normalsize \@date
+\makeatother
+\end{flushleft} 
+
+\newpage
 \tableofcontents
+\newpage
 
 \section{Introduction}
 The aim of this laboratory session is to design a simple RISC-V core implementing the RV32I instruction set in SystemVerilog, which is the basic 32-bit integer-only set of instructions, without multiply and divide. The complete set is shown in figure \ref{fig:rv32i}.
