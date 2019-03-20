@@ -67,7 +67,7 @@ module main_tb;
     #(
         .ADDR_WIDTH(`MEM_ADDR_WIDTH),
         .WORD_WIDTH(`WORD_WIDTH),
-        .INIT_FILE(`RANDOM_DATA_FILE)
+        .INIT_FILE(`DATA_FILE)
     )
     DMEM(
         .clk(clk),
