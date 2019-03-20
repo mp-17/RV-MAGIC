@@ -3166,11 +3166,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="1689.0999"
-     inkscape:cy="740.63296"
+     inkscape:zoom="2"
+     inkscape:cx="507.81698"
+     inkscape:cy="1035.4131"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer2"
      showgrid="true"
      objecttolerance="20"
      inkscape:window-width="1366"
@@ -7810,8 +7810,8 @@
        id="path132562"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#00b6ff;stroke-width:1.38494754;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker134586)"
-       d="m 916.01436,219.18731 -493.04967,0 0,243.39093"
+       style="fill:none;fill-opacity:1;stroke:#00b6ff;stroke-width:1.4031347;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker134586)"
+       d="m 915.99186,219.18288 -493.00498,0 0,249.84798"
        id="path134578"
        inkscape:connector-curvature="0" />
     <text
@@ -9978,12 +9978,6 @@
          x="1607.9847"
          y="693.10571"
          style="font-size:7.5px">32</tspan></text>
-    <circle
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.36699998;stroke-linejoin:miter;stroke-miterlimit:7.80000019;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="path7249"
-       cx="422.67856"
-       cy="469.35101"
-       r="2.5" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5px;line-height:100%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
