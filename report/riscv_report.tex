@@ -11,6 +11,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pdfpages}
 \usepackage{listings}
+\usepackage{rotating}
 
 \sisetup{exponent-product=\cdot}
 
@@ -401,12 +402,12 @@ The Immediate Generator (show in figure \ref{fig:immgen}) is needed to produce t
 \section{Main architecture}
 The main architecture is depicted in figure \ref{fig:rv-magic_main}. One multiplexer was added in the execution stage to add the support for the AUIPC operation.
 
-\begin{figure}[hbtp]
+\begin{sidewaysfigure}[hbtp]
 	\centering
-    \includegraphics[scale=0.2]{../main/ref/schematic/rvMagic.png}
+    \includegraphics[scale=0.4]{../main/ref/schematic/rvMagic.png}
     \caption{RV-MAGIC main architecture}
     \label{fig:rv-magic_main}
-\end{figure}
+\end{sidewaysfigure} 
 
 \section{Simulation}
 \subsection{Memory}\label{sec:memory}
