@@ -23,15 +23,62 @@ Here is a little perspective on the main feature of \textit{com.py}.
 \end{itemize}
 
 \subsubsection{How it works}
-Figure \ref{fig:compy} shows a qualitative flow chart of the assembler. After opening the input file, the script reads one line at a time and remove comments. Pseudo-instructions are then converted to base ones and processed, while the canonical format (\texttt{instr\_name param1, param2, [param3]}) is retrieved. Then, all the instructions are processed the same way. The fields of the machine code that depends only on the type of instruction and the instruction name are processed first. After, the parameters like registers and immediate/offset fields are encoded based on the instruction type. Eventually, all the fields are printed on screen, joined together and appended to a ASCII binary output file with extension \texttt{.mc}. Since the assembler doesn't keep a copy of the entire code but processes one instruction at a time, memory usage is kept under control even when dealing with long pieces of assembly code. 
+Figure \ref{fig:compy} shows a qualitative flow chart of the assembler. After opening the input file, the script reads one line at a time and remove comments. Pseudo-instructions are then converted to base ones and processed, while the canonical format is retrieved:
+\begin{center}
+   \texttt{instr\_name param1, param2, [param3]} 
+\end{center}
+Then, all the instructions are processed the same way. The fields of the machine code that depends only on the type of instruction and the instruction name are processed first. After, the parameters like registers and immediate/offset fields are encoded based on the instruction type. Eventually, all the fields are printed on screen, joined together and appended to a ASCII binary output file with extension \texttt{.mc}. Since the assembler doesn't keep a copy of the entire code but processes one instruction at a time, memory usage is kept under control even when dealing with long pieces of assembly code. 
 
 As soon as an error is encountered processing one line (i.e. one instruction) the user is warned by a message on screen and the assembler exits with a specific error code. This makes it possible to use this script inside other bash or python scripts. Errors are handled by means of python exception handling \texttt{try:... except:...} construct, that interprets these exceptions based on the assembling context instead of throwing generic python interpreter errors to the user. 
+
+Here is an example of the output of the assembler when processing a piece of RISC-V assembly code that computes the Fibonacci sequence:
+
+\begingroup
+    \fontsize{9pt}{12pt}\selectfont
+    \begin{verbatim}  
+RV-MAGIC/common/src$ ./com.py ../../main/tb/assembly/fibo.asm y n
+
+> =================================================================
+>              2019-03-20 19:42:31 - Welcome to com.py
+> =================================================================
+
+
+> Assembling "../../main/tb/assembly/fibo.asm"...
+>       1)    li x5, 7              =>   I-type: 000000000111  00000 000 00101 0010011
+>       2)    li x6, 2              =>   I-type: 000000000010  00000 000 00110 0010011
+>       3)    jal ra, 8             =>   J-type: 00000000100000000000    00001 1101111
+>       4)    j 72                  =>   J-type: 00000100100000000000    00000 1101111
+>       5)    bge x5, x6, 12        =>   B-type: 0000000 00110 00101 101 01100 1100011
+>       6)    addi x7, x5, 0        =>   I-type: 000000000000  00101 000 00111 0010011
+>       7)    jalr x0, 0(ra)        =>   I-type: 000000000000  00001 000 00000 1100111
+>       8)    addi sp, sp, -12      =>   I-type: 111111110100  00010 000 00010 0010011
+>       9)    sw x1, 0(sp)          =>   S-type: 0000000 00001 00010 010 00000 0100011
+>       10)   sw x5, 4(sp)          =>   S-type: 0000000 00101 00010 010 00100 0100011
+>       11)   addi x5, x5, -1       =>   I-type: 111111111111  00101 000 00101 0010011
+>       12)   jal ra, -28           =>   J-type: 11111110010111111111    00001 1101111
+>       13)   sw x7, 8(sp)          =>   S-type: 0000000 00111 00010 010 01000 0100011
+>       14)   lw x5, 4(sp)          =>   I-type: 000000000100  00010 010 00101 0000011
+>       15)   addi x5, x5, -2       =>   I-type: 111111111110  00101 000 00101 0010011
+>       16)   jal ra, -44           =>   J-type: 11111101010111111111    00001 1101111
+>       17)   lw x13, 8(sp)         =>   I-type: 000000001000  00010 010 01101 0000011
+>       18)   add x7, x13, x7       =>   R-type: 0000000 00111 01101 000 00111 0110011
+>       19)   lw ra, 0(sp)          =>   I-type: 000000000000  00010 010 00001 0000011
+>       20)   addi sp, sp, 12       =>   I-type: 000000001100  00010 000 00010 0010011
+>       21)   jalr x0, 0(ra)        =>   I-type: 000000000000  00001 000 00000 1100111
+
+> BIN file successfully created:
+      RV-MAGIC/main/tb/bin_mc/fibo.mc
+
+> HEX file successfully created:
+      RV-MAGIC/main/tb/hex_mc/fibo.riscv
+    \end{verbatim}  
+\endgroup
 
 Eventually, if no error was encountered, a hexadecimal file with extension \texttt{.riscv} is generated starting from the binary one. If requested, the script proceeds linking the assembled code in a System Verilog test-bench configutation file and launches the simulation in Modelsim, running a \texttt{.tcl} script with the necessary commands to compile and simulate the entire design. Since this configuration file can also be used for other purposes, \textit{com.py} keeps a copy of the old version and restores it when Modelsim is quit. 
 
 \begin{figure}[hbtp]
    \centering
-   \includegraphics[scale=.7]{../common/ref/schematic/compy.pdf}
+   \includegraphics[scale=.6]{../common/ref/schematic/compy.pdf}
    \caption{\textit{com.py} flow chart}
    \label{fig:compy}
 \end{figure}

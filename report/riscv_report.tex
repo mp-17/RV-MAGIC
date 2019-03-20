@@ -165,14 +165,14 @@ Moreover, only few bits of the input fields are required to make a definite deci
 \subsection{Branch and Jump management}
 A general view of the unit is given in figure \ref{fig:brJump_man_HW}, along with the significant datapath blocks involved.
 
-\begin{figure}[hbtp]
+\begin{sidewaysfigure}[hbtp]
     \centering
     \makebox[\textwidth][c]{
         \includegraphics[width=1.2\textwidth]{../br_jmp_management/ref/schematic/branchJump_management_schematic_5stages.pdf}
     }
     \caption{Branch and Jump management HW}
     \label{fig:brJump_man_HW}
-\end{figure}
+\end{sidewaysfigure}
 
 \subsubsection{Types of instructions}
 There are two classes of instructions which can lead to a modification of the sequential flow of the program. In the RV32I ISA they are:
@@ -372,12 +372,12 @@ In figure \ref{fig:hzd_management} a high level datapath for hazard management i
 
 \subsection{Control Unit (CU)}
 
-\begin{figure}[hbtp]
+\begin{sidewaysfigure}[hbtp]
     \centering
     \includegraphics[scale=0.3]{../cu/ref/schematic/cu.png}
     \caption{Control Unit and the units connected to it}
     \label{fig:cu}
-\end{figure}
+\end{sidewaysfigure}
 
 The Control Unit is shown in figure \ref{fig:cu}. It is a combinational component, because all the synchronization is done in the pipeline registers. It basically reads the opcode and other eventual flags (funct3, funct7) to determine the format of the instruction used in the immediate generator, as well as other flags.
 
@@ -559,9 +559,18 @@ The last set of instructions was aimed at testing the correct behavior of the HD
 
 The first case is the forwarding of the previous ALU result:
 \begin{verbatim}
-    addi x1, x0, 56
-    and x3, x1, x2
+    li x1, -44
+    addi x2, x0, 56
+    sub x3, x1, x2
 \end{verbatim}
+Figure \ref{fig:FWD_alu_alu} shows the result of the simulation. Here, the first operand of the \texttt{sub} instruction, \texttt{x1}, is taken from the MEM/WB pipe register, since it was set two instruction earlier. Therefore, in the clock cycle indicated by the gold cursor, \texttt{FWU\_fwdA = 1}. The second operand, \texttt{x2}, is forwarded from the previous ALU result in the EX/MEM pipe register, so \texttt{FWU\_fwdB = 2}. Both the sel signals are coloured in pale blue, while the outputs of these multiplexers are in purple. They are set correctly even if the corresponding register has not been written yet. As a result, the alu output of the third instruction in the EX stage (\texttt{ALU\_out}) is correct: $-44 - 56 = -100$.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=\textwidth]{../fwu/ref/simResult/FWD_alu_alu.pdf}
+    \caption{Forwarding: ALU instruction after ALU instruction}
+    \label{fig:FWD_alu_alu}
+\end{figure}
 
 Next, forwarding can also occur from the ALU result of two cycles earlier:
 \begin{verbatim}
@@ -569,7 +578,6 @@ Next, forwarding can also occur from the ALU result of two cycles earlier:
     sub x7, x5, x6
     xor x3, x13, x2
 \end{verbatim}
-
 
 Finally, forwarding between load and store was tested:
 \begin{verbatim}
@@ -579,15 +587,30 @@ Finally, forwarding between load and store was tested:
     lw x2, 16(x1)
     sw x2, 32(x1)
 \end{verbatim}
+Again, there's no need to stall the pipeline since the value loaded from the data memory is forwarded to its data input before it is actually written to register \texttt{x2}. This kind of forwarding is particularly useful when a data in a memory location has to be moved to another location. This operation can be done in just two clock cycle. The wave postscript of this execution is reported in figure \ref{fig:FWD_load_store}.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=\textwidth]{../fwu/ref/simResult/FWD_load_store.pdf}
+    \caption{Forwarding: Store instruction after load instruction}
+    \label{fig:FWD_load_store}
+\end{figure}
 
 The hazard detection was tested with a load followed by another using instruction:
 \begin{verbatim}
     lw t0, 0(x0)
     addi x1, t0, 1 
 \end{verbatim}
+This is the only case a data hazard cannot be resolved by forwarding, as mentioned in section \ref{sec:load_store_fwd}. The pipeline must be stalled. This is shown in figure \ref{fig:FWD_load_alu}: the \texttt{stall\_n} signal is asserted and the program counter (\texttt{I\_MEM\_addr}) is prevented from incrementing to the next instruction, so that the second one is fetched again in the next cycle, when the value loaded from the memory is available, even before it is actually written to register \texttt{t0} (\texttt{x5}, at the bottom of the wave figure), thanks to the forwarding logic instantiated into the register file. This example shows the perfect collaboration between the FWU and the HDU, and how they manage to speed up the processor together. Good guys they are. 
 
-In all the previous cases, the focus was on the interface signals of the HDU and FWU, as well as the correct stalling and flushing of the pipeline.
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=\textwidth]{../fwu/ref/simResult/FWD_load_alu.pdf}
+    \caption{Forwarding: ALU instruction after load. The pipeline is stalled}
+    \label{fig:FWD_load_alu}
+\end{figure}
 
+\newpage
 \subsubsection{Complete program test}
 After having tested all single instructions and hazard scenario individually, a complete assembly program was tested, in order to verify the correctness of the design in a real application. The program in question (listed below) is the translation to RISC-V assembly of the test program provided for the laboratory experience on the MIPS processor, which computes the minimum absolute value among the elements of a vector.
 \begin{verbatim}
@@ -617,6 +640,6 @@ After having tested all single instructions and hazard scenario individually, a 
 
 % ASSEMBLER section 
 % \label{sec:assembler}
-\input{sec/compy.tex}
+\input{sec/assembler.tex}
 
 \end{document}

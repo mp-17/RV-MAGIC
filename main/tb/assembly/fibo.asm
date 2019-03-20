@@ -1,5 +1,3 @@
-main:
-li sp, 32
 li x5, 7
 li x6, 2
 jal ra, 8 # FIB
